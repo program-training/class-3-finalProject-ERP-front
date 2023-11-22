@@ -7,6 +7,7 @@ import SignUp from "./components/SignUp";
 import { AuthProvider } from "./Context/AuthContext";
 import Products from "./components/Products";
 import ProductDetailsPage from "./components/ProductDetailsPage";
+import "./main.css"
 
 const router = createBrowserRouter([
   {
