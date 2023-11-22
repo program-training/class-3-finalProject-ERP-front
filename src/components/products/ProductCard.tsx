@@ -17,7 +17,9 @@ interface ProductCardProps {
     category: string;
     discountPercentage: number;
     image: {
-      url: string;
+      large: string;
+      medium: string;
+      small: string;
       alt: string;
     };
   };
@@ -45,7 +47,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
     <Box sx={{ display: "flex", flexWrap: "wrap" }}>
       <Card sx={{ width: "225px", margin: "20px" }}>
         <Link to={`/product/${_id}`}>
-          <img src={image.large} alt={image.alt} style={{ maxWidth: "100%" }} />
+          <img src={image.medium} alt={image.alt} style={{ maxWidth: "100%" }} />
         </Link>
         <CardContent>
           <Typography variant="h5" component="div">

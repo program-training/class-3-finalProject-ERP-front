@@ -44,20 +44,18 @@ function ResponsiveAppBar() {
     null
   );
 
-  // const handleLogOut = () => {
-  //   setAuthenticated &&
-  //     setAuthenticated(() => {
-  //       return null;
-  //     });
-  //   localStorage.removeItem("user");
-  // };
+  const handleLogOut = () => {
+    setAuthenticated && setAuthenticated(null);
+    localStorage.removeItem("admin");
+    navigate("/")
+  };
 
   return (
     <div>
       <AppBar position="static">
         <Container maxWidth="xl">
           <Toolbar disableGutters>
-            <Typography
+            {/* <Typography
               variant="h6"
               noWrap
               component="a"
@@ -74,7 +72,7 @@ function ResponsiveAppBar() {
               }}
             >
               ERP
-            </Typography>
+            </Typography> */}
             <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
               <IconButton
                 size="large"
@@ -136,15 +134,26 @@ function ResponsiveAppBar() {
 
             <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
               {!isAuthenticated && (
-                <Button
-                  key={"signUp"}
-                  onClick={() => {
-                    handleCloseNavMenu(), navigate("/signUp");
-                  }}
-                  sx={{ my: 2, color: "white", display: "block" }}
-                >
-                  {"SIGN UP"}
-                </Button>
+                <>
+                  <Button
+                    key={"signUp"}
+                    onClick={() => {
+                      handleCloseNavMenu(), navigate("/signUp");
+                    }}
+                    sx={{ my: 2, color: "white", display: "block" }}
+                  >
+                    {"SIGN UP"}
+                  </Button>
+                  <Button
+                    key={"signUp"}
+                    onClick={() => {
+                      handleCloseNavMenu(), navigate("/");
+                    }}
+                    sx={{ my: 2, color: "white", display: "block" }}
+                  >
+                    {"SIGN IN"}
+                  </Button>
+                </>
               )}
             </Box>
             {isAuthenticated && (
@@ -154,7 +163,7 @@ function ResponsiveAppBar() {
                   onClick={handleOpenUserMenu}
                   sx={{ cursor: "pointer" }}
                 >
-                  <Typography>ADMIN</Typography>
+                  <Typography>{isAuthenticated.userName}</Typography>
                 </Tooltip>
                 <Menu
                   sx={{ mt: "45px" }}
@@ -172,7 +181,7 @@ function ResponsiveAppBar() {
                   open={Boolean(anchorElUser)}
                   onClose={handleCloseUserMenu}
                 >
-                  <MenuItem key={"Log out"}>
+                  <MenuItem onClick={handleLogOut} key={"Log out"}>
                     <Typography textAlign="center">{"Log out"}</Typography>
                   </MenuItem>
                 </Menu>

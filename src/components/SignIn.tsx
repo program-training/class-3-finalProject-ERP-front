@@ -53,11 +53,9 @@ export default function SignIn() {
       })
       .then((resolve) => {
         const admin = {
-          userName: data.get("email") as string,
+          userName: data.get("userName") as string,
           token: resolve,
         };
-        console.log(admin);
-
         localStorage.setItem("admin", JSON.stringify(admin)),
           setIsAuthenticated && setIsAuthenticated(admin);
         navigate("/products");
