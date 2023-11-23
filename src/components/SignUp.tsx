@@ -4,7 +4,6 @@ import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { withFormik, FormikProps } from "formik";
@@ -24,6 +23,8 @@ interface FormValues {
 
 const SignUp: React.FC<FormikProps<FormValues>> = (props) => {
   const navigate = useNavigate();
+  const [error, setError] = React.useState("");
+    const [waiting, setWaiting] = React.useState(false);
 
   const authContext = React.useContext(AuthContext);
   const setIsAuthenticated = authContext?.setIsAuthenticated;
@@ -43,7 +44,8 @@ const SignUp: React.FC<FormikProps<FormValues>> = (props) => {
       user_name: values.email,
       password: values.password,
     });
-
+    setWaiting(true);
+    setError("")
     fetch(`${import.meta.env.VITE_BASE_URL}/users/register`, {
       method: "POST",
       headers: myHeaders,
@@ -51,6 +53,7 @@ const SignUp: React.FC<FormikProps<FormValues>> = (props) => {
       redirect: "follow",
     })
       .then(async (res) => {
+        setWaiting(false);
         if (!res.ok) {
           const errorText = await res.text();
           throw new Error(
@@ -68,10 +71,10 @@ const SignUp: React.FC<FormikProps<FormValues>> = (props) => {
           setIsAuthenticated && setIsAuthenticated(admin);
         navigate("/products");
       })
-      .catch((error) => console.log("error", error));
+      .catch((error) => {console.log("error", error), setError(error.message), setWaiting(false)});
   };
 
-  const { values, touched, errors, isSubmitting, handleChange, handleBlur } =
+  const { values, touched, errors, handleChange, handleBlur } =
     props;
 
   return (
@@ -175,7 +178,9 @@ const SignUp: React.FC<FormikProps<FormValues>> = (props) => {
             >
               Sign Up
             </Button>
+
           </Box>
+          <div>{error?(error && <p>{error}</p>):( <img id="await" src="../public/await.gif"></img>)}</div>
         </Box>
       </Container>
     </ThemeProvider>
@@ -187,9 +192,21 @@ const validationSchema = yup.object().shape({
   lastName: yup.string().required("Last Name is required"),
   email: yup.string().email("Invalid email").required("Email is required"),
   password: yup
-    .string()
-    .min(8, "Password must contain at least 8 characters")
-    .required("Enter your password"),
+  .string()
+  .min(8, ({ min }) => `Password must be at least ${min} characters`)
+  .matches(
+    /^(?=.*[a-z])/,
+    "Password must include at least one lowercase letter"
+  )
+  .matches(
+    /^(?=.*[A-Z])/,
+    "Password must include at least one uppercase letter"
+  )
+  .matches(
+    /^(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-])/,
+    "Password must include at least one special character"
+  )
+  .required("Password is required"),
   confirmPassword: yup
     .string()
     .oneOf([yup.ref("password")], "Password does not match")

@@ -8,3 +8,6 @@ body{
 .errorMessage{
     color: red;
 }
+.css-r6ewbb-MuiToolbar-root{
+    justify-content: space-between;
+}

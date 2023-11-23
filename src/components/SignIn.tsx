@@ -9,7 +9,6 @@ import {
   Container,
   CssBaseline,
   TextField,
-  Typography,
 } from "@mui/material";
 
 const defaultTheme = createTheme();

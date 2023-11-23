@@ -10,7 +10,7 @@ import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import SearchFiled from "./Search";
+import SearchFiled from "./SearchBox";
 import { Outlet, useNavigate } from "react-router-dom";
 import AddProductButton from "./AddProduct";
 import { AuthContext } from "../Context/AuthContext";
@@ -20,7 +20,6 @@ function ResponsiveAppBar() {
   const isAuthenticated = authContext?.isAuthenticated;
   const setAuthenticated = authContext?.setIsAuthenticated;
 
-  // const [isAuthenticated] = React.useState<boolean>(true);
   const navigate = useNavigate();
 
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
@@ -45,10 +44,10 @@ function ResponsiveAppBar() {
   );
 
   const handleLogOut = () => {
-    setAnchorElUser(null)
+    setAnchorElUser(null);
     setAuthenticated && setAuthenticated(null);
     localStorage.removeItem("admin");
-    navigate("/")
+    navigate("/");
   };
 
   return (
@@ -56,12 +55,13 @@ function ResponsiveAppBar() {
       <AppBar position="static">
         <Container maxWidth="xl">
           <Toolbar disableGutters>
-            {/* <Typography
+            <Typography
               variant="h6"
               noWrap
               component="a"
-              href="#app-bar-with-responsive-menu"
-              onClick={() => navigate("/")}
+              onClick={() =>
+                isAuthenticated ? () => navigate("/products") : navigate("/")
+              }
               sx={{
                 mr: 2,
                 display: { xs: "none", md: "flex" },
@@ -70,11 +70,12 @@ function ResponsiveAppBar() {
                 letterSpacing: ".3rem",
                 color: "inherit",
                 textDecoration: "none",
+                cursor: "pointer",
               }}
             >
               ERP
-            </Typography> */}
-            <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+            </Typography>
+            {/* <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
               <IconButton
                 size="large"
                 aria-label="account of current user"
@@ -107,13 +108,15 @@ function ResponsiveAppBar() {
                   <Typography textAlign="center">{"demo"}</Typography>
                 </MenuItem>
               </Menu>
-            </Box>
+            </Box> */}
             <Typography
               variant="h5"
               noWrap
               component="a"
-              href="#app-bar-with-responsive-menu"
-              onClick={() => navigate("/")}
+              href="#app-bar-with-respo"
+              onClick={() =>
+                isAuthenticated ? () => navigate("/products") : navigate("/")
+              }
               sx={{
                 mr: 2,
                 display: { xs: "flex", md: "none" },
@@ -132,33 +135,8 @@ function ResponsiveAppBar() {
                 <SearchFiled /> <AddProductButton />
               </>
             )}
-
-            <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-              {!isAuthenticated && (
-                <>
-                  <Button
-                    key={"signUp"}
-                    onClick={() => {
-                      handleCloseNavMenu(), navigate("/signUp");
-                    }}
-                    sx={{ my: 2, color: "white", display: "block" }}
-                  >
-                    {"SIGN UP"}
-                  </Button>
-                  <Button
-                    key={"signUp"}
-                    onClick={() => {
-                      handleCloseNavMenu(), navigate("/");
-                    }}
-                    sx={{ my: 2, color: "white", display: "block" }}
-                  >
-                    {"SIGN IN"}
-                  </Button>
-                </>
-              )}
-            </Box>
             {isAuthenticated && (
-              <Box sx={{ flexGrow: 0 }}>
+              <Box >
                 <Tooltip
                   title="Admin is logged in"
                   onClick={handleOpenUserMenu}
