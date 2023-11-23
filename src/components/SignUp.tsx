@@ -180,7 +180,7 @@ const SignUp: React.FC<FormikProps<FormValues>> = (props) => {
             </Button>
 
           </Box>
-          <div>{error?(error && <p>{error}</p>):( <img id="await" src="../public/await.gif"></img>)}</div>
+          <div>{error?(error && <p>{error}</p>):( waiting && <img id="await" src="../public/await.gif"></img>)}</div>
         </Box>
       </Container>
     </ThemeProvider>
