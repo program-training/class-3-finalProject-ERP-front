@@ -45,6 +45,7 @@ function ResponsiveAppBar() {
   );
 
   const handleLogOut = () => {
+    setAnchorElUser(null)
     setAuthenticated && setAuthenticated(null);
     localStorage.removeItem("admin");
     navigate("/")

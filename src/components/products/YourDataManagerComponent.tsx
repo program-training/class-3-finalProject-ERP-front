@@ -50,6 +50,7 @@ const YourDataManagerComponent: React.FC = () => {
       products={products}
       onDelete={handleDelete}
       onEdit={handleEdit}
+      setStateProducts={setProducts}
     />
   );
 };
