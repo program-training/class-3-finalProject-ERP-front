@@ -44,7 +44,7 @@ const SignUp: React.FC<FormikProps<FormValues>> = (props) => {
       password: values.password,
     });
 
-    fetch(`${import.meta.env.BASE_URL}/users/register`, {
+    fetch(`http://127.0.0.1:3000/users/register`, {
       method: "POST",
       headers: myHeaders,
       body: raw,
@@ -80,15 +80,12 @@ const SignUp: React.FC<FormikProps<FormValues>> = (props) => {
         <CssBaseline />
         <Box
           sx={{
-            marginTop: 8,
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
           }}
         >
-          <Typography component="h1" variant="h5">
-            Sign up
-          </Typography>
+
           <Box
             component="form"
             noValidate
@@ -141,6 +138,7 @@ const SignUp: React.FC<FormikProps<FormValues>> = (props) => {
                   value={values.password}
                   onChange={handleChange}
                   onBlur={handleBlur}
+                  required
                   helperText={touched.password ? errors.password : ""}
                   error={touched.password && Boolean(errors.password)}
                   margin="dense"
@@ -156,6 +154,7 @@ const SignUp: React.FC<FormikProps<FormValues>> = (props) => {
                   value={values.confirmPassword}
                   onChange={handleChange}
                   onBlur={handleBlur}
+                  required
                   helperText={
                     touched.confirmPassword ? errors.confirmPassword : ""
                   }
