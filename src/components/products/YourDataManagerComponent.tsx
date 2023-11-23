@@ -12,7 +12,7 @@ const YourDataManagerComponent: React.FC = () => {
         const myHeaders = new Headers();
         myHeaders.append("Authorization", token);
 
-        const response = await fetch("http://127.0.0.1:3000/api/inventory", {
+        const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/inventory`, {
           method: "GET",
           headers: myHeaders,
           redirect: "follow",

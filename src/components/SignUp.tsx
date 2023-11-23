@@ -44,7 +44,7 @@ const SignUp: React.FC<FormikProps<FormValues>> = (props) => {
       password: values.password,
     });
 
-    fetch("http://127.0.0.1:3000/users/register", {
+    fetch(`${import.meta.env.BASE_URL}/users/register`, {
       method: "POST",
       headers: myHeaders,
       body: raw,
