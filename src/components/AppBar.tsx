@@ -44,13 +44,13 @@ function ResponsiveAppBar() {
     null
   );
 
-  // const handleLogOut = () => {
-  //   setAuthenticated &&
-  //     setAuthenticated(() => {
-  //       return null;
-  //     });
-  //   localStorage.removeItem("user");
-  // };
+  const handleLogOut = () => {
+    setAuthenticated &&
+      setAuthenticated(() => {
+        return null;
+      });
+    localStorage.removeItem("admin");
+  };
 
   return (
     <div>
@@ -172,7 +172,7 @@ function ResponsiveAppBar() {
                   open={Boolean(anchorElUser)}
                   onClose={handleCloseUserMenu}
                 >
-                  <MenuItem key={"Log out"}>
+                  <MenuItem key={"Log out"} onClick={() => {handleLogOut(), navigate("/")}}>
                     <Typography textAlign="center">{"Log out"}</Typography>
                   </MenuItem>
                 </Menu>

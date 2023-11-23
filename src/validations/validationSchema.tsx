@@ -1,13 +1,9 @@
 import * as yup from "yup";
 
-const validationsForm = {
-  name: yup.string().required("Required"),
-  surname: yup.string().required("Required"),
-  email: yup
-    .string()
-    .email("Enter a valid email")
-    .required("Email is required"),
-  course: yup.string().required("Select your course category"),
+const validationsForm = yup.object().shape({
+  firstName: yup.string().required("First Name is required"),
+  lastName: yup.string().required("Last Name is required"),
+  email: yup.string().email("Invalid email").required("Email is required"),
   password: yup
     .string()
     .min(8, "Password must contain at least 8 characters")
@@ -16,7 +12,6 @@ const validationsForm = {
     .string()
     .oneOf([yup.ref("password")], "Password does not match")
     .required("Confirm your password"),
-  website: yup.string().url().required("Website is required"),
-};
+});
 
 export default validationsForm;
