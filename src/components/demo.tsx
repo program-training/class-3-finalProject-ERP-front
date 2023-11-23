@@ -25,20 +25,6 @@ const styles = () => ({
   }
 });
 
-const courseCategory = [
-  {
-    value: "webDevelopment",
-    label: "Web Development"
-  },
-  {
-    value: "networking",
-    label: "Networking"
-  },
-  {
-    value: "computerScience",
-    label: "Computer Science"
-  }
-];
 
 const form = props => {
   const {
@@ -119,11 +105,7 @@ const form = props => {
               variant="outlined"
               fullWidth
             >
-              {courseCategory.map(option => (
-                <MenuItem key={option.value} value={option.value}>
-                  {option.label}
-                </MenuItem>
-              ))}
+
             </TextField>
             <TextField
               id="password"
@@ -186,8 +168,6 @@ const Form = withFormik({
       confirmPassword: confirmPassword || ""
     };
   },
-
-  validationSchema: yup.object().shape(validationsForm),
 
   handleSubmit: (values, { setSubmitting }) => {
     setTimeout(() => {
