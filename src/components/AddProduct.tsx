@@ -1,145 +1,35 @@
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import * as React from "react";
-import IconButton from "@mui/material/IconButton";
-import input from "@mui/material/Input";
-import FilledInput from "@mui/material/FilledInput";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
 import InputAdornment from "@mui/material/InputAdornment";
-import FormHelperText from "@mui/material/FormHelperText";
 import FormControl from "@mui/material/FormControl";
-import Visibility from "@mui/icons-material/Visibility";
-import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { json, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-
-type input = {
-  name: string;
-  description: string;
-  category: string;
-  salePrice: number;
-  quantity: number;
-  discountPercentage: number;
-  image: {
-    large: string;
-    medium: string;
-    small: string;
-    alt: string;
-  };
-};
-
-
-// type gilad = {
-//   image: {
-//     large: string;
-//     medium: string;
-//     small: string;
-//     alt: string;
-//   };
-//   _id: string;
-//   name: string;
-//   salePrice: 14;
-//   quantity: 63;
-//   description: string;
-//   category: string;
-//   discountPercentage: number;
-//   __v: number;
-// };
+import { Product } from "../types";
+import { useEditOrAdd } from "../CustomHooks";
+import { useFetch } from "../CustomHooks";
 
 export default function AddProduct() {
   const params = useParams();
-  const [data2, setData2] = useState<input | null>();
-  const [bool, setBool] = useState<boolean>(false);
-  if (params.id) {
-    useEffect(() => {
-      const storage = localStorage.getItem("admin");
-      const token = storage ? JSON.parse(storage).token : null;
-      const myHeaders = new Headers();
-      myHeaders.append("authorization", token);
-      myHeaders.append("Content-Type", "application/json");
 
-      const fetchEdit = async () => {
-        const data = await fetch(
-          `http://localhost:3009/api/inventory/${params.id}`,
-          {
-            method: "get",
-            headers: myHeaders,
-            redirect: "follow",
-          }
-        );
-        const dataJ = await data.json();
-        console.log(dataJ)
-        setData2(dataJ)
-      };
-      fetchEdit()
-    }, []);
-  } else {
-    useEffect(() => {
-      setBool(true);
-    }, []);
-  }
-
-  const [data1, setData] = useState<input | null>(null);
+  const { isAdd, isEdit } = useEditOrAdd(params.id);
 
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm<input>();
+  } = useForm<Product>();
+  
 
-  const onSubmit: SubmitHandler<input> = (data) => {
-    setData(data);
-    if (params.id) {
-      const storage = localStorage.getItem("admin");
-      const token = storage ? JSON.parse(storage).token : null;
-      const myHeaders = new Headers();
-      myHeaders.append("authorization", token);
-      myHeaders.append("Content-Type", "application/json");
-
-      const raw = JSON.stringify(data)
-      const fetchEdit = async () => {
-        const data = await fetch(
-          `http://localhost:3009/api/inventory/${params.id}`,
-          {
-            method: "PUT",
-            headers: myHeaders,
-            body: raw,
-            redirect: "follow",
-          }
-        );
-        const dataJ = await data.json();
-        console.log(dataJ)
-      };
-      fetchEdit()
-    }else{
-      const storage = localStorage.getItem("admin");
-      const token = storage ? JSON.parse(storage).token : null;
-      const myHeaders = new Headers();
-      myHeaders.append("authorization", token);
-      myHeaders.append("Content-Type", "application/json");
-
-      const raw = JSON.stringify(data)
-      const fetchEdit = async () => {
-        const data = await fetch(
-          `http://localhost:3009/api/inventory/`,
-          {
-            method: "post",
-            headers: myHeaders,
-            body: raw,
-            redirect: "follow",
-          }
-        );
-        const dataJ = await data.json();
-        console.log(dataJ)
-      };
-      fetchEdit()
-
-    }
+  const [messageError, setMessageError] = useState<string | null>();
+  const onSubmit: SubmitHandler<Product> = (data) => {
+  const [messageError] = useFetch(params.id, data);
+  setMessageError(messageError)
   };
-  if (data2 || bool) {
+  if (isAdd || isEdit) {
     return (
       <form action="" onSubmit={handleSubmit(onSubmit)}>
         <Box
@@ -167,7 +57,7 @@ export default function AddProduct() {
                 label="name"
                 id="1"
                 sx={{ m: 1, width: "30ch" }}
-                defaultValue={data2?.name}
+                defaultValue={isEdit?.name}
                 {...register("name")}
                 InputProps={{
                   startAdornment: (
@@ -179,7 +69,7 @@ export default function AddProduct() {
                 label="description"
                 id="2"
                 sx={{ m: 1, width: "30ch" }}
-                defaultValue={data2?.description}
+                defaultValue={isEdit?.description}
                 {...register("description")}
                 InputProps={{
                   startAdornment: (
@@ -191,7 +81,7 @@ export default function AddProduct() {
                 label="category"
                 id="3"
                 sx={{ m: 1, width: "30ch" }}
-                defaultValue={data2?.category}
+                defaultValue={isEdit?.category}
                 {...register("category")}
                 InputProps={{
                   startAdornment: (
@@ -205,7 +95,7 @@ export default function AddProduct() {
                 label="salePrice"
                 id="4"
                 sx={{ m: 1, width: "30ch" }}
-                defaultValue={data2?.salePrice}
+                defaultValue={isEdit?.salePrice}
                 {...register("salePrice")}
                 InputProps={{
                   startAdornment: (
@@ -217,7 +107,7 @@ export default function AddProduct() {
                 label="quantity"
                 id="5"
                 sx={{ m: 1, width: "30ch" }}
-                defaultValue={data2?.quantity}
+                defaultValue={isEdit?.quantity}
                 {...register("quantity")}
                 InputProps={{
                   startAdornment: (
@@ -229,7 +119,7 @@ export default function AddProduct() {
                 label="discountPercentage"
                 id="6"
                 sx={{ m: 1, width: "30ch" }}
-                defaultValue={data2?.discountPercentage}
+                defaultValue={isEdit?.discountPercentage}
                 {...register("discountPercentage")}
                 InputProps={{
                   startAdornment: (
@@ -252,7 +142,7 @@ export default function AddProduct() {
                     <InputAdornment position="start"></InputAdornment>
                   }
                   label="image large"
-                  defaultValue={data2?.image.large}
+                  defaultValue={isEdit?.image.large}
                   {...register("image.large")}
                 />
               </FormControl>
@@ -266,7 +156,7 @@ export default function AddProduct() {
                     <InputAdornment position="start"></InputAdornment>
                   }
                   label="image medium"
-                  defaultValue={data2?.image.medium}
+                  defaultValue={isEdit?.image.medium}
                   {...register("image.medium")}
                 />
               </FormControl>
@@ -280,7 +170,7 @@ export default function AddProduct() {
                     <InputAdornment position="start"></InputAdornment>
                   }
                   label="image small"
-                  defaultValue={data2?.image.small}
+                  defaultValue={isEdit?.image.small}
                   {...register("image.small")}
                 />
               </FormControl>
@@ -294,15 +184,14 @@ export default function AddProduct() {
                     <InputAdornment position="start"></InputAdornment>
                   }
                   label="image alt"
-                  defaultValue={data2?.image.alt}
+                  defaultValue={isEdit?.image.alt}
                   {...register("image.alt")}
                 />
               </FormControl>
             </Box>
           </Box>
         </Box>
-        <div>{data1?.name}</div>
-        <div>{data2?.name}</div>
+        <div>{messageError}</div>
         <input type="submit" />
       </form>
     );
