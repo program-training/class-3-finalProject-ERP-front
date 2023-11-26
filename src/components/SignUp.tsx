@@ -4,7 +4,6 @@ import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { withFormik, FormikProps } from "formik";
@@ -24,18 +23,22 @@ interface FormValues {
 
 const SignUp: React.FC<FormikProps<FormValues>> = (props) => {
   const navigate = useNavigate();
+  const [error, setError] = React.useState("");
+  const [waiting, setWaiting] = React.useState(false);
 
   const authContext = React.useContext(AuthContext);
   const setIsAuthenticated = authContext?.setIsAuthenticated;
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    setWaiting(true);
+    setError("");
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({
       email: values.email,
       password: values.password,
     });
-    
+
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
 
@@ -43,14 +46,14 @@ const SignUp: React.FC<FormikProps<FormValues>> = (props) => {
       user_name: values.email,
       password: values.password,
     });
-
-    fetch("http://127.0.0.1:3009/users/register", {
+    fetch(`${import.meta.env.VITE_BASE_URL}/users/register`, {
       method: "POST",
       headers: myHeaders,
       body: raw,
       redirect: "follow",
     })
       .then(async (res) => {
+        setWaiting(false);
         if (!res.ok) {
           const errorText = await res.text();
           throw new Error(
@@ -68,10 +71,12 @@ const SignUp: React.FC<FormikProps<FormValues>> = (props) => {
           setIsAuthenticated && setIsAuthenticated(admin);
         navigate("/products");
       })
-      .catch((error) => console.log("error", error));
+      .catch((error) => {
+        console.log("error", error), setError(error.message), setWaiting(false);
+      });
   };
 
-  const { values, touched, errors, isSubmitting, handleChange, handleBlur } =
+  const { values, touched, errors, handleChange, handleBlur, isSubmitting } =
     props;
 
   return (
@@ -80,15 +85,11 @@ const SignUp: React.FC<FormikProps<FormValues>> = (props) => {
         <CssBaseline />
         <Box
           sx={{
-            marginTop: 8,
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
           }}
         >
-          <Typography component="h1" variant="h5">
-            Sign up
-          </Typography>
           <Box
             component="form"
             noValidate
@@ -97,25 +98,6 @@ const SignUp: React.FC<FormikProps<FormValues>> = (props) => {
           >
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
-                <TextField
-                  autoComplete="given-name"
-                  name="firstName"
-                  required
-                  fullWidth
-                  id="firstName"
-                  label="First Name"
-                  autoFocus
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="lastName"
-                  autoComplete="family-name"
-                />
               </Grid>
               <Grid item xs={12}>
                 <TextField
@@ -141,6 +123,7 @@ const SignUp: React.FC<FormikProps<FormValues>> = (props) => {
                   value={values.password}
                   onChange={handleChange}
                   onBlur={handleBlur}
+                  required
                   helperText={touched.password ? errors.password : ""}
                   error={touched.password && Boolean(errors.password)}
                   margin="dense"
@@ -156,6 +139,7 @@ const SignUp: React.FC<FormikProps<FormValues>> = (props) => {
                   value={values.confirmPassword}
                   onChange={handleChange}
                   onBlur={handleBlur}
+                  required
                   helperText={
                     touched.confirmPassword ? errors.confirmPassword : ""
                   }
@@ -173,10 +157,16 @@ const SignUp: React.FC<FormikProps<FormValues>> = (props) => {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              disabled={isSubmitting || Object.keys(errors).length > 2}
             >
-              Sign Up
+              Log in
             </Button>
           </Box>
+          <div>
+            {error
+              ? error && <p>{error}</p>
+              : waiting && <img id="await" src="../public/await.gif"></img>}
+          </div>
         </Box>
       </Container>
     </ThemeProvider>
@@ -189,8 +179,20 @@ const validationSchema = yup.object().shape({
   email: yup.string().email("Invalid email").required("Email is required"),
   password: yup
     .string()
-    .min(8, "Password must contain at least 8 characters")
-    .required("Enter your password"),
+    .min(8, ({ min }) => `Password must be at least ${min} characters`)
+    .matches(
+      /^(?=.*[a-z])/,
+      "Password must include at least one lowercase letter"
+    )
+    .matches(
+      /^(?=.*[A-Z])/,
+      "Password must include at least one uppercase letter"
+    )
+    .matches(
+      /^(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-])/,
+      "Password must include at least one special character"
+    )
+    .required("Password is required"),
   confirmPassword: yup
     .string()
     .oneOf([yup.ref("password")], "Password does not match")

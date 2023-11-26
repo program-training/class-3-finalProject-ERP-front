@@ -6,29 +6,22 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { Box } from "@mui/material";
 import { Link } from "react-router-dom";
+import DeleteDialog from "./ModalDeleteProduct";
+import { Product } from "../../types";
 
 interface ProductCardProps {
-  product: {
-    _id: string;
-    name: string;
-    salePrice: number;
-    quantity: number;
-    description: string;
-    category: string;
-    discountPercentage: number;
-    image: {
-      url: string;
-      alt: string;
-    };
-  };
-  onDelete: (productId: string) => void;
   onEdit: (productId: string) => void;
+  setProducts: React.Dispatch<React.SetStateAction<any[] | null>>
+  products:Array<Product>;
+  product: Product
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({
+  
   product,
-  onDelete,
   onEdit,
+  setProducts,
+  products
 }) => {
   const {
     _id,
@@ -40,12 +33,13 @@ const ProductCard: React.FC<ProductCardProps> = ({
     discountPercentage,
     image,
   } = product;
+    const [open, setOpen] = React.useState(false);
 
   return (
     <Box sx={{ display: "flex", flexWrap: "wrap" }}>
       <Card sx={{ width: "225px", margin: "20px" }}>
         <Link to={`/product/${_id}`}>
-          <img src={image.large} alt={image.alt} style={{ maxWidth: "100%" }} />
+          <img src={image.medium} alt={image.alt} style={{ maxWidth: "100%" }} />
         </Link>
         <CardContent>
           <Typography variant="h5" component="div">
@@ -65,7 +59,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
         </CardContent>
         <CardActions>
           <Button onClick={() => onEdit(_id)}>Edit</Button>
-          <Button onClick={() => onDelete(_id)}>Delete</Button>
+          <Button onClick={() => setOpen(true)}>Delete</Button>
+          <DeleteDialog setStateProducts={setProducts} products={products} open={open} setOpen={setOpen} id={_id}/>
         </CardActions>
       </Card>
       <br />

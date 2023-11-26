@@ -1,0 +1,13 @@
+#await{
+    height: 100%;
+    width: 60px;
+}
+body{
+    margin: 0px;
+}
+.errorMessage{
+    color: red;
+}
+.css-r6ewbb-MuiToolbar-root{
+    justify-content: space-between;
+}

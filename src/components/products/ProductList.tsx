@@ -1,30 +1,21 @@
 import React from 'react';
 import ProductCard from './ProductCard';
+import { Product } from '../../types';
 
 interface ProductListProps {
-  products: Array<{
-    _id: string;
-    name: string;
-    salePrice: number;
-    quantity: number;
-    description: string;
-    category: string;
-    discountPercentage: number;
-    image: {
-      url: string;
-      alt: string;
-    };
-  }>;
+  products: Array<Product>;
   onDelete: (productId: string) => void;
   onEdit: (productId: string) => void;
+  setStateProducts: React.Dispatch<React.SetStateAction<any[] | null>>
+
 
 }
 
-const ProductList: React.FC<ProductListProps> = ({ products, onDelete, onEdit}) => {
+const ProductList: React.FC<ProductListProps> = ({ products, onEdit, setStateProducts}) => {
   return (
     <div style={{ display: "flex", flexWrap: "wrap"}}>
       {products.map((product) => (
-        <ProductCard key={product._id} product={product} onDelete={onDelete} onEdit={onEdit} />
+        <ProductCard products={products} key={product._id} product={product} onEdit={onEdit} setProducts={setStateProducts}/>
       ))}
     </div>
   );

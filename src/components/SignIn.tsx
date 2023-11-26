@@ -1,27 +1,82 @@
-import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import React from "react";
+import { AuthContext } from "../Context/AuthContext";
+
+
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import {
+  Box,
+  Button,
+  Container,
+  CssBaseline,
+  TextField,
+} from "@mui/material";
 
 const defaultTheme = createTheme();
 
 export default function SignIn() {
+  const [error, setError] = useState("");
+  const [waiting, setWaiting] = useState(false);
+
+  const authContext = React.useContext(AuthContext);
+  const setIsAuthenticated = authContext?.setIsAuthenticated;
   const navigate = useNavigate();
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    setWaiting(true);
+    setError("")
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const user = {
-      email: data.get("userName"),
+      user_name: data.get("userName"),
       password: data.get("password"),
     };
-    console.log(user);
-    navigate("/products")
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    const raw = JSON.stringify(user);
+
+    fetch(`${import.meta.env.VITE_BASE_URL}/users/logIn`, {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow",
+    })
+      .then(async (res) => {
+        setWaiting(false);
+        if (!res.ok) {
+          const errorText = await res.text();
+          throw new Error(
+            `HTTP error! Status: ${res.status}, Error: ${errorText}`
+          );
+        }
+        return res.text();
+      })
+      .then((resolve) => {
+        const admin = {
+          userName: data.get("userName") as string,
+          token: resolve,
+        };
+        localStorage.setItem("admin", JSON.stringify(admin)),
+          setIsAuthenticated && setIsAuthenticated(admin);
+        navigate("/products");
+      })
+      .catch((error) => {
+        if (
+          error.message === "HTTP error! Status: 400, Error: user is not found"
+        ) {
+          setError("user is not found");
+        } else if (
+          error.message ===
+          "HTTP error! Status: 400, Error: The password is incorrect!"
+        ) {
+          setError("The password is incorrect!");
+        } else if (error.message === "Failed to fetch") {
+          setError("Network error");
+        } else {
+          setError(error.message);
+        }
+      });
   };
 
   return (
@@ -30,15 +85,11 @@ export default function SignIn() {
         <CssBaseline />
         <Box
           sx={{
-            marginTop: 8,
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
           }}
         >
-          <Typography component="h1" variant="h5">
-            Admin login
-          </Typography>
           <Box
             component="form"
             onSubmit={handleSubmit}
@@ -74,6 +125,7 @@ export default function SignIn() {
               Sign In
             </Button>
           </Box>
+          <div>{error?(error && <p>{error}</p>):( waiting && <img id="await" src="../public/await.gif"></img>)}</div>
         </Box>
       </Container>
     </ThemeProvider>
