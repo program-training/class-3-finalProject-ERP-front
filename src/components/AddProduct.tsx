@@ -24,10 +24,10 @@ export default function AddProduct() {
   } = useForm<Product>();
   
 
-  const [messageError, setMessageError] = useState<string | null>();
+
   const onSubmit: SubmitHandler<Product> = (data) => {
-  const [messageError] = useFetch(params.id, data);
-  setMessageError(messageError)
+  useFetch(params.id, data);
+  
   };
   if (isAdd || isEdit) {
     return (
@@ -191,7 +191,6 @@ export default function AddProduct() {
             </Box>
           </Box>
         </Box>
-        <div>{messageError}</div>
         <input type="submit" />
       </form>
     );

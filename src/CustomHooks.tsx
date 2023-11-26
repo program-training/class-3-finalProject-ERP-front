@@ -13,6 +13,7 @@ export const useEditOrAdd = (params: string | undefined) => {
 
       const fetchEdit = async () => {
         const data = await fetch(
+          
           `${import.meta.env.VITE_BASE_URL}/api/inventory/${params}`,
           {
             method: "get",
@@ -21,7 +22,6 @@ export const useEditOrAdd = (params: string | undefined) => {
           }
         );
         const dataJ = await data.json();
-        console.log(dataJ);
         setIsProduct(dataJ);
       };
       fetchEdit();
@@ -35,7 +35,7 @@ export const useEditOrAdd = (params: string | undefined) => {
 };
 
 export const useFetch = (params: string | undefined, data: Product) => {
-  const [messageError, setMessageError] = useState<string | null>("gilad");
+
   if (params) {
     const storage = localStorage.getItem("admin");
     const token = storage ? JSON.parse(storage).token : null;
@@ -45,6 +45,7 @@ export const useFetch = (params: string | undefined, data: Product) => {
 
     const raw = JSON.stringify(data);
     const fetchEdit = async () => {
+      
       const data = await fetch(
         `${import.meta.env.VITE_BASE_URL}/api/inventory/${params}`,
         {
@@ -56,10 +57,6 @@ export const useFetch = (params: string | undefined, data: Product) => {
       );
       const dataJ = await data.json();
       console.log(dataJ)
-      if (!data.ok) {
-        setMessageError(dataJ);
-        console.log(dataJ)
-      }
     };
     fetchEdit();
   } else {
@@ -79,12 +76,7 @@ export const useFetch = (params: string | undefined, data: Product) => {
       });
       const dataJ = await data.json();
       console.log(dataJ)
-      if (!data.ok) {
-        setMessageError(dataJ);
-        console.log(dataJ)
-      }
       fetchEdit();
     };
   }
-  return [messageError];
 };
