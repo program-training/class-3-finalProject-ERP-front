@@ -8,6 +8,7 @@ import Box from "@mui/material/Box";
 import DataTable from "./LineDisplay";
 import YourDataManagerComponent from "./products/YourDataManagerComponent";
 
+
 interface TabPanelProps {
   children?: React.ReactNode;
   dir?: string;
@@ -17,7 +18,7 @@ interface TabPanelProps {
 
 function TabPanel(props: TabPanelProps) {
   const { children, value, index, ...other } = props;
-
+  
   return (
     <div
       role="tabpanel"
