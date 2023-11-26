@@ -6,7 +6,6 @@ import InputAdornment from "@mui/material/InputAdornment";
 import FormControl from "@mui/material/FormControl";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
 import { Product } from "../types";
 import { useEditOrAdd } from "../CustomHooks";
 import { useFetch } from "../CustomHooks";
@@ -19,8 +18,6 @@ export default function AddProduct() {
   const {
     register,
     handleSubmit,
-    watch,
-    formState: { errors },
   } = useForm<Product>();
   
 
