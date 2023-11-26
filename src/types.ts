@@ -16,9 +16,9 @@ export interface Product{
 export interface ModalDeleteProps {
     open: boolean;
     setOpen: (arg0: boolean) => void;
-    id: string;
-    setStateProducts: React.Dispatch<React.SetStateAction<any[] | null>>;
-    products: Product[];
+    id: string | undefined;
+    setStateProducts?: React.Dispatch<React.SetStateAction<any[] | null>>;
+    products?: Product[];
   }
 
 
