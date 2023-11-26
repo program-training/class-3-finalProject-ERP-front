@@ -11,16 +11,16 @@ import { Product } from "../../types";
 
 interface ProductCardProps {
   onEdit: (productId: string) => void;
-  setProducts: React.Dispatch<React.SetStateAction<any[] | null>>
-  products:Array<Product>;
-  product: Product
+  setProducts: React.Dispatch<React.SetStateAction<any[] | null>>;
+  products: Array<Product>;
+  product: Product;
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({
   product,
   onEdit,
   setProducts,
-  products
+  products,
 }) => {
   const {
     _id,
@@ -32,13 +32,17 @@ const ProductCard: React.FC<ProductCardProps> = ({
     discountPercentage,
     image,
   } = product;
-    const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
 
   return (
     <Box sx={{ display: "flex", flexWrap: "wrap" }}>
       <Card sx={{ width: "225px", margin: "20px" }}>
         <Link to={`/product/${_id}`}>
-          <img src={image.medium} alt={image.alt} style={{ maxWidth: "100%" }} />
+          <img
+            src={image.medium}
+            alt={image.alt}
+            style={{ maxWidth: "100%" }}
+          />
         </Link>
         <CardContent>
           <Typography variant="h5" component="div">
@@ -59,7 +63,13 @@ const ProductCard: React.FC<ProductCardProps> = ({
         <CardActions>
           <Button onClick={() => onEdit(_id)}>Edit</Button>
           <Button onClick={() => setOpen(true)}>Delete</Button>
-          <DeleteDialog setStateProducts={setProducts} products={products} open={open} setOpen={setOpen} id={_id}/>
+          <DeleteDialog
+            setStateProducts={setProducts}
+            products={products}
+            open={open}
+            setOpen={setOpen}
+            id={_id}
+          />
         </CardActions>
       </Card>
       <br />

@@ -7,9 +7,8 @@ import Menu from "@mui/material/Menu";
 import Container from "@mui/material/Container";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import SearchFiled from "./SearchBox";
 import { Outlet, useNavigate } from "react-router-dom";
-import AddProductButton from "./AddProduct";
+import AddProductButton from "./AddProductButton";
 import { AuthContext } from "../Context/AuthContext";
 
 function ResponsiveAppBar() {
@@ -85,9 +84,7 @@ function ResponsiveAppBar() {
               ERP
             </Typography>
             {isAuthenticated && (
-              <>
-                <SearchFiled /> <AddProductButton />
-              </>
+  <AddProductButton />
             )}
             {isAuthenticated && (
               <Box >

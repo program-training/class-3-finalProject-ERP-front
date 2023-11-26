@@ -5,9 +5,10 @@ import LoginAndRegistration from "./components/LoginAndRegistration";
 import Header from "./components/Header";
 import SignUp from "./components/SignUp/SignUp";
 import { AuthProvider } from "./Context/AuthContext";
-import Products from "./components/Products";
 import ProductDetailsPage from "./components/ProductDetailsPage";
-import "./main.css";
+import "./main.css"
+import YourDataManagerComponent from "./components/products/YourDataManagerComponent";
+import AddProduct from "./components/AddProduct";
 
 const router = createBrowserRouter([
   {
@@ -24,11 +25,19 @@ const router = createBrowserRouter([
       },
       {
         path: "/products",
-        element: <Products />,
+        element: <YourDataManagerComponent />,
       },
       {
         path: "/product/:productId",
         element: <ProductDetailsPage />,
+      },
+      {
+        path: "/AddProduct",
+        element: <AddProduct />,
+      },
+      {
+        path: "/AddProduct/:id",
+        element: <AddProduct />,
       },
     ],
   },

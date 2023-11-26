@@ -6,8 +6,10 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { ModalDeleteProps } from "../../types";
+import { useNavigate } from "react-router-dom";
 
 export default function DeleteDialog(props: ModalDeleteProps) {
+  const navigate = useNavigate();
   const [error, setError] = React.useState("");
   const { open, setOpen, id, setStateProducts, products } = props;
   const handleClose = () => {
@@ -35,10 +37,13 @@ export default function DeleteDialog(props: ModalDeleteProps) {
       })
       .then((resolve) => {
         console.log(resolve);
-        const currentObjects = [...products];
-        const updatedObjects = currentObjects.filter((obj) => obj._id !== id);
-        setStateProducts(() => updatedObjects);
+        if (products !== undefined) {
+          const currentObjects = [...products];
+          const updatedObjects = currentObjects.filter((obj) => obj._id !== id);
+          setStateProducts && setStateProducts (() => updatedObjects);
+        }
         handleClose();
+        navigate("/products");
       })
       .catch((error) => {
         console.log("error", error), setError("network error");
