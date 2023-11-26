@@ -15,8 +15,11 @@ import { AuthContext } from "../Context/AuthContext";
 function ResponsiveAppBar() {
   const authContext = React.useContext(AuthContext);
   const isAuthenticated = authContext?.isAuthenticated;
+  const setAuthenticated = authContext?.setIsAuthenticated;
 
   const navigate = useNavigate();
+
+
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
@@ -28,13 +31,12 @@ function ResponsiveAppBar() {
     null
   );
 
-  // const handleLogOut = () => {
-  //   setAuthenticated &&
-  //     setAuthenticated(() => {
-  //       return null;
-  //     });
-  //   localStorage.removeItem("user");
-  // };
+  const handleLogOut = () => {
+    setAnchorElUser(null);
+    setAuthenticated && setAuthenticated(null);
+    localStorage.removeItem("admin");
+    navigate("/");
+  };
 
   return (
     <div>
@@ -45,8 +47,9 @@ function ResponsiveAppBar() {
               variant="h6"
               noWrap
               component="a"
-              href="#app-bar-with-responsive-menu"
-              onClick={() => navigate("/")}
+              onClick={() =>
+                isAuthenticated ? () => navigate("/products") : navigate("/")
+              }
               sx={{
                 mr: 2,
                 display: { xs: "none", md: "flex" },
@@ -55,6 +58,7 @@ function ResponsiveAppBar() {
                 letterSpacing: ".3rem",
                 color: "inherit",
                 textDecoration: "none",
+                cursor: "pointer",
               }}
             >
               ERP
@@ -63,8 +67,10 @@ function ResponsiveAppBar() {
               variant="h5"
               noWrap
               component="a"
-              href="#app-bar-with-responsive-menu"
-              onClick={() => navigate("/")}
+              href="#app-bar-with-respo"
+              onClick={() =>
+                isAuthenticated ? () => navigate("/products") : navigate("/")
+              }
               sx={{
                 mr: 2,
                 display: { xs: "flex", md: "none" },
@@ -84,7 +90,7 @@ function ResponsiveAppBar() {
               </>
             )}
             {isAuthenticated && (
-              <Box sx={{ flexGrow: 0 }}>
+              <Box >
                 <Tooltip
                   title="Admin is logged in"
                   onClick={handleOpenUserMenu}
@@ -108,7 +114,7 @@ function ResponsiveAppBar() {
                   open={Boolean(anchorElUser)}
                   onClose={handleCloseUserMenu}
                 >
-                  <MenuItem key={"Log out"}>
+                  <MenuItem onClick={handleLogOut} key={"Log out"}>
                     <Typography textAlign="center">{"Log out"}</Typography>
                   </MenuItem>
                 </Menu>
