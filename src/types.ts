@@ -1,3 +1,5 @@
+import { ChangeEvent } from "react";
+
 export interface Product{
     category: string;
     description: string;
@@ -26,4 +28,16 @@ export interface FormValues {
   userName: string;
   password: string;
   confirmPassword: string;
+}
+
+export interface TabPanelProps {
+  children?: React.ReactNode;
+  dir?: string;
+  index: number;
+  value: number;
+}
+
+
+export interface SearchFieldProps {
+  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
 }

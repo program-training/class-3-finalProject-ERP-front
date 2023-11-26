@@ -2,11 +2,7 @@ import React from "react";
 import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
-import { ChangeEvent } from "react";
-
-interface SearchFieldProps {
-  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
-}
+import { SearchFieldProps } from "../types";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",

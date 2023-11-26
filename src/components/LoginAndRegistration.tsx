@@ -6,13 +6,7 @@ import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import SignUp from "./SignUp/SignUp";
-
-interface TabPanelProps {
-  children?: React.ReactNode;
-  dir?: string;
-  index: number;
-  value: number;
-}
+import { TabPanelProps } from "../types";
 
 function TabPanel(props: TabPanelProps) {
   const { children, value, index, ...other } = props;
