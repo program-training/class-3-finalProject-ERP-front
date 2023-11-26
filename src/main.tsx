@@ -8,6 +8,7 @@ import { AuthProvider } from "./Context/AuthContext";
 import ProductDetailsPage from "./components/ProductDetailsPage";
 import "./main.css"
 import YourDataManagerComponent from "./components/products/YourDataManagerComponent";
+import AddProduct from "./components/AddProduct";
 
 const router = createBrowserRouter([
   {
@@ -29,6 +30,14 @@ const router = createBrowserRouter([
       {
         path: "/product/:productId",
         element: <ProductDetailsPage />,
+      },
+      {
+        path: "/AddProduct",
+        element: <AddProduct />,
+      },
+      {
+        path: "/AddProduct/:id",
+        element: <AddProduct />,
       },
     ],
   },

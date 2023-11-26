@@ -1,8 +1,10 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
 import ProductList from "./ProductList";
 import SearchFiled from "../SearchBox";
+import { useNavigate } from "react-router-dom";
 
 const YourDataManagerComponent: React.FC = () => {
+  const navigate = useNavigate()
   const [products, setProducts] = useState<Array<any> | null>(null);
   const [searchTerm, setSearchTerm] = useState<string>("");
   useEffect(() => {
@@ -43,7 +45,7 @@ const YourDataManagerComponent: React.FC = () => {
   };
 
   const handleEdit = (productId: string) => {
-    console.log(`edit: ${productId}`);
+    navigate(`/AddProduct/${productId}`)
   };
 
   const filteredProducts = products
