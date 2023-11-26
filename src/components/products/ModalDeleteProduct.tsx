@@ -5,14 +5,11 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import { Product } from "../../types";
+import { ModalDeleteProps } from "../../types";
 
-type Props = { open: boolean; setOpen: (arg0: boolean) => void; id:string; setStateProducts: React.Dispatch<React.SetStateAction<any[] | null>>;products:Product[]
-};
-
-export default function DeleteDialog(props: Props) {
+export default function DeleteDialog(props: ModalDeleteProps) {
   const [error, setError] = React.useState("");
-  const { open, setOpen, id, setStateProducts, products} = props;
+  const { open, setOpen, id, setStateProducts, products } = props;
   const handleClose = () => {
     setOpen(false);
   };
@@ -25,7 +22,7 @@ export default function DeleteDialog(props: Props) {
     fetch(`${import.meta.env.VITE_BASE_URL}/api/inventory/${id}`, {
       method: "DELETE",
       redirect: "follow",
-      headers: myHeaders
+      headers: myHeaders,
     })
       .then(async (res) => {
         if (!res.ok) {
@@ -39,14 +36,14 @@ export default function DeleteDialog(props: Props) {
       .then((resolve) => {
         console.log(resolve);
         const currentObjects = [...products];
-        const updatedObjects = currentObjects.filter(obj => obj._id !== id);
-        setStateProducts(() => updatedObjects)
-        handleClose()
+        const updatedObjects = currentObjects.filter((obj) => obj._id !== id);
+        setStateProducts(() => updatedObjects);
+        handleClose();
       })
-      .catch((error) => {console.log("error", error),setError("network error")});
-
-
-  }
+      .catch((error) => {
+        console.log("error", error), setError("network error");
+      });
+  };
   return (
     <React.Fragment>
       <Dialog
@@ -55,9 +52,7 @@ export default function DeleteDialog(props: Props) {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">
-          {"delete product"}
-        </DialogTitle>
+        <DialogTitle id="alert-dialog-title">{"delete product"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
             {`Are you sure you want to delete the product ${id} from the inventory?`}

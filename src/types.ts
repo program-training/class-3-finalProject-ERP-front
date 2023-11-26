@@ -13,3 +13,12 @@ export interface Product{
     salePrice: number;
     _id: string;
   }
+export interface ModalDeleteProps {
+    open: boolean;
+    setOpen: (arg0: boolean) => void;
+    id: string;
+    setStateProducts: React.Dispatch<React.SetStateAction<any[] | null>>;
+    products: Product[];
+  }
+
+
