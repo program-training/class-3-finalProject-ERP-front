@@ -36,7 +36,7 @@ export default function SignIn() {
 
     const raw = JSON.stringify(user);
 
-    fetch(`${import.meta.env.VITE_BASE_URL}/users/logIn`, {
+    fetch(`${import.meta.env.VITE_BASE_URL}/api/users/logIn`, {
       method: "POST",
       headers: myHeaders,
       body: raw,

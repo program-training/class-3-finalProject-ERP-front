@@ -22,3 +22,8 @@ export interface ModalDeleteProps {
   }
 
 
+export interface FormValues {
+  userName: string;
+  password: string;
+  confirmPassword: string;
+}
