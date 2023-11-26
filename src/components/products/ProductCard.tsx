@@ -7,42 +7,13 @@ import Typography from "@mui/material/Typography";
 import { Box } from "@mui/material";
 import { Link } from "react-router-dom";
 import DeleteDialog from "./ModalDeleteProduct";
-import MessageDelete from "./MessageDelete";
+import { Product } from "../../types";
 
 interface ProductCardProps {
-  onDelete: (productId: string) => void;
   onEdit: (productId: string) => void;
   setProducts: React.Dispatch<React.SetStateAction<any[] | null>>
-  products:Array<{
-    _id: string;
-    name: string;
-    salePrice: number;
-    quantity: number;
-    description: string;
-    category: string;
-    discountPercentage: number;
-    image: {
-      url: string;
-      alt: string;
-    };
-  }>;
-
-  product: {
-    _id: string;
-    name: string;
-    salePrice: number;
-    quantity: number;
-    description: string;
-    category: string;
-    discountPercentage: number;
-    image: {
-      large: string;
-      medium: string;
-      small: string;
-      alt: string;
-    };
-  };
-  
+  products:Array<Product>;
+  product: Product
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({
@@ -63,7 +34,6 @@ const ProductCard: React.FC<ProductCardProps> = ({
     image,
   } = product;
     const [open, setOpen] = React.useState(false);
-    const [openMessage, setOpenMessage] = React.useState(false);
 
   return (
     <Box sx={{ display: "flex", flexWrap: "wrap" }}>
@@ -90,8 +60,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
         <CardActions>
           <Button onClick={() => onEdit(_id)}>Edit</Button>
           <Button onClick={() => setOpen(true)}>Delete</Button>
-          <DeleteDialog setStateProducts={setProducts} products={products} open={open} setOpen={setOpen} id={_id} openMessage={setOpenMessage}/>
-          <MessageDelete open={openMessage} setOpen={setOpenMessage}/>
+          <DeleteDialog setStateProducts={setProducts} products={products} open={open} setOpen={setOpen} id={_id}/>
         </CardActions>
       </Card>
       <br />

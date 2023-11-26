@@ -5,13 +5,14 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import { Product } from "../../types";
 
-type Props = { open: boolean; setOpen: (arg0: boolean) => void; id:string; openMessage:(arg0: boolean) => void; setStateProducts: React.Dispatch<React.SetStateAction<any[] | null>>;products:[]
+type Props = { open: boolean; setOpen: (arg0: boolean) => void; id:string; setStateProducts: React.Dispatch<React.SetStateAction<any[] | null>>;products:Product[]
 };
 
 export default function DeleteDialog(props: Props) {
   const [error, setError] = React.useState("");
-  const { open, setOpen, id, openMessage, setStateProducts, products} = props;
+  const { open, setOpen, id, setStateProducts, products} = props;
   const handleClose = () => {
     setOpen(false);
   };
@@ -41,7 +42,6 @@ export default function DeleteDialog(props: Props) {
         const updatedObjects = currentObjects.filter(obj => obj._id !== id);
         setStateProducts(() => updatedObjects)
         handleClose()
-        openMessage(true)
       })
       .catch((error) => {console.log("error", error),setError("network error")});
 

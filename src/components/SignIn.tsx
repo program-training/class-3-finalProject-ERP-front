@@ -23,6 +23,7 @@ export default function SignIn() {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     setWaiting(true);
+    setError("")
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const user = {
@@ -61,12 +62,12 @@ export default function SignIn() {
       })
       .catch((error) => {
         if (
-          error.message === "HTTP error! Status: 500, Error: user is not found"
+          error.message === "HTTP error! Status: 400, Error: user is not found"
         ) {
           setError("user is not found");
         } else if (
           error.message ===
-          "HTTP error! Status: 500, Error: The password is incorrect!"
+          "HTTP error! Status: 400, Error: The password is incorrect!"
         ) {
           setError("The password is incorrect!");
         } else if (error.message === "Failed to fetch") {
@@ -122,9 +123,8 @@ export default function SignIn() {
             >
               Sign In
             </Button>
-            {error && <p>{error}</p>}
           </Box>
-          {waiting && <img id="await" src="../public/await.gif"></img>}
+          <div>{error?(error && <p>{error}</p>):( waiting && <img id="await" src="../public/await.gif"></img>)}</div>
         </Box>
       </Container>
     </ThemeProvider>

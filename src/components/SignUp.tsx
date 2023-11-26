@@ -24,19 +24,21 @@ interface FormValues {
 const SignUp: React.FC<FormikProps<FormValues>> = (props) => {
   const navigate = useNavigate();
   const [error, setError] = React.useState("");
-    const [waiting, setWaiting] = React.useState(false);
+  const [waiting, setWaiting] = React.useState(false);
 
   const authContext = React.useContext(AuthContext);
   const setIsAuthenticated = authContext?.setIsAuthenticated;
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    setWaiting(true);
+    setError("");
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({
       email: values.email,
       password: values.password,
     });
-    
+
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
 
@@ -44,8 +46,6 @@ const SignUp: React.FC<FormikProps<FormValues>> = (props) => {
       user_name: values.email,
       password: values.password,
     });
-    setWaiting(true);
-    setError("")
     fetch(`${import.meta.env.VITE_BASE_URL}/users/register`, {
       method: "POST",
       headers: myHeaders,
@@ -71,10 +71,12 @@ const SignUp: React.FC<FormikProps<FormValues>> = (props) => {
           setIsAuthenticated && setIsAuthenticated(admin);
         navigate("/products");
       })
-      .catch((error) => {console.log("error", error), setError(error.message), setWaiting(false)});
+      .catch((error) => {
+        console.log("error", error), setError(error.message), setWaiting(false);
+      });
   };
 
-  const { values, touched, errors, handleChange, handleBlur } =
+  const { values, touched, errors, handleChange, handleBlur, isSubmitting } =
     props;
 
   return (
@@ -88,7 +90,6 @@ const SignUp: React.FC<FormikProps<FormValues>> = (props) => {
             alignItems: "center",
           }}
         >
-
           <Box
             component="form"
             noValidate
@@ -97,25 +98,6 @@ const SignUp: React.FC<FormikProps<FormValues>> = (props) => {
           >
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
-                <TextField
-                  autoComplete="given-name"
-                  name="firstName"
-                  required
-                  fullWidth
-                  id="firstName"
-                  label="First Name"
-                  autoFocus
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="lastName"
-                  autoComplete="family-name"
-                />
               </Grid>
               <Grid item xs={12}>
                 <TextField
@@ -175,12 +157,16 @@ const SignUp: React.FC<FormikProps<FormValues>> = (props) => {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              disabled={isSubmitting || Object.keys(errors).length > 2}
             >
-              Sign Up
+              Log in
             </Button>
-
           </Box>
-          <div>{error?(error && <p>{error}</p>):( waiting && <img id="await" src="../public/await.gif"></img>)}</div>
+          <div>
+            {error
+              ? error && <p>{error}</p>
+              : waiting && <img id="await" src="../public/await.gif"></img>}
+          </div>
         </Box>
       </Container>
     </ThemeProvider>
@@ -192,21 +178,21 @@ const validationSchema = yup.object().shape({
   lastName: yup.string().required("Last Name is required"),
   email: yup.string().email("Invalid email").required("Email is required"),
   password: yup
-  .string()
-  .min(8, ({ min }) => `Password must be at least ${min} characters`)
-  .matches(
-    /^(?=.*[a-z])/,
-    "Password must include at least one lowercase letter"
-  )
-  .matches(
-    /^(?=.*[A-Z])/,
-    "Password must include at least one uppercase letter"
-  )
-  .matches(
-    /^(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-])/,
-    "Password must include at least one special character"
-  )
-  .required("Password is required"),
+    .string()
+    .min(8, ({ min }) => `Password must be at least ${min} characters`)
+    .matches(
+      /^(?=.*[a-z])/,
+      "Password must include at least one lowercase letter"
+    )
+    .matches(
+      /^(?=.*[A-Z])/,
+      "Password must include at least one uppercase letter"
+    )
+    .matches(
+      /^(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-])/,
+      "Password must include at least one special character"
+    )
+    .required("Password is required"),
   confirmPassword: yup
     .string()
     .oneOf([yup.ref("password")], "Password does not match")

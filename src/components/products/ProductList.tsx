@@ -1,20 +1,9 @@
 import React from 'react';
 import ProductCard from './ProductCard';
+import { Product } from '../../types';
 
 interface ProductListProps {
-  products: Array<{
-    _id: string;
-    name: string;
-    salePrice: number;
-    quantity: number;
-    description: string;
-    category: string;
-    discountPercentage: number;
-    image: {
-      url: string;
-      alt: string;
-    };
-  }>;
+  products: Array<Product>;
   onDelete: (productId: string) => void;
   onEdit: (productId: string) => void;
   setStateProducts: React.Dispatch<React.SetStateAction<any[] | null>>
