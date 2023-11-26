@@ -1,12 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import HomePage from "./components/HomePage";
+import LoginAndRegistration from "./components/LoginAndRegistration";
 import Header from "./components/Header";
 import SignUp from "./components/SignUp";
 import { AuthProvider } from "./Context/AuthContext";
-import Products from "./components/Products";
 import ProductDetailsPage from "./components/ProductDetailsPage";
+import "./main.css"
+import YourDataManagerComponent from "./components/products/YourDataManagerComponent";
 
 const router = createBrowserRouter([
   {
@@ -15,7 +16,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <HomePage />,
+        element: <LoginAndRegistration />,
       },
       {
         path: "/signUp",
@@ -23,7 +24,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/products",
-        element: <Products />,
+        element: <YourDataManagerComponent />,
       },
       {
         path: "/product/:productId",

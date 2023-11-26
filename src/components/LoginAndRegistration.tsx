@@ -1,12 +1,11 @@
+import SignIn from "./SignIn";
 import * as React from "react";
 import { useTheme } from "@mui/material/styles";
-import AppBar from "@mui/material/AppBar";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import DataTable from "./LineDisplay";
-import YourDataManagerComponent from "./products/YourDataManagerComponent";
+import SignUp from "./SignUp";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -41,36 +40,34 @@ function a11yProps(index: number) {
     "aria-controls": `full-width-tabpanel-${index}`,
   };
 }
-
-export default function FullWidthTabs() {
+export default function LoginAndRegistration() {
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
 
   const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
-
   return (
-    <Box sx={{ bgcolor: "background.paper", width: "100%" }}>
-      <AppBar position="static">
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          indicatorColor="secondary"
-          textColor="inherit"
-          variant="fullWidth"
-          aria-label="full width tabs example"
-        >
-          <Tab label="cards" {...a11yProps(0)} />
-          <Tab label="rows" {...a11yProps(1)} />
+    <>
+      <Box
+        sx={{
+          marginTop: 5,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <Tabs value={value} onChange={handleChange}>
+          <Tab label="SIGN IN" {...a11yProps(0)} />
+          <Tab label="SIGN UP" {...a11yProps(1)} />
         </Tabs>
-      </AppBar>
+      </Box>
       <TabPanel value={value} index={0} dir={theme.direction}>
-        <YourDataManagerComponent />
+        <SignIn />
       </TabPanel>
       <TabPanel value={value} index={1} dir={theme.direction}>
-        <DataTable />
+        <SignUp />
       </TabPanel>
-    </Box>
+    </>
   );
 }

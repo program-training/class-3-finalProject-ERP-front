@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ProductList from "./ProductList";
+import SearchFiled from "../SearchBox";
 
 const YourDataManagerComponent: React.FC = () => {
   const [products, setProducts] = useState<Array<any> | null>(null);
@@ -12,11 +13,14 @@ const YourDataManagerComponent: React.FC = () => {
         const myHeaders = new Headers();
         myHeaders.append("Authorization", token);
 
-        const response = await fetch("http://127.0.0.1:3000/api/inventory", {
-          method: "GET",
-          headers: myHeaders,
-          redirect: "follow",
-        });
+        const response = await fetch(
+          `${import.meta.env.VITE_BASE_URL}/api/inventory`,
+          {
+            method: "GET",
+            headers: myHeaders,
+            redirect: "follow",
+          }
+        );
         if (!response.ok) {
           const errorText = await response.text();
           throw new Error(
@@ -46,11 +50,15 @@ const YourDataManagerComponent: React.FC = () => {
   }
 
   return (
-    <ProductList
-      products={products}
-      onDelete={handleDelete}
-      onEdit={handleEdit}
-    />
+    <>
+      <SearchFiled/>
+      <ProductList
+        products={products}
+        onDelete={handleDelete}
+        onEdit={handleEdit}
+        setStateProducts={setProducts}
+      />
+    </>
   );
 };
 
