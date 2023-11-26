@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import ProductList from "./ProductList";
+import { useNavigate } from "react-router-dom";
 
 const YourDataManagerComponent: React.FC = () => {
+  const navigate = useNavigate()
   const [products, setProducts] = useState<Array<any> | null>(null);
   useEffect(() => {
     const fetchData = async () => {
@@ -38,7 +40,7 @@ const YourDataManagerComponent: React.FC = () => {
   };
 
   const handleEdit = (productId: string) => {
-    console.log(`edit: ${productId}`);
+    navigate(`/AddProduct/${productId}`)
   };
 
   if (!products) {
