@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import ProductList from "./ProductList";
 import SearchFiled from "../SearchBox";
 
 const YourDataManagerComponent: React.FC = () => {
   const [products, setProducts] = useState<Array<any> | null>(null);
+  const [searchTerm, setSearchTerm] = useState<string>("");
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -45,15 +46,20 @@ const YourDataManagerComponent: React.FC = () => {
     console.log(`edit: ${productId}`);
   };
 
+  const filteredProducts = products
+    ? products.filter((product) =>
+        product.name.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    : [];
   if (!products) {
     return <div>Loading...</div>;
   }
 
   return (
     <>
-      <SearchFiled/>
+      <SearchFiled onChange={(e: ChangeEvent<HTMLInputElement>) => setSearchTerm(e.target.value)} />
       <ProductList
-        products={products}
+        products={filteredProducts}
         onDelete={handleDelete}
         onEdit={handleEdit}
         setStateProducts={setProducts}
