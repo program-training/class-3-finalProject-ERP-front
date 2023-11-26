@@ -1,6 +1,12 @@
+import React from "react";
 import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
+import { ChangeEvent } from "react";
+
+interface SearchFieldProps {
+  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
+}
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -41,7 +47,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export default function SearchFiled() {
+const SearchField: React.FC<SearchFieldProps> = ({ onChange }) => {
   return (
     <>
       <Search>
@@ -49,10 +55,13 @@ export default function SearchFiled() {
           <SearchIcon />
         </SearchIconWrapper>
         <StyledInputBase
-          placeholder="Search…"
+          placeholder="Search products..."
           inputProps={{ "aria-label": "search" }}
+          onChange={onChange}
         />
       </Search>
     </>
   );
 }
+
+export default SearchField;

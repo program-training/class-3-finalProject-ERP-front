@@ -13,7 +13,7 @@ export const useEditOrAdd = (params: string | undefined) => {
 
       const fetchEdit = async () => {
         const data = await fetch(
-          `http://localhost:3009/api/inventory/${params}`,
+          `${import.meta.env.VITE_BASE_URL}/api/inventory/${params}`,
           {
             method: "get",
             headers: myHeaders,
@@ -46,7 +46,7 @@ export const useFetch = (params: string | undefined, data: Product) => {
     const raw = JSON.stringify(data);
     const fetchEdit = async () => {
       const data = await fetch(
-        `http://localhost:3009/api/inventory/${params}`,
+        `${import.meta.env.VITE_BASE_URL}/api/inventory/${params}`,
         {
           method: "PUT",
           headers: myHeaders,
@@ -71,7 +71,7 @@ export const useFetch = (params: string | undefined, data: Product) => {
 
     const raw = JSON.stringify(data);
     const fetchEdit = async () => {
-      const data = await fetch(`http://localhost:3009/api/inventory/`, {
+      const data = await fetch(`${import.meta.env.VITE_BASE_URL}/api/inventory/`, {
         method: "post",
         headers: myHeaders,
         body: raw,
