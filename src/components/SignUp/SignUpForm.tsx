@@ -14,9 +14,11 @@ import { registerUser } from "./apiCalls.ts";
 import { LinearProgress } from "@mui/material";
 const defaultTheme = createTheme();
 
-export const SignUp: React.FC<FormikProps<FormValues>> = (props) => {
+export const SignUp: React.FC<FormikProps<FormValues>> =
+ ({ values, touched, errors, handleChange, handleBlur, isSubmitting }) => {
   const navigate = useNavigate();
   const [error, setError] = React.useState("");
+
   const [waiting, setWaiting] = React.useState(false);
   const authContext = React.useContext(AuthContext);
   const setIsAuthenticated = authContext?.setIsAuthenticated;
@@ -34,8 +36,7 @@ export const SignUp: React.FC<FormikProps<FormValues>> = (props) => {
     );
   };
 
-  const { values, touched, errors, handleChange, handleBlur, isSubmitting } =
-    props;
+
   return (
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
