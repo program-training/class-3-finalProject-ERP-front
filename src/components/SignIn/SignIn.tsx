@@ -71,7 +71,7 @@ export default function SignIn() {
             {error ? (
               <p>{error}</p>
             ) : (
-              waiting && <img id="await" src="../public/await.gif" alt="Loading" />
+              waiting && <img id="await" src="../../public/await.gif" alt="Loading" />
             )}
           </div>
         </Box>
