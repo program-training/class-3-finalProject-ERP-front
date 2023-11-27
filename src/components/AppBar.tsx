@@ -16,7 +16,7 @@ function ResponsiveAppBar() {
   const isAuthenticated = authContext?.isAuthenticated;
   const setAuthenticated = authContext?.setIsAuthenticated;
   const navigate = useNavigate();
-  
+
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
   };
@@ -42,9 +42,7 @@ function ResponsiveAppBar() {
               variant="h6"
               noWrap
               component="a"
-              onClick={() =>
-                isAuthenticated ? () => navigate("/products") : navigate("/")
-              }
+              href={isAuthenticated ? "/products" : "/"}
               sx={{
                 mr: 2,
                 display: { xs: "none", md: "flex" },
@@ -62,10 +60,7 @@ function ResponsiveAppBar() {
               variant="h5"
               noWrap
               component="a"
-              href="#app-bar-with-respo"
-              onClick={() =>
-                isAuthenticated ? () => navigate("/products") : navigate("/")
-              }
+              href={isAuthenticated ? "/products" : "/"}
               sx={{
                 mr: 2,
                 display: { xs: "flex", md: "none" },
@@ -79,11 +74,9 @@ function ResponsiveAppBar() {
             >
               ERP
             </Typography>
+            {isAuthenticated && <AddProductButton />}
             {isAuthenticated && (
-  <AddProductButton />
-            )}
-            {isAuthenticated && (
-              <Box >
+              <Box>
                 <Tooltip
                   title="Admin is logged in"
                   onClick={handleOpenUserMenu}

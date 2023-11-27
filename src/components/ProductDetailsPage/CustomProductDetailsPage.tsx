@@ -4,7 +4,7 @@ import { Product } from "../../types";
 export const useProductDetails = (productId: string | undefined) => {
   const [product, setProduct] = useState<Product | null>(null);
   const [error] = useState<unknown | null>(null);
-  const [loading] = useState(true);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -32,6 +32,7 @@ export const useProductDetails = (productId: string | undefined) => {
         }
         const data = await response.json();
         setProduct(data);
+        setLoading(false)
       } catch (error) {
         console.error("Error fetching data:", error);
       }
