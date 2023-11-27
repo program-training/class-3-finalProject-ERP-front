@@ -27,22 +27,18 @@ export const registerUser = async (
                 redirect: "follow",
             }
         );
-
         setWaiting(false);
-
         if (!response.ok) {
             const errorText = await response.text();
             throw new Error(
                 `HTTP error! Status: ${response.status}, Error: ${errorText}`
             );
         }
-
         const resolve = await response.text();
         const admin = {
             userName,
             token: resolve,
         };
-
         localStorage.setItem("admin", JSON.stringify(admin));
         setIsAuthenticated && setIsAuthenticated(admin);
         navigate && navigate("/products");
