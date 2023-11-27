@@ -4,20 +4,24 @@ import {
   Button,
   Container,
   CssBaseline,
+  LinearProgress,
   TextField,
 } from "@mui/material";
-import {useSignIn} from "./UseSignIn"
+import { useSignIn } from "./UseSignIn";
 
 const defaultTheme = createTheme();
 
 export default function SignIn() {
   const { error, waiting, signIn } = useSignIn();
 
-  const handleSubmit = (event: { preventDefault: () => void; currentTarget: HTMLFormElement | undefined; }) => {
+  const handleSubmit = (event: {
+    preventDefault: () => void;
+    currentTarget: HTMLFormElement | undefined;
+  }) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    const userName = data.get("userName")?.toString()
-    const password = data.get("password")?.toString()
+    const userName = data.get("userName")?.toString();
+    const password = data.get("password")?.toString();
     signIn(userName, password);
   };
 
@@ -67,13 +71,15 @@ export default function SignIn() {
               Sign In
             </Button>
           </Box>
-          <div>
-            {error ? (
-              <p>{error}</p>
-            ) : (
-              waiting && <img id="await" src="../public/await.gif" alt="Loading" />
-            )}
-          </div>
+          {error ? (
+            <p>{error}</p>
+          ) : (
+            waiting && (
+              <Box sx={{ width: "100%" }}>
+                <LinearProgress />
+              </Box>
+            )
+          )}
         </Box>
       </Container>
     </ThemeProvider>
