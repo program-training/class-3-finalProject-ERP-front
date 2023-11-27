@@ -3,6 +3,7 @@ import ProductList from "./ProductList";
 import SearchFiled from "../SearchBox";
 import { useNavigate } from "react-router-dom";
 import { MessageError } from "../ErrorsManage/MessageError";
+
 const YourDataManagerComponent: React.FC = () => {
   const navigate = useNavigate();
   const [products, setProducts] = useState<Array<any> | null>(null);

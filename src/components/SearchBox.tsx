@@ -1,7 +1,7 @@
 import React from "react";
 import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
-import SearchIcon from "@mui/icons-material/Search";
+// import SearchIcon from "@mui/icons-material/Search";
 import { SearchFieldProps } from "../types";
 
 const Search = styled("div")(({ theme }) => ({
@@ -48,7 +48,7 @@ const SearchField: React.FC<SearchFieldProps> = ({ onChange }) => {
     <>
       <Search>
         <SearchIconWrapper>
-          <SearchIcon />
+          {/* <SearchIcon /> */}
         </SearchIconWrapper>
         <StyledInputBase
           placeholder="Search products..."
