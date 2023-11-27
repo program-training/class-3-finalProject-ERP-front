@@ -6,7 +6,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 import { Product } from "../../types";
 import { useEditOrAdd } from "./CustomHooks";
-import { FetchToServer } from "./CustomHooks";
+import { FetchToServer } from "./FetchToServer";
 import { LinearProgress } from "@mui/material";
 import { useState } from "react";
 
