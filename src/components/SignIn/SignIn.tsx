@@ -4,6 +4,7 @@ import {
   Button,
   Container,
   CssBaseline,
+  LinearProgress,
   TextField,
 } from "@mui/material";
 import { useSignIn } from "./UseSignIn";
@@ -70,13 +71,15 @@ export default function SignIn() {
               Sign In
             </Button>
           </Box>
-          <div>
-            {error ? (
-              <p>{error}</p>
-            ) : (
-              waiting && <img id="await" src="../public/await.gif" alt="Loading" />
-            )}
-          </div>
+          {error ? (
+            <p>{error}</p>
+          ) : (
+            waiting && (
+              <Box sx={{ width: "100%" }}>
+                <LinearProgress />
+              </Box>
+            )
+          )}
         </Box>
       </Container>
     </ThemeProvider>
