@@ -17,10 +17,9 @@ export const useSignIn = () => {
     setWaiting(true);
     setError("");
     try {
-      const user = { userName, password };
+      const user = { user_name: userName, password:password };
       const myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
-
       const raw = JSON.stringify(user);
 
       const res = await fetch(

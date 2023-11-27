@@ -121,7 +121,7 @@ export const SignUp: React.FC<FormikProps<FormValues>> = (props) => {
             <div>
               {error
                 ? error && <p>{error}</p>
-                : waiting && <img id="await" src="../public/await.gif"></img>}
+                : waiting && <img id="await" src="../../public/await.gif"></img>}
             </div>
           </Box>
         </Container>
