@@ -1,18 +1,12 @@
-import SignIn from "./SignIn";
+import SignIn from "./SignIn/SignIn";
 import * as React from "react";
 import { useTheme } from "@mui/material/styles";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import SignUp from "./SignUp";
-
-interface TabPanelProps {
-  children?: React.ReactNode;
-  dir?: string;
-  index: number;
-  value: number;
-}
+import SignUp from "./SignUp/SignUpWithFormik";
+import { TabPanelProps } from "../types";
 
 function TabPanel(props: TabPanelProps) {
   const { children, value, index, ...other } = props;

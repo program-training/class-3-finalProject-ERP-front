@@ -1,48 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useParams } from "react-router-dom";
-import { Product } from "../types";
 import { Box, Button, Container, Toolbar } from "@mui/material";
 import Typography from "@mui/material/Typography";
-import DeleteDialog from "./products/ModalDeleteProduct";
+import DeleteDialog from "../products/ModalDeleteProduct";
 import { useNavigate } from "react-router-dom";
+import { useProductDetails } from "./CustomProductDetailsPage";
+import { MessageError } from "../ErrorsManage/MessageError";
 
 const ProductDetailsPage: React.FC = () => {
   const navigate = useNavigate();
   const { productId } = useParams<{ productId: string }>();
-  const [product, setProduct] = useState<Product | null>(null);
-  const [openDeleteDialog, setOpenDeleteDialog] = useState<boolean>(false);
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const storage = localStorage.getItem("admin");
-        const token = storage ? JSON.parse(storage).token : null;
-
-        const myHeaders = new Headers();
-        myHeaders.append("Authorization", token);
-
-        const response = await fetch(
-          `${import.meta.env.VITE_BASE_URL}/api/inventory/${productId}`,
-          {
-            method: "GET",
-            headers: myHeaders,
-            redirect: "follow",
-          }
-        );
-        if (!response.ok) {
-          const errorText = await response.text();
-          throw new Error(
-            `HTTP error! Status: ${response.status}, Error: ${errorText}`
-          );
-        }
-        const data = await response.json();
-        setProduct(data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
+  const { product, loading, error } = useProductDetails(productId);
+  const [openDeleteDialog, setOpenDeleteDialog] = React.useState<boolean>(
+    false
+  );
 
   const handleEdit = (productId?: string) => {
     navigate(`/product/${productId}`);
@@ -51,6 +22,14 @@ const ProductDetailsPage: React.FC = () => {
   const handleDelete = () => {
     setOpenDeleteDialog(true);
   };
+
+  if (loading) {
+    return <MessageError/>
+  }
+
+  if (error && error instanceof Error) {
+    return <p>{error.message}</p>;
+  }
 
   return (
     <div>
@@ -62,7 +41,7 @@ const ProductDetailsPage: React.FC = () => {
             style={{ maxWidth: "100%" }}
           />
         </Box>
-        <Box sx={{ display: "flex", flexDirection: "column" }}>
+        <Box sx={{ display: "flex", flexDirection: "column"}}>
           <Typography variant="h1" component="div">
             {product?.name}
           </Typography>

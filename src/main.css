@@ -11,3 +11,23 @@ body{
 .css-r6ewbb-MuiToolbar-root{
     justify-content: space-between;
 }
+
+.waiting{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+#waitingImg{
+    width: 100px;
+    height: 100px;
+}
+#messageError{
+    color: red;
+}
+#reload{
+    display: flex;
+    flex-direction: column;
+}

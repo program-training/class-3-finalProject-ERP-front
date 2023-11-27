@@ -2,9 +2,9 @@ import React, { ChangeEvent, useEffect, useState } from "react";
 import ProductList from "./ProductList";
 import SearchFiled from "../SearchBox";
 import { useNavigate } from "react-router-dom";
-
+import { MessageError } from "../ErrorsManage/MessageError";
 const YourDataManagerComponent: React.FC = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [products, setProducts] = useState<Array<any> | null>(null);
   const [searchTerm, setSearchTerm] = useState<string>("");
   useEffect(() => {
@@ -45,7 +45,7 @@ const YourDataManagerComponent: React.FC = () => {
   };
 
   const handleEdit = (productId: string) => {
-    navigate(`/AddProduct/${productId}`)
+    navigate(`/AddProduct/${productId}`);
   };
 
   const filteredProducts = products
@@ -54,12 +54,16 @@ const YourDataManagerComponent: React.FC = () => {
       )
     : [];
   if (!products) {
-    return <div>Loading...</div>;
+    return <MessageError/>
   }
 
   return (
     <>
-      <SearchFiled onChange={(e: ChangeEvent<HTMLInputElement>) => setSearchTerm(e.target.value)} />
+      <SearchFiled
+        onChange={(e: ChangeEvent<HTMLInputElement>) =>
+          setSearchTerm(e.target.value)
+        }
+      />
       <ProductList
         products={filteredProducts}
         onDelete={handleDelete}

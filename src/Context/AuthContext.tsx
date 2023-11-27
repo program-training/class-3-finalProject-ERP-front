@@ -6,7 +6,7 @@ interface AuthContextProps {
 }
 
 interface Admin {
-  userName: string | null;
+  userName: string | undefined | null;
   token: string;
 }
 

@@ -3,10 +3,10 @@ import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import LoginAndRegistration from "./components/LoginAndRegistration";
 import Header from "./components/Header";
-import SignUp from "./components/SignUp";
+import SignUp from "./components/SignUp/SignUpWithFormik";
 import { AuthProvider } from "./Context/AuthContext";
-import ProductDetailsPage from "./components/ProductDetailsPage";
-import "./main.css"
+import ProductDetailsPage from "./components/ProductDetailsPage/ProductDetailsPage";
+import "./main.css";
 import YourDataManagerComponent from "./components/products/YourDataManagerComponent";
 import AddProduct from "./components/AddProduct";
 

@@ -13,7 +13,7 @@ interface ProductListProps {
 
 const ProductList: React.FC<ProductListProps> = ({ products, onEdit, setStateProducts}) => {
   return (
-    <div style={{ display: "flex", flexWrap: "wrap"}}>
+    <div style={{ display: "flex", flexWrap: "wrap", justifyContent:"space-around"}}>
       {products.map((product) => (
         <ProductCard products={products} key={product._id} product={product} onEdit={onEdit} setProducts={setStateProducts}/>
       ))}
