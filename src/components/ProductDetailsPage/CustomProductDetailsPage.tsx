@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { Product } from "../../types";
 
-export const useProductDetails = (productId:string | undefined) => {
+export const useProductDetails = (productId: string | undefined) => {
   const [product, setProduct] = useState<Product | null>(null);
-  const [error, setError] = useState<unknown | null>(null);
+  const [error] = useState<unknown | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -30,13 +30,11 @@ export const useProductDetails = (productId:string | undefined) => {
             `HTTP error! Status: ${response.status}, Error: ${errorText}`
           );
         }
-
         const data = await response.json();
         setProduct(data);
-        setLoading(false);
+        setLoading(false)
       } catch (error) {
-        setError(error);
-        setLoading(false);
+        console.error("Error fetching data:", error);
       }
     };
 
