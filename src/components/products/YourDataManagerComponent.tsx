@@ -1,9 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import ProductList from "./ProductList";
 import SearchFiled from "../SearchBox";
+import { useNavigate } from "react-router-dom";
+import { MessageError } from "../ErrorsManage/MessageError";
 
 const YourDataManagerComponent: React.FC = () => {
+  const navigate = useNavigate();
   const [products, setProducts] = useState<Array<any> | null>(null);
+  const [searchTerm, setSearchTerm] = useState<string>("");
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -42,18 +46,27 @@ const YourDataManagerComponent: React.FC = () => {
   };
 
   const handleEdit = (productId: string) => {
-    console.log(`edit: ${productId}`);
+    navigate(`/AddProduct/${productId}`);
   };
 
+  const filteredProducts = products
+    ? products.filter((product) =>
+        product.name.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    : [];
   if (!products) {
-    return <div>Loading...</div>;
+    return <MessageError/>
   }
 
   return (
     <>
-      <SearchFiled/>
+      <SearchFiled
+        onChange={(e: ChangeEvent<HTMLInputElement>) =>
+          setSearchTerm(e.target.value)
+        }
+      />
       <ProductList
-        products={products}
+        products={filteredProducts}
         onDelete={handleDelete}
         onEdit={handleEdit}
         setStateProducts={setProducts}
