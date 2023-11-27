@@ -15,11 +15,8 @@ function ResponsiveAppBar() {
   const authContext = React.useContext(AuthContext);
   const isAuthenticated = authContext?.isAuthenticated;
   const setAuthenticated = authContext?.setIsAuthenticated;
-
   const navigate = useNavigate();
-
-
-
+  
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
   };
@@ -29,7 +26,6 @@ function ResponsiveAppBar() {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
   );
-
   const handleLogOut = () => {
     setAnchorElUser(null);
     setAuthenticated && setAuthenticated(null);
