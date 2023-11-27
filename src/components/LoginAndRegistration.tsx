@@ -5,7 +5,7 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import SignUp from "./SignUp/SignUpWithFormik";
+import SignUp from "./SignUp/SignUpForm";
 import { TabPanelProps } from "../types";
 
 function TabPanel(props: TabPanelProps) {

@@ -1,132 +1,130 @@
-import * as React from "react";
-import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import Container from "@mui/material/Container";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { AuthContext } from "../../Context/AuthContext";
-import { useNavigate } from "react-router-dom";
-import { FormValues } from "../../types";
-import { FormikProps } from "formik";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import {  
+  TextField,   
+  Button,    
+  Container,   
+  IconButton,    
+  InputAdornment,
+  LinearProgress,
+  Box
+} from "@mui/material";
+import { useState } from "react";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { registerUser } from "./apiCalls.ts";
-import { LinearProgress } from "@mui/material";
-const defaultTheme = createTheme();
+import { User } from "../../types.ts";
+import { useNavigate } from "react-router-dom";
+import React from "react";
+import { AuthContext } from "../../Context/AuthContext.tsx";
 
-export const SignUp: React.FC<FormikProps<FormValues>> =
- ({ values, touched, errors, handleChange, handleBlur, isSubmitting }) => {
+const schema = yup.object().shape({
+  username: yup.string().required("Required field"),
+  password: yup.string()
+    .min(8, "Password must be at least 8 characters")
+    .required("Required field"),
+  confirmPassword: yup.string()
+    .oneOf([yup.ref("password"), undefined], "Passwords must match")
+    .required("Required field")   
+});
+
+
+export default function RegisterForm() {
   const navigate = useNavigate();
   const [error, setError] = React.useState("");
 
   const [waiting, setWaiting] = React.useState(false);
   const authContext = React.useContext(AuthContext);
   const setIsAuthenticated = authContext?.setIsAuthenticated;
+  const [showPassword, setShowPassword] = useState(false);
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const { userName, password } = values;
-    registerUser(
-      userName,
-      password,
-      setWaiting,
-      setError,
-      setIsAuthenticated,
-      navigate
-    );
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword);
   };
 
+  const {  
+    register,
+    handleSubmit, 
+    formState: { errors }
+  } = useForm({
+    resolver: yupResolver(schema)
+  });
+   
+const onSubmit = (user:User) => {
+  console.log(user);
+  const { username, password } = user;
+  registerUser(
+    username,
+    password,
+    setWaiting,
+    setError,
+    setIsAuthenticated,
+    navigate
+  );
+};
 
   return (
-    <ThemeProvider theme={defaultTheme}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <Box
-            component="form"
-            noValidate
-            onSubmit={handleSubmit}
-            sx={{ mt: 3 }}
-          >
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  id="userName"
-                  label="userName"
-                  type="userName"
-                  value={values.userName}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  helperText={touched.userName ? errors.userName : ""}
-                  error={touched.userName && Boolean(errors.userName)}
-                  margin="dense"
-                  variant="outlined"
-                  fullWidth
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  id="password"
-                  label="Password"
-                  type="password"
-                  value={values.password}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  required
-                  helperText={touched.password ? errors.password : ""}
-                  error={touched.password && Boolean(errors.password)}
-                  margin="dense"
-                  variant="outlined"
-                  fullWidth
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  id="confirmPassword"
-                  label="Confirm Password"
-                  type="password"
-                  value={values.confirmPassword}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  required
-                  helperText={
-                    touched.confirmPassword ? errors.confirmPassword : ""
-                  }
-                  error={
-                    touched.confirmPassword && Boolean(errors.confirmPassword)
-                  }
-                  margin="dense"
-                  variant="outlined"
-                  fullWidth
-                />
-              </Grid>
-            </Grid>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-              disabled={isSubmitting || Object.keys(errors).length > 2}
+    <Container maxWidth="xs">
+      <form onSubmit={handleSubmit(onSubmit)}>
+      
+        <TextField
+          {...register("username")}
+          label="Username"
+          fullWidth    
+          margin="normal"
+          error={!!errors.username}
+          helperText={errors?.username?.message} 
+        />
+
+<TextField
+      {...register("password")}
+      label="Password"    
+      type={showPassword ? 'text' : 'password'}
+      fullWidth    
+      margin="normal"
+      error={!!errors.password} 
+      helperText={errors?.password?.message}
+      InputProps={{
+        endAdornment: (
+          <InputAdornment position="end">
+            <IconButton
+              edge="end"
+              onClick={handleClickShowPassword}
             >
-              Sign up
-            </Button>
-          </Box>
-          {error
+              {showPassword ? <VisibilityOff /> : <Visibility />}
+            </IconButton>
+          </InputAdornment>
+        ),
+      }}
+    />
+
+        <TextField
+          {...register("confirmPassword")}
+          label="Confirm Password"
+          type="password"
+          fullWidth  
+          margin="normal" 
+          error={!!errors.confirmPassword}
+          helperText={errors?.confirmPassword?.message}  
+        />
+
+        <Button
+          variant="contained"
+          color="primary"
+          type="submit" 
+          sx={{ width: '100%', mt: 2 }} 
+
+        >
+          Sign up
+        </Button>
+      </form>
+      {error
             ? error && <p>{error}</p>
             : waiting && (
                 <Box sx={{ width: "100%" }}>
                   <LinearProgress />
                 </Box>
               )}
-        </Box>
-      </Container>
-    </ThemeProvider>
+    </Container>
   );
-};
+}
