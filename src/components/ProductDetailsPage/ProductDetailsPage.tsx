@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { useProductDetails } from "./CustomProductDetailsPage";
 import { MessageError } from "../ErrorsManage/MessageError";
 
-const ProductDetailsPage: React.FC = () => {
+export const ProductDetailsPage = () => {
   const navigate = useNavigate();
   const { productId } = useParams<{ productId: string }>();
   const { product, loading, error } = useProductDetails(productId);
@@ -70,4 +70,3 @@ const ProductDetailsPage: React.FC = () => {
   );
 };
 
-export default ProductDetailsPage;

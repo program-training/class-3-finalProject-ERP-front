@@ -5,7 +5,7 @@ import LoginAndRegistration from "./components/LoginAndRegistration";
 import Header from "./components/Header";
 import SignUp from "./components/SignUp/SignUpForm";
 import { AuthProvider } from "./Context/AuthContext";
-import ProductDetailsPage from "./components/ProductDetailsPage/ProductDetailsPage";
+import {ProductDetailsPage} from "./components/ProductDetailsPage/ProductDetailsPage";
 import "./main.css";
 import {DataManagerComponent} from "./components/Products/DataManagerComponent";
 import AddProduct from "./components/Add-EditProduct/Add-EditProduct";
