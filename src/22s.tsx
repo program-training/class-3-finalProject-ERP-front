@@ -3,16 +3,16 @@ import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
-import SearchField from "../SearchField";
-import useDataManager from "./useDataManager";
+import SearchField from "./components/SearchField";
+import useDataManager from "./components/Products/useDataManager";
 import { ChangeEvent, useState } from "react";
-import ProductList from "./ProductList";
+import ProductList from "./components/Products/ProductList";
 import { useNavigate } from "react-router-dom";
-import { MessageError } from "../ErrorsManage/MessageError";
-import AddProductButton from "../AddProductButton";
+import { MessageError } from "./components/ErrorsManage/MessageError";
+import AddProductButton from "./components/AddProductButton";
 import CircularProgress from "@mui/material/CircularProgress";
 
-export const products = () => {
+export const Products = () => {
   const navigate = useNavigate();
   const [value, setValue] = useState("1");
   const { products, setProducts, page } = useDataManager();

@@ -5,7 +5,7 @@ import Typography from "@mui/material/Typography";
 import { useNavigate } from "react-router-dom";
 import { useProductDetails } from "./CustomProductDetailsPage";
 import { MessageError } from "../ErrorsManage/MessageError";
-import { DeleteDial } from "./DeleteDial";
+import { DeleteDialog } from "./DeleteDialog";
 
 export const ProductDetailsPage = () => {
   const navigate = useNavigate();
@@ -61,7 +61,7 @@ export const ProductDetailsPage = () => {
           </Container>
         </Box>
       </Toolbar>
-      <DeleteDial
+      <DeleteDialog
         open={openDeleteDialog}
         setOpen={setOpenDeleteDialog}
         id={productId}

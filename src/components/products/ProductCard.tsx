@@ -6,7 +6,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { Box } from "@mui/material";
 import { Link } from "react-router-dom";
-import { DeleteDial } from "../ProductDetailsPage/DeleteDial";
+import { DeleteDialog } from "../ProductDetailsPage/DeleteDialog";
 import { Product } from "../../types";
 
 interface ProductCardProps {
@@ -65,7 +65,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
         <CardActions>
           <Button onClick={() => onEdit(_id)}>Edit</Button>
           <Button onClick={() => setOpen(true)}>Delete</Button>
-          <DeleteDial
+          <DeleteDialog
             setStateProducts={setProducts}
             products={products}
             open={open}
