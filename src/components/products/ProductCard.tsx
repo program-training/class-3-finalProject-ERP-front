@@ -11,7 +11,7 @@ import { Product } from "../../types";
 
 interface ProductCardProps {
   onEdit: (productId: string) => void;
-  setProducts: React.Dispatch<React.SetStateAction<any[] | null>>;
+  setProducts: React.Dispatch<React.SetStateAction<Product[] | null>>;
   products: Array<Product>;
   product: Product;
 }

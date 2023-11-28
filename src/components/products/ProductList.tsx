@@ -5,7 +5,7 @@ import { Product } from "../../types";
 interface ProductListProps {
   products: Product[];
   onEdit: (productId: string) => void;
-  setStateProducts: React.Dispatch<React.SetStateAction<any[] | null>>;
+  setStateProducts: React.Dispatch<React.SetStateAction<Product[] | null>>;
 }
 
 const ProductList: React.FC<ProductListProps> = ({
