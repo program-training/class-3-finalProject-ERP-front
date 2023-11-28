@@ -8,7 +8,7 @@ import { AuthProvider } from "./Context/AuthContext";
 import { ProductDetailsPage } from "./components/ProductDetailsPage/ProductDetailsPage";
 import "./main.css";
 import AddProduct from "./components/Add-EditProduct/Add-EditProduct";
-import { Products } from "./Products";
+import { Products } from "./Products22";
 
 const router = createBrowserRouter([
   {
