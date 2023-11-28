@@ -12,7 +12,7 @@ import { MessageError } from "../ErrorsManage/MessageError";
 import AddProductButton from "../AddProductButton";
 import CircularProgress from "@mui/material/CircularProgress";
 
-export const products = () => {
+export const Products = () => {
   const navigate = useNavigate();
   const [value, setValue] = useState("1");
   const { products, setProducts, page } = useDataManager();
