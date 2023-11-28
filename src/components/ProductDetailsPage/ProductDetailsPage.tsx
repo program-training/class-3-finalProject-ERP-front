@@ -2,10 +2,10 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import { Box, Button, Container, Toolbar } from "@mui/material";
 import Typography from "@mui/material/Typography";
-import { DeleteDialog } from "../Products/DeleteDialog1";
 import { useNavigate } from "react-router-dom";
 import { useProductDetails } from "./CustomProductDetailsPage";
 import { MessageError } from "../ErrorsManage/MessageError";
+import { DeleteDialog } from "../Products/DeleteDialog1";
 
 export const ProductDetailsPage = () => {
   const navigate = useNavigate();
