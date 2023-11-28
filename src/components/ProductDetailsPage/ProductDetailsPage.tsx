@@ -5,7 +5,7 @@ import Typography from "@mui/material/Typography";
 import { useNavigate } from "react-router-dom";
 import { useProductDetails } from "./CustomProductDetailsPage";
 import { MessageError } from "../ErrorsManage/MessageError";
-import { DeleteDial } from "../Products/DeleteDial";
+import { DeleteDial } from "./DeleteDial";
 
 export const ProductDetailsPage = () => {
   const navigate = useNavigate();
