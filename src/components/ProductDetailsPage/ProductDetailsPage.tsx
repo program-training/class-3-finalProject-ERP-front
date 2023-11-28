@@ -5,7 +5,7 @@ import Typography from "@mui/material/Typography";
 import { useNavigate } from "react-router-dom";
 import { useProductDetails } from "./CustomProductDetailsPage";
 import { MessageError } from "../ErrorsManage/MessageError";
-import { DeleteDialog } from "../Products/akiva";
+import { a } from "../Products/akiva";
 
 export const ProductDetailsPage = () => {
   const navigate = useNavigate();
@@ -61,11 +61,12 @@ export const ProductDetailsPage = () => {
           </Container>
         </Box>
       </Toolbar>
-      <DeleteDialog
+      {/* <DeleteDialog
         open={openDeleteDialog}
         setOpen={setOpenDeleteDialog}
         id={productId}
-      />
+      /> */}
+      {a}
     </div>
   );
 };
