@@ -1,5 +1,3 @@
-import { User } from "../../types";
-
 export const registerUser = async (
     userName: string,
     password: string,
