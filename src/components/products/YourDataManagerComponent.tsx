@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { MessageError } from "../ErrorsManage/MessageError";
 import useDataManager from "./useDataManager";
 
-export const YourDataManagerComponent: React.FC = () => {
+export const DataManagerComponent: React.FC = () => {
   const navigate = useNavigate();
   const { products, setProducts } = useDataManager();
   const [searchTerm, setSearchTerm] = useState<string>("");

@@ -7,7 +7,7 @@ import SignUp from "./components/SignUp/SignUpForm";
 import { AuthProvider } from "./Context/AuthContext";
 import ProductDetailsPage from "./components/ProductDetailsPage/ProductDetailsPage";
 import "./main.css";
-import {YourDataManagerComponent} from "./components/Products/YourDataManagerComponent";
+import {DataManagerComponent} from "./components/Products/YourDataManagerComponent";
 import AddProduct from "./components/Add-EditProduct/Add-EditProduct";
 
 const router = createBrowserRouter([
@@ -25,7 +25,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/products",
-        element: <YourDataManagerComponent />,
+        element: <DataManagerComponent />,
       },
       {
         path: "/product/:productId",
