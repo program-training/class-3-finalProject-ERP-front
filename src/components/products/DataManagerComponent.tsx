@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useState, useEffect } from "react";
 import ProductList from "./ProductList";
 import SearchFiled from "../SearchBox";
 import { useNavigate } from "react-router-dom";
@@ -24,6 +24,20 @@ export const DataManagerComponent = () => {
       )
     : [];
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const isAtBottom =
+        window.innerHeight + window.scrollY >= document.body.offsetHeight;
+      if (isAtBottom) {
+        console.log("Reached the bottom of the page");
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []); 
+
   if (!products) {
     return <MessageError />;
   }
@@ -44,5 +58,3 @@ export const DataManagerComponent = () => {
     </>
   );
 };
-
-
