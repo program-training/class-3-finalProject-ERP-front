@@ -1,12 +1,11 @@
-// YourDataManagerComponent.js
-import React, { ChangeEvent, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import ProductList from "./ProductList";
 import SearchFiled from "../SearchBox";
 import { useNavigate } from "react-router-dom";
 import { MessageError } from "../ErrorsManage/MessageError";
 import useDataManager from "./useDataManager";
 
-export const DataManagerComponent: React.FC = () => {
+export const DataManagerComponent = () => {
   const navigate = useNavigate();
   const { products, setProducts } = useDataManager();
   const [searchTerm, setSearchTerm] = useState<string>("");
