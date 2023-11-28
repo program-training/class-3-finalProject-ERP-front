@@ -65,7 +65,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
         <CardActions>
           <Button onClick={() => onEdit(_id)}>Edit</Button>
           <Button onClick={() => setOpen(true)}>Delete</Button>
-          <DeleteDialog
+          <DeleteDial
             setStateProducts={setProducts}
             products={products}
             open={open}
