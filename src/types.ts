@@ -41,9 +41,8 @@ export interface TabPanelProps {
 export interface SearchFieldProps {
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
 }
-
 export interface User{
-confirmPassword: string
-password: string
-username: string
-}
+  confirmPassword: string
+  password: string
+  username: string
+  }

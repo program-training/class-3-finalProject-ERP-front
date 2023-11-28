@@ -29,7 +29,7 @@ const schema = yup.object().shape({
 });
 
 
-export default function RegisterForm() {
+export default function SignUpForm() {
   const navigate = useNavigate();
   const [error, setError] = React.useState("");
 
