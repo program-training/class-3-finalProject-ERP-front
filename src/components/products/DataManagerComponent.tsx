@@ -1,4 +1,4 @@
-import { ChangeEvent} from "react";
+import { ChangeEvent } from "react";
 import ProductList from "./ProductList";
 import SearchFiled from "../SearchBox";
 import { useNavigate } from "react-router-dom";
