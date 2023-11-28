@@ -33,7 +33,7 @@ export const DeleteDialog = (props: ModalDeleteProps) => {
             `HTTP error! Status: ${res.status}, Error: ${errorText}`
           );
         }
-        return res.json();
+        return res.text();
       })
       .then((resolve) => {
         console.log(resolve);

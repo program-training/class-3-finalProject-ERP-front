@@ -1,14 +1,21 @@
-import { ChangeEvent, useState, useEffect } from "react";
+import { ChangeEvent} from "react";
 import ProductList from "./ProductList";
 import SearchFiled from "../SearchBox";
 import { useNavigate } from "react-router-dom";
 import { MessageError } from "../ErrorsManage/MessageError";
 import useDataManager from "./useDataManager";
+import CircularProgress from "@mui/material/CircularProgress";
+import Box from "@mui/material/Box";
 
 export const DataManagerComponent = () => {
   const navigate = useNavigate();
-  const { products, setProducts } = useDataManager();
-  const [searchTerm, setSearchTerm] = useState<string>("");
+  const {
+    products,
+    setProducts,
+    filteredProducts,
+    setSearchTerm,
+    page,
+  } = useDataManager();
 
   const handleDelete = (productId: string) => {
     console.log(`delete: ${productId}`);
@@ -18,25 +25,7 @@ export const DataManagerComponent = () => {
     navigate(`/AddProduct/${productId}`);
   };
 
-  const filteredProducts = products
-    ? products.filter((product) =>
-        product.name.toLowerCase().includes(searchTerm.toLowerCase())
-      )
-    : [];
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const isAtBottom =
-        window.innerHeight + window.scrollY >= document.body.offsetHeight;
-      if (isAtBottom) {
-        console.log("Reached the bottom of the page");
-      }
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []); 
 
   if (!products) {
     return <MessageError />;
@@ -55,6 +44,18 @@ export const DataManagerComponent = () => {
         onEdit={handleEdit}
         setStateProducts={setProducts}
       />
+      {page !== null ? (
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-around",
+            height: "200px",
+            alignItems: "center",
+          }}
+        >
+          <CircularProgress />
+        </Box>
+      ) : null}
     </>
   );
 };
