@@ -5,7 +5,7 @@ import Typography from "@mui/material/Typography";
 import { useNavigate } from "react-router-dom";
 import { useProductDetails } from "./CustomProductDetailsPage";
 import { MessageError } from "../ErrorsManage/MessageError";
-import { DeleteDialog } from "../Products/DeleteDialog1";
+import { DeleteDialog } from "../Products/akiva";
 
 export const ProductDetailsPage = () => {
   const navigate = useNavigate();

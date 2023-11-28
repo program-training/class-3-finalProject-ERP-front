@@ -6,7 +6,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { Box } from "@mui/material";
 import { Link } from "react-router-dom";
-import { DeleteDialog } from "./DeleteDialog1";
+import { DeleteDialog } from "./akiva";
 import { Product } from "../../types";
 
 interface ProductCardProps {
