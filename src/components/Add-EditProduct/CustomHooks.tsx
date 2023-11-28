@@ -3,8 +3,9 @@ import { Product } from "../../types";
 export const useEditOrAdd = (params: string | undefined) => {
   const [isEdit, setIsEdit] = useState<Product | null>(null);
   const [isAdd, setAdd] = useState<boolean>(false);
-  if (params) {
-    useEffect(() => {
+
+  useEffect(() => {
+    if (params) {
       const storage = localStorage.getItem("admin");
       const token = storage ? JSON.parse(storage).token : null;
       const myHeaders = new Headers();
@@ -24,13 +25,9 @@ export const useEditOrAdd = (params: string | undefined) => {
         setIsEdit(dataJ);
       };
       fetchEdit();
-    }, []);
-  } else {
-    useEffect(() => {
+    } else {
       setAdd(true);
-    }, []);
-  }
+    }
+  }, []);
   return { isAdd, isEdit };
 };
-
-
