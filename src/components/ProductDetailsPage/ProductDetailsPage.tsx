@@ -11,7 +11,7 @@ export const ProductDetailsPage = () => {
   const navigate = useNavigate();
   const { productId } = useParams<{ productId: string }>();
   const { product, loading, error } = useProductDetails(productId);
-  const [openDeleteDialog, setOpenDeleteDialog] =
+  // const [openDeleteDialog, setOpenDeleteDialog] =
     React.useState<boolean>(false);
 
   const handleEdit = (productId?: string) => {
@@ -19,7 +19,7 @@ export const ProductDetailsPage = () => {
   };
 
   const handleDelete = () => {
-    setOpenDeleteDialog(true);
+    // setOpenDeleteDialog(true);
   };
 
   if (loading) {
