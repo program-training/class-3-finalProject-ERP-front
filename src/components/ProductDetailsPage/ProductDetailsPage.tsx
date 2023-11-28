@@ -5,13 +5,11 @@ import Typography from "@mui/material/Typography";
 import { useNavigate } from "react-router-dom";
 import { useProductDetails } from "./CustomProductDetailsPage";
 import { MessageError } from "../ErrorsManage/MessageError";
-// import { DeleteDialog } from "../Products/DeleteDialog";
 
 export const ProductDetailsPage = () => {
   const navigate = useNavigate();
   const { productId } = useParams<{ productId: string }>();
   const { product, loading, error } = useProductDetails(productId);
-  // const [openDeleteDialog, setOpenDeleteDialog] =
     React.useState<boolean>(false);
 
   const handleEdit = (productId?: string) => {
@@ -19,7 +17,8 @@ export const ProductDetailsPage = () => {
   };
 
   const handleDelete = () => {
-    // setOpenDeleteDialog(true);
+    console.log("dscs");
+    
   };
 
   if (loading) {
@@ -61,11 +60,6 @@ export const ProductDetailsPage = () => {
           </Container>
         </Box>
       </Toolbar>
-      {/* <DeleteDialog
-        open={openDeleteDialog}
-        setOpen={setOpenDeleteDialog}
-        id={productId}
-      />  */}
     </div>
   );
 };
