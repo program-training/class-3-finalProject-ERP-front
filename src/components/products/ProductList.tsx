@@ -6,7 +6,7 @@ interface ProductListProps {
   products: Array<Product>;
   onDelete: (productId: string) => void;
   onEdit: (productId: string) => void;
-  setStateProducts: React.Dispatch<React.SetStateAction<any[] | null>>;
+  setStateProducts: React.Dispatch<React.SetStateAction<Product[] | null>>;
 }
 
 const ProductList: React.FC<ProductListProps> = ({

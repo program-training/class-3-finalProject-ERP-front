@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
+import { Product } from "../../types";
 
 const useDataManager = () => {
-  const [products, setProducts] = useState<Array<any> | null>(null);
+  const [products, setProducts] = useState<Array<Product> | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {

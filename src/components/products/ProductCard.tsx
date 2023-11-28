@@ -6,12 +6,12 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { Box } from "@mui/material";
 import { Link } from "react-router-dom";
-import DeleteDialog from "./ModalDeleteProduct";
+import DeleteDialog from "./DeleteDialog";
 import { Product } from "../../types";
 
 interface ProductCardProps {
   onEdit: (productId: string) => void;
-  setProducts: React.Dispatch<React.SetStateAction<any[] | null>>;
+  setProducts: React.Dispatch<React.SetStateAction<Product[] | null>>;
   products: Array<Product>;
   product: Product;
 }

@@ -1,9 +1,14 @@
+import { User } from "../../types";
+
 export const registerUser = async (
     userName: string,
     password: string,
     setWaiting: React.Dispatch<React.SetStateAction<boolean>>,
     setError: React.Dispatch<React.SetStateAction<string>>,
-    setIsAuthenticated?: (admin: any) => void,
+    setIsAuthenticated?: (admin: {
+        userName : string
+        token: string
+    }) => void,
     navigate?: (path: string) => void
 ) => {
     setWaiting(true);
