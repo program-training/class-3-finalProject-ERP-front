@@ -26,7 +26,7 @@ export const validationSchema = yup.object().shape({
     .matches(
       /^(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-])/,
       "Password must include at least one special character"
-    )
+    )    
     .required("Password is required"),
   confirmPassword: yup
     .string()
