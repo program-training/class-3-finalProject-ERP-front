@@ -10,11 +10,12 @@ import ProductList from "./ProductList";
 import { useNavigate } from "react-router-dom";
 import { MessageError } from "../ErrorsManage/MessageError";
 import AddProductButton from "../AddProductButton";
+import CircularProgress from "@mui/material/CircularProgress";
 
 export default function LabTabs() {
   const navigate = useNavigate();
   const [value, setValue] = useState("1");
-  const { products, setProducts } = useDataManager();
+  const { products, setProducts, page } = useDataManager();
   const [searchTerm, setSearchTerm] = useState<string>("");
 
   const handleChange = (_event: React.SyntheticEvent, newValue: string) => {
@@ -31,12 +32,14 @@ export default function LabTabs() {
     navigate(`/AddProduct/${productId}`);
   };
 
-  const renderErrorMessage = () => (!products ? <MessageError /> : null);
+  if (!products) return (
+    <>
+    <MessageError />
+    </>
+  );
 
   return (
     <TabContext value={value}>
-      {renderErrorMessage()}
-
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
         <Box>
           <SearchField
@@ -57,6 +60,16 @@ export default function LabTabs() {
           onEdit={handleEdit}
           setStateProducts={setProducts}
         />
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-around",
+            height: "200px",
+            alignItems: "center",
+          }}
+        >
+          {page !== null ? <CircularProgress id="load" /> : null}
+        </Box>
       </TabPanel>
       <TabPanel value="2">Item Two</TabPanel>
     </TabContext>

@@ -5,12 +5,10 @@ const useDataManager = () => {
   const [products, setProducts] = useState<Array<Product> | null>(null);
   const [page, setPage] = useState<number | null>(0);
   const [loadingNextPage, setLoadingNextPage] = useState(false);
-  const [searchTerm, setSearchTerm] = useState<string>("");
 
   useEffect(() => {
     const fetchData = async () => {
       if (page === null) return;
-      setLoadingNextPage(true);
       try {
         const storage = localStorage.getItem("admin");
         const token = storage ? JSON.parse(storage).token : null;
@@ -19,7 +17,7 @@ const useDataManager = () => {
         myHeaders.append("Authorization", token);
 
         const response = await fetch(
-          `${import.meta.env.VITE_BASE_URL}/api/inventory/${page}`,
+          `${import.meta.env.VITE_BASE_URL}/api/inventory/pages/${page}`,
           {
             method: "GET",
             headers: myHeaders,
@@ -35,7 +33,7 @@ const useDataManager = () => {
             `HTTP error! Status: ${response.status}, Error: ${errorText}`
           );
         }
-        
+
         const data = await response.json();
         setProducts(products ? [...products, ...data] : data);
         setLoadingNextPage(false);
@@ -47,31 +45,26 @@ const useDataManager = () => {
     fetchData();
   }, [page]);
 
-  const filteredProducts = products
-    ? products.filter((product) =>
-        product.name.toLowerCase().includes(searchTerm.toLowerCase())
-      )
-    : [];
-  const handleScroll = () => {
-    const isAtBottom =
-      window.innerHeight + window.scrollY >= document.body.offsetHeight - 2;
-    if (isAtBottom && !loadingNextPage) {
-      setPage((page) => (page !== null ? page + 1 : null));
-    }
-  };
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
+    const observer = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting && !loadingNextPage) {
+        setLoadingNextPage(true);
+        setPage((pag) => (pag !== null ? pag + 1 : null));
+      }
+    });
+    const element = document.getElementById("load") as HTMLElement;
+    if (!element) return;
+    observer.observe(element);
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      observer.unobserve(element);
     };
-  }, []);
+  }, [products]);
+  
   return {
     products,
     setProducts,
     setPage,
     loadingNextPage,
-    filteredProducts,
-    setSearchTerm,
     page,
   };
 };

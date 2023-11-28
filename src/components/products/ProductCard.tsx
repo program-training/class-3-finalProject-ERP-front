@@ -6,7 +6,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { Box } from "@mui/material";
 import { Link } from "react-router-dom";
-import { DeleteDialog } from "./akiva";
+import { DeleteDialog } from "./DeleteDialog";
 import { Product } from "../../types";
 
 interface ProductCardProps {
@@ -37,13 +37,15 @@ const ProductCard: React.FC<ProductCardProps> = ({
   return (
     <Box sx={{ display: "flex", flexWrap: "wrap" }}>
       <Card sx={{ width: "225px", margin: "20px", minHeight: "450px" }}>
-        <Link to={`/product/${_id}`}>
-          <img
-            src={image.medium}
-            alt={image.alt}
-            style={{ maxWidth: "100%" }}
-          />
-        </Link>
+        <div style={{ minHeight: "220px" }}>
+          <Link to={`/product/${_id}`}>
+            <img
+              src={image.medium}
+              alt={image.alt}
+              style={{ maxWidth: "100%" }}
+            />
+          </Link>
+        </div>
         <CardContent>
           <Typography variant="h5" component="div">
             {name}
