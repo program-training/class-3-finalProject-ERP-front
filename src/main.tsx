@@ -7,8 +7,8 @@ import SignUp from "./components/SignUp/SignUpWithFormik";
 import { AuthProvider } from "./Context/AuthContext";
 import ProductDetailsPage from "./components/ProductDetailsPage/ProductDetailsPage";
 import "./main.css";
-import YourDataManagerComponent from "./components/products/YourDataManagerComponent";
 import AddProduct from "./components/AddProduct";
+import LabTabs from "./components/products/Products";
 
 const router = createBrowserRouter([
   {
@@ -25,7 +25,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/products",
-        element: <YourDataManagerComponent />,
+        element: <LabTabs />,
       },
       {
         path: "/product/:productId",

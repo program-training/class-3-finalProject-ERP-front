@@ -3,8 +3,7 @@ import ProductCard from "./ProductCard";
 import { Product } from "../../types";
 
 interface ProductListProps {
-  products: Array<Product>;
-  onDelete: (productId: string) => void;
+  products: Product[];
   onEdit: (productId: string) => void;
   setStateProducts: React.Dispatch<React.SetStateAction<any[] | null>>;
 }
