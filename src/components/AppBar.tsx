@@ -53,7 +53,7 @@ function ResponsiveAppBar() {
                 cursor: "pointer",
               }}
             >
-              ERP
+              GDYA
             </Typography>
             <Typography
               variant="h5"
