@@ -1,28 +1,40 @@
 import { ChangeEvent } from "react";
 
-export interface Product{
-    category: string;
-    description: string;
-    discountPercentage: number;
-    image: {
-      alt: string;
-      large: string;
-      medium: string;
-      small: string;
-    };
-    name: string;
-    quantity: number;
-    salePrice: number;
-    _id: string;
-  }
+export interface Product {
+  category: string;
+  description: string;
+  discountPercentage: number;
+  image: {
+    alt: string;
+    large: string;
+    medium: string;
+    small: string;
+  };
+  name: string;
+  quantity: number;
+  salePrice: number;
+  _id: string;
+}
 export interface ModalDeleteProps {
-    open: boolean;
-    setOpen: (arg0: boolean) => void;
-    id: string | undefined;
-    setStateProducts?: React.Dispatch<React.SetStateAction<Product[] | null>>;
-    products?: Product[];
-  }
+  open: boolean;
+  setOpen: (arg0: boolean) => void;
+  id: string | undefined;
+  setStateProducts?: React.Dispatch<React.SetStateAction<Product[] | null>>;
+  products?: Product[];
+}
 
+export interface ProductCardProps {
+  onEdit: (productId: string) => void;
+  setProducts: React.Dispatch<React.SetStateAction<any[] | null>>;
+  products: Array<Product>;
+  product: Product;
+}
+
+export interface ProductListProps {
+  products: Product[];
+  onEdit: (productId: string) => void;
+  setStateProducts: React.Dispatch<React.SetStateAction<any[] | null>>;
+}
 
 export interface FormValues {
   userName: string;
@@ -37,12 +49,11 @@ export interface TabPanelProps {
   value: number;
 }
 
-
 export interface SearchFieldProps {
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
 }
-export interface User{
-  confirmPassword: string
-  password: string
-  username: string
-  }
+export interface User {
+  confirmPassword: string;
+  password: string;
+  username: string;
+}

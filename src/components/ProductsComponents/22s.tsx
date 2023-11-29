@@ -4,18 +4,21 @@ import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 import SearchField from "../SearchField";
-import useDataManager from "./useDataManager";
 import { ChangeEvent, useState } from "react";
 import ProductList from "./ProductList";
 import { useNavigate } from "react-router-dom";
 import { MessageError } from "../ErrorsManage/MessageError";
 import AddProductButton from "../AddProductButton";
 import CircularProgress from "@mui/material/CircularProgress";
+import DataTable from "./ProductsColum";
+import useProductsPageDataManager from "./useDataManager";
+import useAllProductsDataManager from "./useAllProductsDataManager";
 
 export const Products = () => {
   const navigate = useNavigate();
   const [value, setValue] = useState("1");
-  const { products, setProducts, page } = useDataManager();
+  const { products, setProducts, page } = useProductsPageDataManager();
+  const { allProducts } = useAllProductsDataManager();
   const [searchTerm, setSearchTerm] = useState<string>("");
 
   const handleChange = (_event: React.SyntheticEvent, newValue: string) => {
@@ -32,15 +35,11 @@ export const Products = () => {
     navigate(`/AddProduct/${productId}`);
   };
 
-  if (!products)
-    return (
-      <>
-        <MessageError />
-      </>
-    );
+  const renderErrorMessage = () => (!products ? <MessageError /> : null);
 
   return (
     <TabContext value={value}>
+      {renderErrorMessage()}
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
         <Box>
           <SearchField
@@ -69,10 +68,12 @@ export const Products = () => {
             alignItems: "center",
           }}
         >
-          {page !== null ? <CircularProgress id="load" /> : null}
+          {page !== null && products ? <CircularProgress id="load" /> : null}
         </Box>
       </TabPanel>
-      <TabPanel value="2">Item Two</TabPanel>
+      <TabPanel value="2">
+        <DataTable products={allProducts} />
+      </TabPanel>
     </TabContext>
   );
 };
