@@ -9,7 +9,7 @@ import { ProductDetailsPage } from "./components/ProductDetailsPage/ProductDetai
 import "./main.css";
 import AddProduct from "./components/Add-EditProduct/Add-EditProduct";
 import { Products } from "./components/ProductsComponents/22s";
-import { Navi } from "./components/navi";
+import { Navi } from "./components/Navi";
 
 
 const router = createBrowserRouter([
