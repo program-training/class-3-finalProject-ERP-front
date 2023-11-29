@@ -2,21 +2,20 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import { Box, Button, Container, Toolbar } from "@mui/material";
 import Typography from "@mui/material/Typography";
-import DeleteDialog from "../products/ModalDeleteProduct";
 import { useNavigate } from "react-router-dom";
 import { useProductDetails } from "./CustomProductDetailsPage";
 import { MessageError } from "../ErrorsManage/MessageError";
+import { DeleteDialog } from "./DeleteDialog";
 
-const ProductDetailsPage: React.FC = () => {
+export const ProductDetailsPage = () => {
   const navigate = useNavigate();
   const { productId } = useParams<{ productId: string }>();
   const { product, loading, error } = useProductDetails(productId);
-  const [openDeleteDialog, setOpenDeleteDialog] = React.useState<boolean>(
-    false
-  );
+  const [openDeleteDialog, setOpenDeleteDialog] =
+    React.useState<boolean>(false);
 
   const handleEdit = (productId?: string) => {
-    navigate(`/product/${productId}`);
+    navigate(`/erp/product/${productId}`);
   };
 
   const handleDelete = () => {
@@ -24,7 +23,7 @@ const ProductDetailsPage: React.FC = () => {
   };
 
   if (loading) {
-    return <MessageError/>
+    return <MessageError />;
   }
 
   if (error && error instanceof Error) {
@@ -41,7 +40,7 @@ const ProductDetailsPage: React.FC = () => {
             style={{ maxWidth: "100%" }}
           />
         </Box>
-        <Box sx={{ display: "flex", flexDirection: "column"}}>
+        <Box sx={{ display: "flex", flexDirection: "column" }}>
           <Typography variant="h1" component="div">
             {product?.name}
           </Typography>
@@ -70,5 +69,3 @@ const ProductDetailsPage: React.FC = () => {
     </div>
   );
 };
-
-export default ProductDetailsPage;

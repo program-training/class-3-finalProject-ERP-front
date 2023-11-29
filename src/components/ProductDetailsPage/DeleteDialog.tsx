@@ -8,7 +8,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { ModalDeleteProps } from "../../types";
 import { useNavigate } from "react-router-dom";
 
-export default function DeleteDialog(props: ModalDeleteProps) {
+export const DeleteDialog = (props: ModalDeleteProps) => {
   const navigate = useNavigate();
   const [error, setError] = React.useState("");
   const { open, setOpen, id, setStateProducts, products } = props;
@@ -33,7 +33,7 @@ export default function DeleteDialog(props: ModalDeleteProps) {
             `HTTP error! Status: ${res.status}, Error: ${errorText}`
           );
         }
-        return res.json();
+        return res.text();
       })
       .then((resolve) => {
         console.log(resolve);
@@ -43,7 +43,7 @@ export default function DeleteDialog(props: ModalDeleteProps) {
           setStateProducts && setStateProducts (() => updatedObjects);
         }
         handleClose();
-        navigate("/products");
+        navigate("/erp/products");
       })
       .catch((error) => {
         console.log("error", error), setError("network error");

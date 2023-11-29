@@ -1,17 +1,17 @@
-import Button from '@mui/material/Button';
-import AddIcon from '@mui/icons-material/Add';
-import { useNavigate } from 'react-router-dom';
-
+import Button from "@mui/material/Button";
+import { MdAdd } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 
 const AddProductButton = () => {
   const navigate = useNavigate();
   return (
     <Button
-      variant="contained"
-      color="primary"
-      startIcon={<AddIcon />}
+    sx={{height: "48px"}}
+      variant="outlined"
+      color="error"
+      startIcon={<MdAdd />}
       onClick={() => {
-      navigate("/AddProduct")
+        navigate("/erp/AddProduct");
       }}
     >
       Add Product

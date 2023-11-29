@@ -6,12 +6,12 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { Box } from "@mui/material";
 import { Link } from "react-router-dom";
-import DeleteDialog from "./ModalDeleteProduct";
+import { DeleteDialog } from "../ProductDetailsPage/DeleteDialog";
 import { Product } from "../../types";
 
 interface ProductCardProps {
   onEdit: (productId: string) => void;
-  setProducts: React.Dispatch<React.SetStateAction<any[] | null>>;
+  setProducts: React.Dispatch<React.SetStateAction<Product[] | null>>;
   products: Array<Product>;
   product: Product;
 }
@@ -36,14 +36,16 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
   return (
     <Box sx={{ display: "flex", flexWrap: "wrap" }}>
-      <Card sx={{ width: "225px", margin: "20px" }}>
-        <Link to={`/product/${_id}`}>
-          <img
-            src={image.medium}
-            alt={image.alt}
-            style={{ maxWidth: "100%" }}
-          />
-        </Link>
+      <Card sx={{ width: "225px", margin: "20px", minHeight: "450px" }}>
+        <div style={{ minHeight: "220px" }}>
+          <Link to={`/erp/product/${_id}`}>
+            <img
+              src={image.medium}
+              alt={image.alt}
+              style={{ maxWidth: "100%" }}
+            />
+          </Link>
+        </div>
         <CardContent>
           <Typography variant="h5" component="div">
             {name}

@@ -8,7 +8,6 @@ import Container from "@mui/material/Container";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import { Outlet, useNavigate } from "react-router-dom";
-import AddProductButton from "./AddProductButton";
 import { AuthContext } from "../Context/AuthContext";
 
 function ResponsiveAppBar() {
@@ -30,7 +29,7 @@ function ResponsiveAppBar() {
     setAnchorElUser(null);
     setAuthenticated && setAuthenticated(null);
     localStorage.removeItem("admin");
-    navigate("/");
+    navigate("/erp");
   };
 
   return (
@@ -42,7 +41,7 @@ function ResponsiveAppBar() {
               variant="h6"
               noWrap
               component="a"
-              href={isAuthenticated ? "/products" : "/"}
+              href={isAuthenticated ? "/erp/products" : "/erp"}
               sx={{
                 mr: 2,
                 display: { xs: "none", md: "flex" },
@@ -60,7 +59,7 @@ function ResponsiveAppBar() {
               variant="h5"
               noWrap
               component="a"
-              href={isAuthenticated ? "/products" : "/"}
+              href={isAuthenticated ? "/erp/products" : "/erp"}
               sx={{
                 mr: 2,
                 display: { xs: "flex", md: "none" },
@@ -74,7 +73,6 @@ function ResponsiveAppBar() {
             >
               ERP
             </Typography>
-            {isAuthenticated && <AddProductButton />}
             {isAuthenticated && (
               <Box>
                 <Tooltip

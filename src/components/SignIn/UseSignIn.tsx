@@ -43,7 +43,7 @@ export const useSignIn = () => {
       const admin = { userName, token: resolve };
       localStorage.setItem("admin", JSON.stringify(admin));
       setIsAuthenticated && setIsAuthenticated(admin);
-      navigate("/products");
+      navigate("/erp/products");
     } catch (error) {
       if (
         error instanceof Error &&
