@@ -39,7 +39,7 @@ export const FetchToServer = (
         );
       }
       const result = await data.json();
-      navigate("/products");
+      navigate("/erp/products");
       console.log(result);
     } catch (error: unknown) {
       if (error instanceof Error) {

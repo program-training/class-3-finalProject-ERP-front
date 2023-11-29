@@ -32,7 +32,7 @@ export const Products = () => {
     : [];
 
   const handleEdit = (productId: string) => {
-    navigate(`/AddProduct/${productId}`);
+    navigate(`/erp/AddProduct/${productId}`);
   };
 
 
