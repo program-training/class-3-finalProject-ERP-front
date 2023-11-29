@@ -44,7 +44,7 @@ export const registerUser = async (
         };
         localStorage.setItem("admin", JSON.stringify(admin));
         setIsAuthenticated && setIsAuthenticated(admin);
-        navigate && navigate("/products");
+        navigate && navigate("/erp/products");
     } catch (error: unknown) {
         if (error instanceof Error) {
             if (error.message === "Failed to fetch") {

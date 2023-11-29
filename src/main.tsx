@@ -12,31 +12,31 @@ import { Products } from "./components/ProductsComponents/22s";
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: "/erp",
     element: <Header />,
     children: [
       {
-        path: "/",
+        path: "/erp",
         element: <LoginAndRegistration />,
       },
       {
-        path: "/signUp",
+        path: "/erp/signUp",
         element: <SignUpForm />,
       },
       {
-        path: "/products",
+        path: "/erp/products",
         element: <Products />,
       },
       {
-        path: "/product/:productId",
+        path: "/erp/product/:productId",
         element: <ProductDetailsPage />,
       },
       {
-        path: "/AddProduct",
+        path: "/erp/AddProduct",
         element: <AddProduct />,
       },
       {
-        path: "/AddProduct/:id",
+        path: "/erp/AddProduct/:id",
         element: <AddProduct />,
       },
     ],
