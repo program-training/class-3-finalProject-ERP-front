@@ -2,11 +2,11 @@ import React from "react";
 import ProductCard from "./ProductCard";
 import { Product } from "../../types";
 
+
 interface ProductListProps {
-  products: Array<Product>;
-  onDelete: (productId: string) => void;
+  products: Product[];
   onEdit: (productId: string) => void;
-  setStateProducts: React.Dispatch<React.SetStateAction<any[] | null>>;
+  setStateProducts: React.Dispatch<React.SetStateAction<Product[] | null>>;
 }
 
 const ProductList: React.FC<ProductListProps> = ({
@@ -15,11 +15,13 @@ const ProductList: React.FC<ProductListProps> = ({
   setStateProducts,
 }) => {
   return (
-    <div
+        <div
       style={{
         display: "flex",
+        flexDirection: "row",
         flexWrap: "wrap",
-        justifyContent: "space-around",
+        alignContent: "center",
+        justifyContent: "center",
       }}
     >
       {products.map((product) => (

@@ -3,12 +3,12 @@ import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import LoginAndRegistration from "./components/LoginAndRegistration";
 import Header from "./components/Header";
-import SignUp from "./components/SignUp/SignUpWithFormik";
+import SignUpForm from "./components/SignUp/SignUpForm";
 import { AuthProvider } from "./Context/AuthContext";
-import ProductDetailsPage from "./components/ProductDetailsPage/ProductDetailsPage";
+import { ProductDetailsPage } from "./components/ProductDetailsPage/ProductDetailsPage";
 import "./main.css";
-import YourDataManagerComponent from "./components/products/YourDataManagerComponent";
-import AddProduct from "./components/AddProduct";
+import AddProduct from "./components/Add-EditProduct/Add-EditProduct";
+import { Products } from "./components/ProductsComponents/22s";
 
 const router = createBrowserRouter([
   {
@@ -21,11 +21,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/signUp",
-        element: <SignUp />,
+        element: <SignUpForm />,
       },
       {
         path: "/products",
-        element: <YourDataManagerComponent />,
+        element: <Products />,
       },
       {
         path: "/product/:productId",
