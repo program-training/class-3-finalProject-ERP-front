@@ -43,7 +43,7 @@ export const DeleteDialog = (props: ModalDeleteProps) => {
           setStateProducts && setStateProducts (() => updatedObjects);
         }
         handleClose();
-        navigate("/products");
+        navigate("/erp/products");
       })
       .catch((error) => {
         console.log("error", error), setError("network error");

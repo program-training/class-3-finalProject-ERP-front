@@ -29,7 +29,7 @@ function ResponsiveAppBar() {
     setAnchorElUser(null);
     setAuthenticated && setAuthenticated(null);
     localStorage.removeItem("admin");
-    navigate("/");
+    navigate("/erp");
   };
 
   return (
@@ -41,7 +41,7 @@ function ResponsiveAppBar() {
               variant="h6"
               noWrap
               component="a"
-              href={isAuthenticated ? "/products" : "/"}
+              href={isAuthenticated ? "/erp/products" : "/erp"}
               sx={{
                 mr: 2,
                 display: { xs: "none", md: "flex" },
@@ -59,7 +59,7 @@ function ResponsiveAppBar() {
               variant="h5"
               noWrap
               component="a"
-              href={isAuthenticated ? "/products" : "/"}
+              href={isAuthenticated ? "/erp/products" : "/erp"}
               sx={{
                 mr: 2,
                 display: { xs: "flex", md: "none" },
