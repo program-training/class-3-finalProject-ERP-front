@@ -1,9 +1,8 @@
-import SignIn from "./SignIn/SignIn";
+import {SignIn} from "./SignIn/SignIn";
 import * as React from "react";
 import { useTheme } from "@mui/material/styles";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import SignUpForm from "./SignUp/SignUpForm";
 import { TabPanelProps } from "../types";
@@ -21,7 +20,7 @@ function TabPanel(props: TabPanelProps) {
     >
       {value === index && (
         <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
+          <div>{children}</div>
         </Box>
       )}
     </div>

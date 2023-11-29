@@ -11,7 +11,7 @@ import { useSignIn } from "./UseSignIn";
 
 const defaultTheme = createTheme();
 
-export default function SignIn() {
+export const  SignIn = () => {
   const { error, waiting, signIn } = useSignIn();
 
   const handleSubmit = (event: {

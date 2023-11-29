@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Product } from "../../types";
 
 const useDataManager = () => {
   const [products, setProducts] = useState<Array<Product> | null>(null);
   const [page, setPage] = useState<number | null>(0);
   const [loadingNextPage, setLoadingNextPage] = useState(false);
+  const [showScrollButton, setShowScrollButton] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -17,7 +18,7 @@ const useDataManager = () => {
         myHeaders.append("Authorization", token);
 
         const response = await fetch(
-          `${import.meta.env.VITE_BASE_URL}/api/inventory/pages/${page}`,
+          `${import.meta.env.VITE_BASE_URL}/api/inventory/products/${page}`,
           {
             method: "GET",
             headers: myHeaders,
@@ -59,6 +60,18 @@ const useDataManager = () => {
       observer.unobserve(element);
     };
   }, [products]);
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+  const handleScroll = useCallback(() => {
+    setShowScrollButton(window.scrollY > 200);
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [handleScroll]);
+
   
   return {
     products,
@@ -66,6 +79,8 @@ const useDataManager = () => {
     setPage,
     loadingNextPage,
     page,
+    showScrollButton,
+    scrollToTop
   };
 };
 
