@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { Product } from "../../types";
 import axios from "axios";
 
-const useDataManager = () => {
+const useProductsPageDataManager = () => {
   const [products, setProducts] = useState<Array<Product> | null>(null);
   const [page, setPage] = useState<number | null>(0);
   const [loadingNextPage, setLoadingNextPage] = useState(false);
@@ -81,4 +81,4 @@ const useDataManager = () => {
   };
 };
 
-export default useDataManager;
+export default useProductsPageDataManager;
