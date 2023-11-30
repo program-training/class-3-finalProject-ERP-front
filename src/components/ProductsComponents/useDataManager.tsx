@@ -1,45 +1,43 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Product } from "../../types";
+import axios from "axios";
 
-const useDataManager = () => {
+const useProductsPageDataManager = () => {
   const [products, setProducts] = useState<Array<Product> | null>(null);
   const [page, setPage] = useState<number | null>(0);
   const [loadingNextPage, setLoadingNextPage] = useState(false);
+  const [showScrollButton, setShowScrollButton] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       if (page === null) return;
-      try {
-        const storage = localStorage.getItem("admin");
-        const token = storage ? JSON.parse(storage).token : null;
-
-        const myHeaders = new Headers();
-        myHeaders.append("Authorization", token);
-
-        const response = await fetch(
-          `${import.meta.env.VITE_BASE_URL}/api/inventory/products/${page}`,
-          {
-            method: "GET",
-            headers: myHeaders,
-            redirect: "follow",
+      const storage = localStorage.getItem("admin");
+      const token = storage ? JSON.parse(storage).token : null;      
+      const headers = {
+        Authorization: token,
+      };
+      axios
+        .get(`${import.meta.env.VITE_BASE_URL}/api/inventory/products/${page}`, {
+          headers,
+        })
+        .then((response) => {
+          if (response.status !== 200) {
+            if (products) {
+              setPage(null);
+            }
+            throw new Error(
+              `HTTP error! Status: ${response.status}, Error: ${response.data}`
+            );
           }
-        );
-        if (!response.ok) {
-          if (products) {
-            setPage(null);
-          }
-          const errorText = await response.text();
-          throw new Error(
-            `HTTP error! Status: ${response.status}, Error: ${errorText}`
+
+          setProducts(
+            products ? [...products, ...response.data] : response.data
           );
-        }
-
-        const data = await response.json();
-        setProducts(products ? [...products, ...data] : data);
-        setLoadingNextPage(false);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
+          setLoadingNextPage(false);
+        })
+        .catch((error) => {
+          console.error("Error fetching data:", error);
+        });
     };
 
     fetchData();
@@ -59,6 +57,18 @@ const useDataManager = () => {
       observer.unobserve(element);
     };
   }, [products]);
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+  const handleScroll = useCallback(() => {
+    setShowScrollButton(window.scrollY > 200);
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [handleScroll]);
+
   
   return {
     products,
@@ -66,7 +76,9 @@ const useDataManager = () => {
     setPage,
     loadingNextPage,
     page,
+    showScrollButton,
+    scrollToTop
   };
 };
 
-export default useDataManager;
+export default useProductsPageDataManager;

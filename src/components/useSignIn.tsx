@@ -1,8 +1,8 @@
 import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../../Context/AuthContext";
+import { AuthContext } from "../Context/AuthContext";
 
-export const useSignIn = () => {
+export const useSignInForm = () => {
   const [error, setError] = useState("");
   const [waiting, setWaiting] = useState(false);
 

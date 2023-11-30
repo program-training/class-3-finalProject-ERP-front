@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Product } from "../../types";
+import axios from "axios";
 
 export const useProductDetails = (productId: string | undefined) => {
   const [product, setProduct] = useState<Product | null>(null);
@@ -8,34 +9,28 @@ export const useProductDetails = (productId: string | undefined) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const storage = localStorage.getItem("admin");
-        const token = storage ? JSON.parse(storage).token : null;
-
-        const myHeaders = new Headers();
-        myHeaders.append("Authorization", token);
-
-        const response = await fetch(
-          `${import.meta.env.VITE_BASE_URL}/api/inventory/${productId}`,
-          {
-            method: "GET",
-            headers: myHeaders,
-            redirect: "follow",
+      const storage = localStorage.getItem("admin");
+      const token = storage ? JSON.parse(storage).token : null;
+      const headers = {
+        Authorization: token,
+      };
+      
+      axios
+        .get(`${import.meta.env.VITE_BASE_URL}/api/inventory/${productId}`, {
+          headers,
+        })
+        .then((response) => {
+          if (response.status !== 200) {
+            throw new Error(
+              `HTTP error! Status: ${response.status}, Error: ${response.data}`
+            );
           }
-        );
-
-        if (!response.ok) {
-          const errorText = await response.text();
-          throw new Error(
-            `HTTP error! Status: ${response.status}, Error: ${errorText}`
-          );
-        }
-        const data = await response.json();
-        setProduct(data);
-        setLoading(false)
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
+          setProduct(response.data);
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.error("Error fetching data:", error);
+        });
     };
 
     fetchData();

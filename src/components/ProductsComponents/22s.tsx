@@ -4,18 +4,25 @@ import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 import SearchField from "../SearchField";
-import useDataManager from "./useDataManager";
 import { ChangeEvent, useState } from "react";
 import ProductList from "./ProductList";
 import { useNavigate } from "react-router-dom";
 import { MessageError } from "../ErrorsManage/MessageError";
 import AddProductButton from "../AddProductButton";
 import CircularProgress from "@mui/material/CircularProgress";
+import DataTable from "./ProductsColum";
+import useProductsPageDataManager from "./useDataManager";
+import useAllProductsDataManager from "./useAllProductsDataManager";
+import { Product } from "../../types";
+import { Fab } from "@mui/material";
+import { RxDoubleArrowUp } from "react-icons/rx";
 
 export const Products = () => {
   const navigate = useNavigate();
   const [value, setValue] = useState("1");
-  const { products, setProducts, page } = useDataManager();
+  const { allProducts } = useAllProductsDataManager();
+  const { products, setProducts, page, showScrollButton, scrollToTop } =
+    useProductsPageDataManager();
   const [searchTerm, setSearchTerm] = useState<string>("");
 
   const handleChange = (_event: React.SyntheticEvent, newValue: string) => {
@@ -23,7 +30,7 @@ export const Products = () => {
   };
 
   const filteredProducts = products
-    ? products.filter((product) =>
+    ? products.filter((product: Product) =>
         product.name.toLowerCase().includes(searchTerm.toLowerCase())
       )
     : [];
@@ -32,23 +39,21 @@ export const Products = () => {
     navigate(`/erp/AddProduct/${productId}`);
   };
 
-  if (!products)
-    return (
-      <>
-        <MessageError />
-      </>
-    );
+  const renderErrorMessage = () => (!products ? <MessageError /> : null);
 
   return (
     <TabContext value={value}>
+      {renderErrorMessage()}
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
         <Box>
-          <SearchField
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              setSearchTerm(e.target.value)
-            }
-          />
-          <AddProductButton />
+        <AddProductButton />
+          {value === "1" ? (
+            <SearchField
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                setSearchTerm(e.target.value)
+              }
+            />
+          ) : null}
         </Box>
         <TabList onChange={handleChange} aria-label="lab API tabs example">
           <Tab label="card" value="1" />
@@ -61,6 +66,15 @@ export const Products = () => {
           onEdit={handleEdit}
           setStateProducts={setProducts}
         />
+        <Fab
+          style={{ display: showScrollButton ? "block" : "none" }}
+          onClick={scrollToTop}
+          id="buttonTop"
+          color="primary"
+          aria-label="add"
+        >
+          <RxDoubleArrowUp />
+        </Fab>
         <Box
           sx={{
             display: "flex",
@@ -69,10 +83,12 @@ export const Products = () => {
             alignItems: "center",
           }}
         >
-          {page !== null ? <CircularProgress id="load" /> : null}
+          {page !== null && products ? <CircularProgress id="load" /> : null}
         </Box>
       </TabPanel>
-      <TabPanel value="2">Item Two</TabPanel>
+      <TabPanel value="2">
+        <DataTable products={allProducts} />
+      </TabPanel>
     </TabContext>
   );
 };

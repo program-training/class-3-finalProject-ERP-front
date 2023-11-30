@@ -6,15 +6,8 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { Box } from "@mui/material";
 import { Link } from "react-router-dom";
-import { DeleteDialog } from "../ProductDetailsPage/DeleteDialog";
-import { Product } from "../../types";
-
-interface ProductCardProps {
-  onEdit: (productId: string) => void;
-  setProducts: React.Dispatch<React.SetStateAction<Product[] | null>>;
-  products: Array<Product>;
-  product: Product;
-}
+import { ProductCardProps } from "../../types";
+import { DeleteDialog } from "../DeleteDialog/DeleteDialog";
 
 const ProductCard: React.FC<ProductCardProps> = ({
   product,
