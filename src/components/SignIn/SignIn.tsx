@@ -4,15 +4,20 @@ import {
   Button,
   Container,
   CssBaseline,
+  IconButton,
+  InputAdornment,
   LinearProgress,
   TextField,
 } from "@mui/material";
-import { useSignIn } from "./UseSignIn";
+import { useSignIn } from "./useSignIn";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { useState } from "react";
 
 const defaultTheme = createTheme();
 
-export const  SignIn = () => {
+export const SignIn = () => {
   const { error, waiting, signIn } = useSignIn();
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = (event: {
     preventDefault: () => void;
@@ -23,6 +28,10 @@ export const  SignIn = () => {
     const userName = data.get("userName")?.toString();
     const password = data.get("password")?.toString();
     signIn(userName, password);
+  };
+
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword);
   };
 
   return (
@@ -58,9 +67,18 @@ export const  SignIn = () => {
               fullWidth
               name="password"
               label="Password"
-              type="password"
+              type={showPassword ? "text" : "password"}
               id="password"
               autoComplete="current-password"
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton edge="end" onClick={handleClickShowPassword}>
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
             />
             <Button
               type="submit"
@@ -84,4 +102,4 @@ export const  SignIn = () => {
       </Container>
     </ThemeProvider>
   );
-}
+};

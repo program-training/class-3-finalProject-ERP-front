@@ -21,9 +21,9 @@ export const Products = () => {
   const navigate = useNavigate();
   const [value, setValue] = useState("1");
   const { allProducts } = useAllProductsDataManager();
-  const { products, setProducts, page, showScrollButton, scrollToTop } = useProductsPageDataManager();
+  const { products, setProducts, page, showScrollButton, scrollToTop } =
+    useProductsPageDataManager();
   const [searchTerm, setSearchTerm] = useState<string>("");
-
 
   const handleChange = (_event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
@@ -46,12 +46,14 @@ export const Products = () => {
       {renderErrorMessage()}
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
         <Box>
-          <SearchField
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              setSearchTerm(e.target.value)
-            }
-          />
-          <AddProductButton />
+        <AddProductButton />
+          {value === "1" ? (
+            <SearchField
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                setSearchTerm(e.target.value)
+              }
+            />
+          ) : null}
         </Box>
         <TabList onChange={handleChange} aria-label="lab API tabs example">
           <Tab label="card" value="1" />
