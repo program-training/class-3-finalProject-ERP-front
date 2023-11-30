@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
@@ -25,7 +25,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
     discountPercentage,
     image,
   } = product;
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
   return (
     <Box sx={{ display: "flex", flexWrap: "wrap" }}>

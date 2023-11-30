@@ -1,61 +1,44 @@
 import * as React from "react";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import {
-  Box,
-  CircularProgress,
-  IconButton,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogContentText,
-  DialogActions,
-  Button,
-} from "@mui/material";
+import { Box, CircularProgress, IconButton } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Link, useNavigate } from "react-router-dom";
 import { Product } from "../../types";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import { DeleteDialog } from "../DeleteDialog/DeleteDialog";
 
 interface ProductTableProps {
   products: Product[] | null;
+  setProducts: React.Dispatch<React.SetStateAction<Product[] | null>>;
 }
 
-const ProductTable: React.FC<ProductTableProps> = ({ products }) => {
+const ProductTable: React.FC<ProductTableProps> = ({
+  products,
+  setProducts,
+}) => {
   const [deleteProductId, setDeleteProductId] = React.useState<string | null>(
     null
   );
-  const [openDeleteDialog, setOpenDeleteDialog] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
 
   const navigate = useNavigate();
 
   const handleEdit = (productId: string) => {
-    navigate(`/AddProduct/${productId}`);
+    navigate(`/erp/AddProduct/${productId}`);
   };
 
   const handleDelete = (id: string) => {
     setDeleteProductId(id);
-    setOpenDeleteDialog(true);
-  };
-
-  const handleDeleteConfirm = () => {
-    console.log(`Delete product with ID: ${deleteProductId}`);
-    setOpenDeleteDialog(false);
-  };
-
-  const handleDeleteCancel = () => {
-    setDeleteProductId(null);
-    setOpenDeleteDialog(false);
+    setOpen(true);
   };
 
   const handleIncreaseQuantity = (productId: string) => {
-    // פונקציה להגדיל את הכמות
     console.log(`+: ${productId}`);
   };
 
   const handleDecreaseQuantity = (productId: string) => {
-    // פונקציה להוריד את הכמות
     console.log(`-: ${productId}`);
   };
 
@@ -170,27 +153,13 @@ const ProductTable: React.FC<ProductTableProps> = ({ products }) => {
   return (
     <div style={{ height: "82vh", width: "100%" }}>
       <DataGrid rows={transformedProducts} columns={columns} autoPageSize />
-      <Dialog
-        open={openDeleteDialog}
-        onClose={handleDeleteCancel}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">{"Delete Product?"}</DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Are you sure you want to delete this product?
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleDeleteCancel} color="primary">
-            Cancel
-          </Button>
-          <Button onClick={handleDeleteConfirm} color="primary" autoFocus>
-            Confirm
-          </Button>
-        </DialogActions>
-      </Dialog>
+      <DeleteDialog
+        setStateProducts={setProducts}
+        products={products}
+        open={open}
+        setOpen={setOpen}
+        id={deleteProductId as string}
+      />
     </div>
   );
 };
