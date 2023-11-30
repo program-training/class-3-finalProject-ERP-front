@@ -38,7 +38,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
     <Box sx={{ display: "flex", flexWrap: "wrap" }}>
       <Card sx={{ width: "225px", margin: "20px", minHeight: "450px" }}>
         <div style={{ minHeight: "220px" }}>
-          <Link to={`/product/${_id}`}>
+          <Link to={`/erp/product/${_id}`}>
             <img
               src={image.medium}
               alt={image.alt}

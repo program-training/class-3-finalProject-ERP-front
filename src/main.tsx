@@ -9,34 +9,41 @@ import { ProductDetailsPage } from "./components/ProductDetailsPage/ProductDetai
 import "./main.css";
 import AddProduct from "./components/Add-EditProduct/Add-EditProduct";
 import { Products } from "./components/ProductsComponents/22s";
+import { Navi } from "./components/Navi";
+
 
 const router = createBrowserRouter([
   {
     path: "/",
+    element: <Navi />,
+  },
+  {
+
+    path: "/erp",
     element: <Header />,
     children: [
       {
-        path: "/",
+        path: "/erp",
         element: <LoginAndRegistration />,
       },
       {
-        path: "/signUp",
+        path: "/erp/signUp",
         element: <SignUpForm />,
       },
       {
-        path: "/products",
+        path: "/erp/products",
         element: <Products />,
       },
       {
-        path: "/product/:productId",
+        path: "/erp/product/:productId",
         element: <ProductDetailsPage />,
       },
       {
-        path: "/AddProduct",
+        path: "/erp/AddProduct",
         element: <AddProduct />,
       },
       {
-        path: "/AddProduct/:id",
+        path: "/erp/AddProduct/:id",
         element: <AddProduct />,
       },
     ],

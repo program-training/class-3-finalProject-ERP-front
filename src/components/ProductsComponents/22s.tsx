@@ -11,12 +11,15 @@ import { useNavigate } from "react-router-dom";
 import { MessageError } from "../ErrorsManage/MessageError";
 import AddProductButton from "../AddProductButton";
 import CircularProgress from "@mui/material/CircularProgress";
+import { Fab } from "@mui/material";
+import { RxDoubleArrowUp } from "react-icons/rx";
 
 export const Products = () => {
   const navigate = useNavigate();
   const [value, setValue] = useState("1");
-  const { products, setProducts, page } = useDataManager();
+  const { products, setProducts, page, showScrollButton, scrollToTop } = useDataManager();
   const [searchTerm, setSearchTerm] = useState<string>("");
+
 
   const handleChange = (_event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
@@ -29,8 +32,9 @@ export const Products = () => {
     : [];
 
   const handleEdit = (productId: string) => {
-    navigate(`/AddProduct/${productId}`);
+    navigate(`/erp/AddProduct/${productId}`);
   };
+
 
   if (!products)
     return (
@@ -61,6 +65,15 @@ export const Products = () => {
           onEdit={handleEdit}
           setStateProducts={setProducts}
         />
+        <Fab
+          style={{ display: showScrollButton ? "block" : "none" }}
+          onClick={scrollToTop}
+          id="buttonTop"
+          color="primary"
+          aria-label="add"
+        >
+          <RxDoubleArrowUp />
+        </Fab>
         <Box
           sx={{
             display: "flex",

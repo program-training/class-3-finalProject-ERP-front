@@ -6,7 +6,6 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { ModalDeleteProps } from "../../types";
-import { useNavigate } from "react-router-dom";
 import { useFetch } from "./CustomDeleteDialog";
 
 

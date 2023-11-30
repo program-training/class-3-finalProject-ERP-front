@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Product } from "../../types";
 import axios from "axios";
 
@@ -6,6 +6,7 @@ const useDataManager = () => {
   const [products, setProducts] = useState<Array<Product> | null>(null);
   const [page, setPage] = useState<number | null>(0);
   const [loadingNextPage, setLoadingNextPage] = useState(false);
+  const [showScrollButton, setShowScrollButton] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -56,13 +57,27 @@ const useDataManager = () => {
       observer.unobserve(element);
     };
   }, [products]);
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+  const handleScroll = useCallback(() => {
+    setShowScrollButton(window.scrollY > 200);
+  }, []);
 
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [handleScroll]);
+
+  
   return {
     products,
     setProducts,
     setPage,
     loadingNextPage,
     page,
+    showScrollButton,
+    scrollToTop
   };
 };
 

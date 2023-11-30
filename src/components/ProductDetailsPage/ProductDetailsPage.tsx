@@ -15,7 +15,7 @@ export const ProductDetailsPage = () => {
     React.useState<boolean>(false);
 
   const handleEdit = (productId?: string) => {
-    navigate(`/product/${productId}`);
+    navigate(`/erp/product/${productId}`);
   };
 
   const handleDelete = () => {
