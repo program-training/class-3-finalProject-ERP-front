@@ -11,7 +11,7 @@ const AddProductButton = () => {
       color="error"
       startIcon={<MdAdd />}
       onClick={() => {
-        navigate("/AddProduct");
+        navigate("/erp/AddProduct");
       }}
     >
       Add Product

@@ -6,8 +6,8 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { Box } from "@mui/material";
 import { Link } from "react-router-dom";
-import { DeleteDialog } from "../ProductDetailsPage/DeleteDialog";
 import { ProductCardProps } from "../../types";
+import { DeleteDialog } from "../DeleteDialog/DeleteDialog";
 
 const ProductCard: React.FC<ProductCardProps> = ({
   product,
@@ -31,7 +31,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
     <Box sx={{ display: "flex", flexWrap: "wrap" }}>
       <Card sx={{ width: "225px", margin: "20px", minHeight: "450px" }}>
         <div style={{ minHeight: "220px" }}>
-          <Link to={`/product/${_id}`}>
+          <Link to={`/erp/product/${_id}`}>
             <img
               src={image.medium}
               alt={image.alt}

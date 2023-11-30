@@ -5,7 +5,7 @@ import Typography from "@mui/material/Typography";
 import { useNavigate } from "react-router-dom";
 import { useProductDetails } from "./CustomProductDetailsPage";
 import { MessageError } from "../ErrorsManage/MessageError";
-import { DeleteDialog } from "./DeleteDialog";
+import { DeleteDialog } from "../DeleteDialog/DeleteDialog";
 
 export const ProductDetailsPage = () => {
   const navigate = useNavigate();
@@ -15,7 +15,7 @@ export const ProductDetailsPage = () => {
     React.useState<boolean>(false);
 
   const handleEdit = (productId?: string) => {
-    navigate(`/product/${productId}`);
+    navigate(`/erp/product/${productId}`);
   };
 
   const handleDelete = () => {

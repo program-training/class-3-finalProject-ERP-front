@@ -13,26 +13,30 @@ import CircularProgress from "@mui/material/CircularProgress";
 import DataTable from "./ProductsColum";
 import useProductsPageDataManager from "./useDataManager";
 import useAllProductsDataManager from "./useAllProductsDataManager";
+import { Product } from "../../types";
+import { Fab } from "@mui/material";
+import { RxDoubleArrowUp } from "react-icons/rx";
 
 export const Products = () => {
   const navigate = useNavigate();
   const [value, setValue] = useState("1");
-  const { products, setProducts, page } = useProductsPageDataManager();
   const { allProducts } = useAllProductsDataManager();
+  const { products, setProducts, page, showScrollButton, scrollToTop } = useProductsPageDataManager();
   const [searchTerm, setSearchTerm] = useState<string>("");
+
 
   const handleChange = (_event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
   };
 
   const filteredProducts = products
-    ? products.filter((product) =>
+    ? products.filter((product: Product) =>
         product.name.toLowerCase().includes(searchTerm.toLowerCase())
       )
     : [];
 
   const handleEdit = (productId: string) => {
-    navigate(`/AddProduct/${productId}`);
+    navigate(`/erp/AddProduct/${productId}`);
   };
 
   const renderErrorMessage = () => (!products ? <MessageError /> : null);
@@ -60,6 +64,15 @@ export const Products = () => {
           onEdit={handleEdit}
           setStateProducts={setProducts}
         />
+        <Fab
+          style={{ display: showScrollButton ? "block" : "none" }}
+          onClick={scrollToTop}
+          id="buttonTop"
+          color="primary"
+          aria-label="add"
+        >
+          <RxDoubleArrowUp />
+        </Fab>
         <Box
           sx={{
             display: "flex",
