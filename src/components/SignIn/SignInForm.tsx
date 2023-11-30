@@ -9,14 +9,14 @@ import {
   LinearProgress,
   TextField,
 } from "@mui/material";
-import { useSignIn } from "./useSignIn";
+import { useSignInForm } from "./useSignIn";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useState } from "react";
 
 const defaultTheme = createTheme();
 
 export const SignIn = () => {
-  const { error, waiting, signIn } = useSignIn();
+  const { error, waiting, signIn } = useSignInForm();
   const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = (event: {

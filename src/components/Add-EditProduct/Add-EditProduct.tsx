@@ -7,7 +7,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Product } from "../../types";
 import { useEditOrAdd } from "./CustomHooks";
 import { FetchToServer } from "./FetchToServer";
-import { Divider, LinearProgress, Typography } from "@mui/material";
+import { LinearProgress, Typography } from "@mui/material";
 import { useState } from "react";
 
 export default function AddProduct() {
