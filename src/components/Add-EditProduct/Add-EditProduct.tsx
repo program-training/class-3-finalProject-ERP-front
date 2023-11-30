@@ -7,7 +7,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Product } from "../../types";
 import { useEditOrAdd } from "./CustomHooks";
 import { FetchToServer } from "./FetchToServer";
-import { LinearProgress } from "@mui/material";
+import { LinearProgress, Typography } from "@mui/material";
 import { useState } from "react";
 
 export default function AddProduct() {
@@ -16,7 +16,6 @@ export default function AddProduct() {
   const { isAdd, isEdit } = useEditOrAdd(params.id);
   const [error, setError] = useState("");
   const [waiting, setWaiting] = useState(false);
-
 
   const {
     register,
@@ -38,6 +37,13 @@ export default function AddProduct() {
         }}
         onSubmit={handleSubmit(onSubmit)}
       >
+        <br />
+        <br />
+        <br />
+        <Typography variant="h3" color={"#1976d2"}>
+          {isAdd ? "ADD PRODUCT" : "EDIT PRODUCT"}
+        </Typography>
+
         <Box
           sx={{
             display: "flex",
@@ -187,12 +193,12 @@ export default function AddProduct() {
           Submit
         </Button>
         {error
-            ? error && <p>{error}</p>
-            : waiting && (
-                <Box sx={{ width: "50%" }}>
-                  <LinearProgress />
-                </Box>
-              )}
+          ? error && <p>{error}</p>
+          : waiting && (
+              <Box sx={{ width: "50%" }}>
+                <LinearProgress />
+              </Box>
+            )}
       </form>
     );
   }

@@ -13,6 +13,7 @@ const SearchField: React.FC<SearchFieldProps> = ({ onChange }) => {
         style: {
           height: "48px",
           padding: "0 14px",
+          width: "200px"
         },
         startAdornment: (
           <InputAdornment position="start">
