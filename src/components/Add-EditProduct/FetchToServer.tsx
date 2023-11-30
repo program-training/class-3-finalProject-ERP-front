@@ -18,7 +18,7 @@ export const FetchToServer = (
     "Content-Type": "application/json",
   };
     axios({
-      method: params ? "PUT" : "post",
+      method: params ? "PUT" : "POST",
       url: `${import.meta.env.VITE_BASE_URL}/api/inventory/${
         params !== undefined ? params : ""
       }`,
@@ -27,12 +27,12 @@ export const FetchToServer = (
     })
       .then((response) => {
         setWaiting(false);
-        if (response.status != 200) {
+        if (response.status != 200 && response.status != 201) {
           throw new Error(
             `HTTP error! Status: ${response.status}, Error: ${response.data}`
           );
         }
-        navigate("/products");
+        navigate("/erp/products");
       })
     .catch((error) => {
       console.log(error);
