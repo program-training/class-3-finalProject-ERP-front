@@ -18,7 +18,6 @@ import { Product } from "../../types";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
-
 interface ProductTableProps {
   products: Product[] | null;
 }
@@ -52,10 +51,12 @@ const ProductTable: React.FC<ProductTableProps> = ({ products }) => {
 
   const handleIncreaseQuantity = (productId: string) => {
     // פונקציה להגדיל את הכמות
+    console.log(`+: ${productId}`);
   };
-  
+
   const handleDecreaseQuantity = (productId: string) => {
     // פונקציה להוריד את הכמות
+    console.log(`-: ${productId}`);
   };
 
   const columns: GridColDef[] = [
@@ -76,7 +77,7 @@ const ProductTable: React.FC<ProductTableProps> = ({ products }) => {
     },
     { field: "name", headerName: "Name", width: 200 },
     { field: "category", headerName: "Category", width: 150 },
-    { field: "description", headerName: "Description", width: 300 },
+    { field: "description", headerName: "Description", width: 250 },
     {
       field: "quantity",
       headerName: "Quantity",
@@ -110,7 +111,8 @@ const ProductTable: React.FC<ProductTableProps> = ({ products }) => {
       field: "salePrice",
       headerName: "Sale Price",
       type: "number",
-      width: 150,
+      width: 80,
+      align: "center",
     },
 
     {
@@ -118,6 +120,8 @@ const ProductTable: React.FC<ProductTableProps> = ({ products }) => {
       headerName: "Actions",
       width: 120,
       disableColumnMenu: true,
+      headerAlign: "right",
+      align: "right",
       renderCell: (params) => (
         <Box>
           <IconButton
