@@ -51,7 +51,6 @@ export default function SignUpForm() {
   });
    
 const onSubmit = (user:User) => {
-  console.log(user);
   const { username, password } = user;
   registerUser(
     username,
