@@ -25,7 +25,7 @@ export interface ModalDeleteProps {
 
 export interface ProductCardProps {
   onEdit: (productId: string) => void;
-  setProducts: React.Dispatch<React.SetStateAction<any[] | null>>;
+  setProducts: React.Dispatch<React.SetStateAction<Product[] | null>>;
   products: Array<Product>;
   product: Product;
 }
@@ -33,7 +33,7 @@ export interface ProductCardProps {
 export interface ProductListProps {
   products: Product[];
   onEdit: (productId: string) => void;
-  setStateProducts: React.Dispatch<React.SetStateAction<any[] | null>>;
+  setStateProducts: React.Dispatch<React.SetStateAction<Product[] | null>>;
 }
 
 export interface FormValues {
