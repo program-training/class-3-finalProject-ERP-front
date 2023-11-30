@@ -7,47 +7,15 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { ModalDeleteProps } from "../../types";
 import { useNavigate } from "react-router-dom";
+import { useFetch } from "./CustomDeleteDialog";
+
+
 
 export const DeleteDialog = (props: ModalDeleteProps) => {
-  const navigate = useNavigate();
-  const [error, setError] = React.useState("");
-  const { open, setOpen, id, setStateProducts, products } = props;
-  const handleClose = () => {
-    setOpen(false);
-  };
+  const { error, open, deleteAndClose ,handleClose, id} = useFetch(props) 
   const handleDelete = () => {
-    const storage = localStorage.getItem("admin");
-    const token = storage ? JSON.parse(storage).token : null;
-    const myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-    myHeaders.append("authorization", token);
-    fetch(`${import.meta.env.VITE_BASE_URL}/api/inventory/${id}`, {
-      method: "DELETE",
-      redirect: "follow",
-      headers: myHeaders,
-    })
-      .then(async (res) => {
-        if (!res.ok) {
-          const errorText = await res.text();
-          throw new Error(
-            `HTTP error! Status: ${res.status}, Error: ${errorText}`
-          );
-        }
-        return res.text();
-      })
-      .then((resolve) => {
-        console.log(resolve);
-        if (products !== undefined) {
-          const currentObjects = [...products];
-          const updatedObjects = currentObjects.filter((obj) => obj._id !== id);
-          setStateProducts && setStateProducts (() => updatedObjects);
-        }
-        handleClose();
-        navigate("/products");
-      })
-      .catch((error) => {
-        console.log("error", error), setError("network error");
-      });
+    deleteAndClose()
+  
   };
   return (
     <React.Fragment>
