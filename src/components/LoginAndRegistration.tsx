@@ -1,4 +1,4 @@
-import { SignIn } from "./SignIn/SignInForm";
+import { SignIn } from "./SignInForm";
 import * as React from "react";
 import { useTheme } from "@mui/material/styles";
 import Tabs from "@mui/material/Tabs";
