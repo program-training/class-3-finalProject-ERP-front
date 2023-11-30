@@ -27,12 +27,12 @@ export const FetchToServer = (
     })
       .then((response) => {
         setWaiting(false);
-        if (response.status != 200) {
+        if (response.status != 200 && response.status != 201) {
           throw new Error(
             `HTTP error! Status: ${response.status}, Error: ${response.data}`
           );
         }
-        navigate("/products");
+        navigate("/erp/products");
       })
     .catch((error) => {
       console.log(error);

@@ -1,59 +1,59 @@
+import axios, { AxiosError } from "axios";
+
 export const registerUser = async (
-    userName: string,
-    password: string,
-    setWaiting: React.Dispatch<React.SetStateAction<boolean>>,
-    setError: React.Dispatch<React.SetStateAction<string>>,
-    setIsAuthenticated?: (admin: {
-        userName : string
-        token: string
-    }) => void,
-    navigate?: (path: string) => void
+  userName: string,
+  password: string,
+  setWaiting: React.Dispatch<React.SetStateAction<boolean>>,
+  setError: React.Dispatch<React.SetStateAction<string>>,
+  setIsAuthenticated?: (admin: { userName: string; token: string }) => void,
+  navigate?: (path: string) => void
 ) => {
-    setWaiting(true);
-    setError("");
+  setWaiting(true);
+  setError("");
 
-    try {
-        const myHeaders = new Headers();
-        myHeaders.append("Content-Type", "application/json");
+  const myHeaders = {
+    "Content-Type": "application/json",
+  };
 
-        const raw = JSON.stringify({
-            user_name: userName,
-            password: password,
-        });
+  const data = {
+    user_name: userName,
+    password: password,
+  };
 
-        const response = await fetch(
-            `${import.meta.env.VITE_BASE_URL}/api/users/register`,
-            {
-                method: "POST",
-                headers: myHeaders,
-                body: raw,
-                redirect: "follow",
-            }
+  axios
+    .post(`${import.meta.env.VITE_BASE_URL}/api/users/register`, data, {
+      headers: myHeaders,
+    })
+    .then((response) => {
+      setWaiting(false);
+
+      if (!response.data.ok) {
+        throw new Error(
+          `HTTP error! Status: ${response.status}, Error: ${response.data}`
         );
-        setWaiting(false);
-        if (!response.ok) {
-            const errorText = await response.text();
-            throw new Error(
-                `HTTP error! Status: ${response.status}, Error: ${errorText}`
-            );
+      }
+
+      const admin = {
+        userName,
+        token: response.data.token,
+      };
+
+      localStorage.setItem("admin", JSON.stringify(admin));
+      setIsAuthenticated && setIsAuthenticated(admin);
+      navigate?.("/erp/products");
+    })
+    .catch((error: AxiosError) => {
+      if (axios.isAxiosError(error)) {
+        if (error.message === "Failed to fetch") {
+          setError("network error");
         }
-        const resolve = await response.text();
-        const admin = {
-            userName,
-            token: resolve,
-        };
-        localStorage.setItem("admin", JSON.stringify(admin));
-        setIsAuthenticated && setIsAuthenticated(admin);
-        navigate && navigate("/erp/products");
-    } catch (error: unknown) {
-        if (error instanceof Error) {
-            if (error.message === "Failed to fetch") {
-                setError("network error");
-            } else {
-                console.log("error", error);
-                setError(error.message);
-            }
+        if (error.message === "Request failed with status code 500") {
+          setError("user is Already exists");
+        } else {
+          console.log("error", error);
+          setError(error.message);
         }
-        setWaiting(false);
-    }
+      }
+      setWaiting(false);
+    });
 };

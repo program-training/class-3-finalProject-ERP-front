@@ -66,7 +66,7 @@ const ProductTable: React.FC<ProductTableProps> = ({ products }) => {
       width: 100,
       disableColumnMenu: true,
       renderCell: (params) => (
-        <Link to={`/product/${params.row.id}`}>
+        <Link to={`/erp/product/${params.row.id}`}>
           <img
             src={params.row.image.small}
             alt="Product"
