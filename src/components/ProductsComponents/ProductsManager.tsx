@@ -20,10 +20,10 @@ import { RxDoubleArrowUp } from "react-icons/rx";
 export const Products = () => {
   const navigate = useNavigate();
   const [value, setValue] = useState("1");
-  const { allProducts } = useAllProductsDataManager();
-  const { products, setProducts, page, showScrollButton, scrollToTop } =
-    useProductsPageDataManager();
+  const { allProducts, setAllProducts } = useAllProductsDataManager();
+  const { products, setProducts, page, showScrollButton, scrollToTop } = useProductsPageDataManager();
   const [searchTerm, setSearchTerm] = useState<string>("");
+
 
   const handleChange = (_event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
@@ -46,14 +46,12 @@ export const Products = () => {
       {renderErrorMessage()}
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
         <Box>
-        <AddProductButton />
-          {value === "1" ? (
-            <SearchField
-              onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                setSearchTerm(e.target.value)
-              }
-            />
-          ) : null}
+          <SearchField
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              setSearchTerm(e.target.value)
+            }
+          />
+          <AddProductButton />
         </Box>
         <TabList onChange={handleChange} aria-label="lab API tabs example">
           <Tab label="card" value="1" />
@@ -87,7 +85,7 @@ export const Products = () => {
         </Box>
       </TabPanel>
       <TabPanel value="2">
-        <DataTable products={allProducts} />
+        <DataTable products={allProducts} setProducts= {setAllProducts} />
       </TabPanel>
     </TabContext>
   );

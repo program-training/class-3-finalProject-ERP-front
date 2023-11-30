@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Product } from "../../types";
 
 const useAllProductsDataManager = () => {
-  const [allProducts, setProducts] = useState<Array<Product> | null>(null);
+  const [allProducts, setAllProducts] = useState<Array<Product> | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -29,7 +29,7 @@ const useAllProductsDataManager = () => {
         }
 
         const data = await response.json();
-        setProducts(allProducts ? [...allProducts, ...data] : data);
+        setAllProducts(allProducts ? [...allProducts, ...data] : data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -40,7 +40,7 @@ const useAllProductsDataManager = () => {
 
   return {
     allProducts,
-    setProducts,
+    setAllProducts,
   };
 };
 

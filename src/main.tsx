@@ -8,7 +8,7 @@ import { AuthProvider } from "./Context/AuthContext";
 import { ProductDetailsPage } from "./components/ProductDetailsPage/ProductDetailsPage";
 import "./main.css";
 import AddProduct from "./components/Add-EditProduct/Add-EditProduct";
-import { Products } from "./components/ProductsComponents/22s";
+import { Products } from "./components/ProductsComponents/ProductsManager";
 import { Navi } from "./components/Navi";
 
 
