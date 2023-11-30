@@ -1,13 +1,6 @@
 import React from "react";
 import ProductCard from "./ProductCard";
-import { Product } from "../../types";
-
-
-interface ProductListProps {
-  products: Product[];
-  onEdit: (productId: string) => void;
-  setStateProducts: React.Dispatch<React.SetStateAction<Product[] | null>>;
-}
+import { ProductListProps } from "../../types";
 
 const ProductList: React.FC<ProductListProps> = ({
   products,

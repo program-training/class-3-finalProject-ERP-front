@@ -34,7 +34,7 @@ export const useFetch = (props: ModalDeleteProps) => {
           setStateProducts && setStateProducts(updatedObjects);
         }
         handleClose();
-        navigate("/products");
+        navigate("/erp/products");
       })
       .catch((error) => {
         console.error("error", error);

@@ -4,20 +4,24 @@ import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 import SearchField from "../SearchField";
-import useDataManager from "./useDataManager";
 import { ChangeEvent, useState } from "react";
 import ProductList from "./ProductList";
 import { useNavigate } from "react-router-dom";
 import { MessageError } from "../ErrorsManage/MessageError";
 import AddProductButton from "../AddProductButton";
 import CircularProgress from "@mui/material/CircularProgress";
+import DataTable from "./ProductsColum";
+import useProductsPageDataManager from "./useDataManager";
+import useAllProductsDataManager from "./useAllProductsDataManager";
+import { Product } from "../../types";
 import { Fab } from "@mui/material";
 import { RxDoubleArrowUp } from "react-icons/rx";
 
 export const Products = () => {
   const navigate = useNavigate();
   const [value, setValue] = useState("1");
-  const { products, setProducts, page, showScrollButton, scrollToTop } = useDataManager();
+  const { allProducts } = useAllProductsDataManager();
+  const { products, setProducts, page, showScrollButton, scrollToTop } = useProductsPageDataManager();
   const [searchTerm, setSearchTerm] = useState<string>("");
 
 
@@ -26,7 +30,7 @@ export const Products = () => {
   };
 
   const filteredProducts = products
-    ? products.filter((product) =>
+    ? products.filter((product: Product) =>
         product.name.toLowerCase().includes(searchTerm.toLowerCase())
       )
     : [];
@@ -35,16 +39,11 @@ export const Products = () => {
     navigate(`/erp/AddProduct/${productId}`);
   };
 
-
-  if (!products)
-    return (
-      <>
-        <MessageError />
-      </>
-    );
+  const renderErrorMessage = () => (!products ? <MessageError /> : null);
 
   return (
     <TabContext value={value}>
+      {renderErrorMessage()}
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
         <Box>
           <SearchField
@@ -82,10 +81,12 @@ export const Products = () => {
             alignItems: "center",
           }}
         >
-          {page !== null ? <CircularProgress id="load" /> : null}
+          {page !== null && products ? <CircularProgress id="load" /> : null}
         </Box>
       </TabPanel>
-      <TabPanel value="2">Item Two</TabPanel>
+      <TabPanel value="2">
+        <DataTable products={allProducts} />
+      </TabPanel>
     </TabContext>
   );
 };
