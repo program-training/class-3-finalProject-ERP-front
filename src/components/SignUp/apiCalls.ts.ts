@@ -22,7 +22,7 @@ export const registerUser = async (
         });
 
         const response = await fetch(
-            `${import.meta.env.VITE_BASE_URL}/api/users/register`,
+            `${import.meta.env.VITE_BASE_URL}/users/register`,
             {
                 method: "POST",
                 headers: myHeaders,

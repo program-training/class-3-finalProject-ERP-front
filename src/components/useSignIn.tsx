@@ -23,7 +23,7 @@ export const useSignInForm = () => {
       const raw = JSON.stringify(user);
 
       const res = await fetch(
-        `${import.meta.env.VITE_BASE_URL}/api/users/logIn`,
+        `${import.meta.env.VITE_BASE_URL}/users/logIn`,
         {
           method: "POST",
           headers: myHeaders,

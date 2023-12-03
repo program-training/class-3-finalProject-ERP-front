@@ -14,7 +14,7 @@ const useAllProductsDataManager = () => {
         myHeaders.append("Authorization", token);
 
         const response = await fetch(
-          `${import.meta.env.VITE_BASE_URL}/api/inventory`,
+          `${import.meta.env.VITE_BASE_URL}/inventory`,
           {
             method: "GET",
             headers: myHeaders,
