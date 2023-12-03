@@ -16,7 +16,7 @@ export const useProductDetails = (productId: string | undefined) => {
       };
       
       axios
-        .get(`${import.meta.env.VITE_BASE_URL}/api/inventory/${productId}`, {
+        .get(`${import.meta.env.VITE_BASE_URL}/inventory/${productId}`, {
           headers,
         })
         .then((response) => {
