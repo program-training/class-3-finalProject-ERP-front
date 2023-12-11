@@ -57,3 +57,9 @@ export interface User {
   password: string;
   username: string;
 }
+
+export interface ProductData {
+  product_name: string;
+  quantity: number;
+  time: { time: string; quantity: number }[];
+}

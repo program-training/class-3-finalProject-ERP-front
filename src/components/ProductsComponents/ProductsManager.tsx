@@ -16,6 +16,7 @@ import useAllProductsDataManager from "./useAllProductsDataManager";
 import { Product } from "../../types";
 import { Fab } from "@mui/material";
 import { RxDoubleArrowUp } from "react-icons/rx";
+import StatisticsButton from "../Statistics/StatisticsButton";
 
 export const Products = () => {
   const navigate = useNavigate();
@@ -53,6 +54,7 @@ export const Products = () => {
           />
           <AddProductButton />
         </Box>
+        <StatisticsButton/>
         <TabList onChange={handleChange} aria-label="lab API tabs example">
           <Tab label="card" value="1" />
           <Tab label="rows" value="2" />

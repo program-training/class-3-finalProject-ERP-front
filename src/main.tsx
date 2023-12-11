@@ -10,6 +10,7 @@ import "./main.css";
 import AddProduct from "./components/Add-EditProduct/Add-EditProduct";
 import { Products } from "./components/ProductsComponents/ProductsManager";
 import { Navi } from "./components/Navi";
+import Statistics from "./components/Statistics/StatisticsPage";
 
 
 const router = createBrowserRouter([
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
       {
         path: "/erp/AddProduct/:id",
         element: <AddProduct />,
+      },
+      {
+        path: "/erp/Statistics",
+        element: <Statistics />,
       },
     ],
   },
