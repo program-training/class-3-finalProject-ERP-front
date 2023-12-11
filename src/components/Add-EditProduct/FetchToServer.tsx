@@ -19,7 +19,7 @@ export const FetchToServer = (
   };
     axios({
       method: params ? "PUT" : "POST",
-      url: `${import.meta.env.VITE_BASE_URL}/api/inventory/${
+      url: `${import.meta.env.VITE_BASE_URL}/inventory/${
         params !== undefined ? params : ""
       }`,
       headers: headers,

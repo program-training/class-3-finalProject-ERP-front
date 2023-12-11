@@ -2,7 +2,7 @@ import Button from "@mui/material/Button";
 import { MdAutoGraph } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 
-const StatisticsButton = () => {
+const StatisticsAllProductsButton = () => {
   const navigate = useNavigate();
   return (
     <Button
@@ -19,4 +19,4 @@ const StatisticsButton = () => {
   );
 };
 
-export default StatisticsButton;
+export default StatisticsAllProductsButton;

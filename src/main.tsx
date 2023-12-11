@@ -10,7 +10,9 @@ import "./main.css";
 import AddProduct from "./components/Add-EditProduct/Add-EditProduct";
 import { Products } from "./components/ProductsComponents/ProductsManager";
 import { Navi } from "./components/Navi";
-import Statistics from "./components/Statistics/StatisticsPage";
+import AllProductsGraph from "./components/Statistics/StatisticsAllProductsPage";
+import ProductByIdGraph from "./components/Statistics/StatisticsProductByIdPage";
+
 
 
 const router = createBrowserRouter([
@@ -49,7 +51,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/erp/Statistics",
-        element: <Statistics />,
+        element: <AllProductsGraph />,
+      },
+      {
+        path: "/erp/Statistics/:productId",
+        element: <ProductByIdGraph />,
       },
     ],
   },

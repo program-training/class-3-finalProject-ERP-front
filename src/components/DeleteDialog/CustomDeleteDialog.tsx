@@ -19,7 +19,7 @@ export const useFetch = (props: ModalDeleteProps) => {
     };
 
     axios
-      .delete(`${import.meta.env.VITE_BASE_URL}/api/inventory/${id}`, {
+      .delete(`${import.meta.env.VITE_BASE_URL}/inventory/${id}`, {
         headers: headers,
       })
       .then((response) => {

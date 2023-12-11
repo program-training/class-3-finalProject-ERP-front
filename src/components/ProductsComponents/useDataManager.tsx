@@ -17,7 +17,7 @@ const useProductsPageDataManager = () => {
         Authorization: token,
       };
       axios
-        .get(`${import.meta.env.VITE_BASE_URL}/api/inventory/products/${page}`, {
+        .get(`${import.meta.env.VITE_BASE_URL}/inventory/products/${page}`, {
           headers,
         })
         .then((response) => {
