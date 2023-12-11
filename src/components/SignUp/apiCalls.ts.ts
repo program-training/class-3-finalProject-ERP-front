@@ -17,12 +17,10 @@ export const registerUser = async (
         myHeaders.append("Content-Type", "application/json");
 
         const raw = JSON.stringify({
-            user_name: userName,
-            password: password,
-        });
-
+            "query": `mutation SignUp { signUp(user_name: \"${userName}\", password: \"${password}\") }`
+          });
         const response = await fetch(
-            `${import.meta.env.VITE_BASE_URL}/users/register`,
+            `${import.meta.env.VITE_BASE_URL}`,
             {
                 method: "POST",
                 headers: myHeaders,
@@ -35,12 +33,13 @@ export const registerUser = async (
             const errorText = await response.text();
             throw new Error(
                 `HTTP error! Status: ${response.status}, Error: ${errorText}`
+
             );
         }
-        const resolve = await response.text();
+        const resolve = await response.json();
         const admin = {
             userName,
-            token: resolve,
+            token: resolve.data.signUp,
         };
         localStorage.setItem("admin", JSON.stringify(admin));
         setIsAuthenticated && setIsAuthenticated(admin);
@@ -57,3 +56,4 @@ export const registerUser = async (
         setWaiting(false);
     }
 };
+

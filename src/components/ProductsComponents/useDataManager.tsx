@@ -16,12 +16,24 @@ const useProductsPageDataManager = () => {
       const headers = {
         Authorization: token,
       };
-      axios
-        .get(`${import.meta.env.VITE_BASE_URL}/inventory/products/${page}`, {
-          headers,
-        })
+      let data = JSON.stringify({
+  "query": "query OneProductPage { OneProductPage(page: 1) { _id name salePrice quantity description category discountPercentage image { large medium small alt } } }"
+});
+let config = {
+  method: 'post',
+  maxBodyLength: Infinity,
+  url: `${import.meta.env.VITE_BASE_URL}`,
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  data : data
+};
+axios.request(config)
         .then((response) => {
+          console.log(response.data
+            )
           if (response.status !== 200) {
+            
             if (products) {
               setPage(null);
             }
@@ -36,6 +48,8 @@ const useProductsPageDataManager = () => {
           setLoadingNextPage(false);
         })
         .catch((error) => {
+          console.log("sinai");
+          
           console.error("Error fetching data:", error);
         });
     };
@@ -82,3 +96,23 @@ const useProductsPageDataManager = () => {
 };
 
 export default useProductsPageDataManager;
+// const axios = require('axios');
+// let data = JSON.stringify({
+//   "query": "query OneProductPage { OneProductPage(page: 1) { _id name salePrice quantity description category discountPercentage image { large medium small alt } } }"
+// });
+// let config = {
+//   method: 'post',
+//   maxBodyLength: Infinity,
+//   url: 'http://localhost:3009/graphql',
+//   headers: {
+//     'Content-Type': 'application/json'
+//   },
+//   data : data
+// };
+// axios.request(config)
+// .then((response) => {
+//   console.log(JSON.stringify(response.data));
+// })
+// .catch((error) => {
+//   console.log(error);
+// });
