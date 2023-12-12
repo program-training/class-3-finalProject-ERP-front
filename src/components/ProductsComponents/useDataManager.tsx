@@ -9,31 +9,26 @@ const useProductsPageDataManager = () => {
   const [showScrollButton, setShowScrollButton] = useState(false);
 
   useEffect(() => {
-    const fetchData = async () => {
       if (page === null) return;
       const storage = localStorage.getItem("admin");
-      const token = storage ? JSON.parse(storage).token : null;      
-      const headers = {
-        Authorization: token,
-      };
+      const token = storage ? JSON.parse(storage).token : null;
       let data = JSON.stringify({
-  "query": "query OneProductPage { OneProductPage(page: 1) { _id name salePrice quantity description category discountPercentage image { large medium small alt } } }"
-});
-let config = {
-  method: 'post',
-  maxBodyLength: Infinity,
-  url: `${import.meta.env.VITE_BASE_URL}`,
-  headers: {
-    'Content-Type': 'application/json'
-  },
-  data : data
-};
-axios.request(config)
+        query: `query OneProductPage { OneProductPage(page: ${page}) { _id name salePrice quantity description category discountPercentage image {large medium small alt} } }`,
+      });
+      let config = {
+        method: "post",
+        maxBodyLength: Infinity,
+        url: `${import.meta.env.VITE_BASE_URL}`,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+        data: data,
+      };
+      axios
+        .request(config)
         .then((response) => {
-          console.log(response.data
-            )
           if (response.status !== 200) {
-            
             if (products) {
               setPage(null);
             }
@@ -41,20 +36,13 @@ axios.request(config)
               `HTTP error! Status: ${response.status}, Error: ${response.data}`
             );
           }
-
-          setProducts(
-            products ? [...products, ...response.data] : response.data
-          );
+          const data = response.data.data.OneProductPage;
+          setProducts(products ? [...products, ...data] : data);
           setLoadingNextPage(false);
         })
         .catch((error) => {
-          console.log("sinai");
-          
           console.error("Error fetching data:", error);
         });
-    };
-
-    fetchData();
   }, [page]);
 
   useEffect(() => {
@@ -83,7 +71,6 @@ axios.request(config)
     return () => window.removeEventListener("scroll", handleScroll);
   }, [handleScroll]);
 
-  
   return {
     products,
     setProducts,
@@ -91,28 +78,8 @@ axios.request(config)
     loadingNextPage,
     page,
     showScrollButton,
-    scrollToTop
+    scrollToTop,
   };
 };
 
 export default useProductsPageDataManager;
-// const axios = require('axios');
-// let data = JSON.stringify({
-//   "query": "query OneProductPage { OneProductPage(page: 1) { _id name salePrice quantity description category discountPercentage image { large medium small alt } } }"
-// });
-// let config = {
-//   method: 'post',
-//   maxBodyLength: Infinity,
-//   url: 'http://localhost:3009/graphql',
-//   headers: {
-//     'Content-Type': 'application/json'
-//   },
-//   data : data
-// };
-// axios.request(config)
-// .then((response) => {
-//   console.log(JSON.stringify(response.data));
-// })
-// .catch((error) => {
-//   console.log(error);
-// });
