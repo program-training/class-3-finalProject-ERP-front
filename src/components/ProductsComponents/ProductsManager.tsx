@@ -16,6 +16,7 @@ import useAllProductsDataManager from "./useAllProductsDataManager";
 import { Product } from "../../types";
 import { Fab } from "@mui/material";
 import { RxDoubleArrowUp } from "react-icons/rx";
+import StatisticsAllProductsButton from "../Statistics/StatisticsAllProductsButton";
 
 export const Products = () => {
   const navigate = useNavigate();
@@ -39,6 +40,10 @@ export const Products = () => {
     navigate(`/erp/AddProduct/${productId}`);
   };
 
+  const HandleOpenStatistics = (productId: string) => {
+    navigate(`/erp/Statistics/${productId}`);
+  };
+
   const renderErrorMessage = () => (!products ? <MessageError /> : null);
 
   return (
@@ -53,6 +58,7 @@ export const Products = () => {
           />
           <AddProductButton />
         </Box>
+        <StatisticsAllProductsButton/>
         <TabList onChange={handleChange} aria-label="lab API tabs example">
           <Tab label="card" value="1" />
           <Tab label="rows" value="2" />
@@ -62,6 +68,7 @@ export const Products = () => {
         <ProductList
           products={filteredProducts}
           onEdit={handleEdit}
+          setOpenStatistics={HandleOpenStatistics}
           setStateProducts={setProducts}
         />
         <Fab

@@ -25,6 +25,7 @@ export interface ModalDeleteProps {
 
 export interface ProductCardProps {
   onEdit: (productId: string) => void;
+  setOpenStatistics: (productId: string) => void;
   setProducts: React.Dispatch<React.SetStateAction<Product[] | null>>;
   products: Array<Product>;
   product: Product;
@@ -33,6 +34,7 @@ export interface ProductCardProps {
 export interface ProductListProps {
   products: Product[];
   onEdit: (productId: string) => void;
+  setOpenStatistics: (productId: string) => void;
   setStateProducts: React.Dispatch<React.SetStateAction<Product[] | null>>;
 }
 
@@ -56,4 +58,10 @@ export interface User {
   confirmPassword: string;
   password: string;
   username: string;
+}
+
+export interface ProductData {
+  product_name: string;
+  quantity: number;
+  time: { time: string; quantity: number }[];
 }

@@ -8,10 +8,12 @@ import { Box } from "@mui/material";
 import { Link } from "react-router-dom";
 import { ProductCardProps } from "../../types";
 import { DeleteDialog } from "../DeleteDialog/DeleteDialog";
+import { MdAutoGraph } from "react-icons/md";
 
 const ProductCard: React.FC<ProductCardProps> = ({
   product,
   onEdit,
+  setOpenStatistics,
   setProducts,
   products,
 }) => {
@@ -58,6 +60,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
         <CardActions>
           <Button onClick={() => onEdit(_id)}>Edit</Button>
           <Button onClick={() => setOpen(true)}>Delete</Button>
+          <Button onClick={() => setOpenStatistics(_id)}><MdAutoGraph/></Button>
           <DeleteDialog
             setStateProducts={setProducts}
             products={products}
