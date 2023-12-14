@@ -24,24 +24,15 @@ const AllProductsGraph: React.FC = () => {
   if (!data) {
     return <div>Data is not available</div>;
   }
-
-  if (Object.keys(data).length === 0) {
-    return <div>No data available</div>;
-  }
-
-  const newData = Object.entries(data).map(([, productData]) => ({
-    name: productData.product_name,
-    quantity: productData.quantity,
-  }));
-
+  console.log(data);
   return (
     <>
       <h1>Statistics Page</h1>
       <div id="productPopularContainer" style={style}>
-        <ResponsiveContainer width="80%" height={300} >
-          <BarChart width={500} height={300} data={newData}>
+        <ResponsiveContainer width="80%" height={300}>
+          <BarChart width={500} height={300} data={data}>
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" />
+            <XAxis dataKey="product_name" />
             <YAxis />
             <Tooltip />
             <Legend />
