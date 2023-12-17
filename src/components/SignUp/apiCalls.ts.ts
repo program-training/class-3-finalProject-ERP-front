@@ -37,6 +37,9 @@ export const registerUser = async (
             );
         }
         const resolve = await response.json();
+        if (resolve.errors) {
+            throw new Error(resolve.errors[0].message);
+          }
         const admin = {
             userName,
             token: resolve.data.signUp,

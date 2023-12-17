@@ -39,25 +39,17 @@ export const useSignInForm = () => {
           `HTTP error! Status: ${res.status}, Error: ${errorText}`
         );
       }
-
       const resolve = await res.json();
+      if (resolve.errors) {
+        throw new Error(resolve.errors[0].message);
+      }
       const admin = { userName, token: resolve.data.logIn };
+      console.log(admin);
       localStorage.setItem("admin", JSON.stringify(admin));
       setIsAuthenticated && setIsAuthenticated(admin);
       navigate("/erp/products");
     } catch (error) {
       if (
-        error instanceof Error &&
-        error.message === "HTTP error! Status: 400, Error: user is not found"
-      ) {
-        setError("user is not found");
-      } else if (
-        error instanceof Error &&
-        error.message ===
-          "HTTP error! Status: 400, Error: The password is incorrect!"
-      ) {
-        setError("The password is incorrect!");
-      } else if (
         error instanceof Error &&
         error.message === "Failed to fetch"
       ) {
