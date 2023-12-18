@@ -18,7 +18,7 @@ export const FetchToServer = (
   mutation  ${params ? "EditProduct":"NewProduct"} {
     ${params ? "editProduct":"newProduct"}(
       productInput: {
-        ${params ? "id:params" : ""}
+        ${params ? `_id:"${params}"` : ""}
         name: "${data.name}"
         salePrice: ${data.salePrice}
         quantity: ${data.quantity}
@@ -49,6 +49,8 @@ export const FetchToServer = (
     }
   }
 `;
+console.log(editProductMutation);
+
   let config = {
     method: "post",
     maxBodyLength: Infinity,

@@ -49,6 +49,8 @@ export const useEditOrAdd = (params: string | undefined) => {
           if (response.data.errors) {
             throw new Error(response.data.errors[0].message);
           }
+          console.log(response);
+          
           setIsEdit(response.data.data.getProductById);
         })
         .catch((error) => {
