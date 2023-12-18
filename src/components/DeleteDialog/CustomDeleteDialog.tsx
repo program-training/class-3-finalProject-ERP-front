@@ -13,20 +13,47 @@ export const useFetch = (props: ModalDeleteProps) => {
   const deleteAndClose = () => {
     const storage = localStorage.getItem("admin");
     const token = storage ? JSON.parse(storage).token : null;
-    const headers = {
-      authorization: token,
-      "Content-Type": "application/json",
+    const query = `
+      mutation DeleteProduct {
+      deleteProduct(id: "${id}") {
+      _id
+      name
+      salePrice
+      quantity
+      description
+      category
+      discountPercentage
+      image {
+        large
+        medium
+        small
+        alt
+    }
+    }
+  }
+`;
+    let config = {
+      method: "post",
+      maxBodyLength: Infinity,
+      url: `${import.meta.env.VITE_BASE_URL}`,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: token,
+      },
+      data: JSON.stringify({ query }),
     };
-
     axios
-      .delete(`${import.meta.env.VITE_BASE_URL}/inventory/${id}`, {
-        headers: headers,
-      })
+      .request(config)
       .then((response) => {
-        if (response.status !== 204) {
+        if (response.status !== 200) {
           throw new Error(
             `HTTP error! Status: ${response.status}, Error: ${response.data}`
           );
+        }
+        console.log(response.data);
+        
+        if (response.data.errors) {
+          throw new Error(response.data.errors[0].message);
         }
         if (products !== undefined) {
           const currentObjects = [...products];
@@ -38,7 +65,7 @@ export const useFetch = (props: ModalDeleteProps) => {
       })
       .catch((error) => {
         console.error("error", error);
-        setError("network error");
+        setError(error.message);
       });
   };
   return { error, open, deleteAndClose, handleClose, id };
