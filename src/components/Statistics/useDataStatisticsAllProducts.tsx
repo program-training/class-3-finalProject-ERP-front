@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { ProductData } from "../../types";
 
-const useDataPopularProducts = () => {
+const useDataStatisticsAllProducts = () => {
   const [data, setData] = useState<ProductData[] | null>(null);
 
   useEffect(() => {
@@ -52,4 +52,4 @@ const useDataPopularProducts = () => {
   };
 };
 
-export default useDataPopularProducts;
+export default useDataStatisticsAllProducts;

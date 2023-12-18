@@ -1,24 +1,20 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { ProductDataTime } from "../../types";
+import { DataRegisteredStatistics } from "../../types";
 
-const useDataStatisticsProductById = (productId: string | undefined) => {
-  const [data, setData] = useState<ProductDataTime[] | null>(null);
+const useDataRegisteredStatistics = (dateStart: string, dateEnd: string) => {
+  const [data, setData] = useState< DataRegisteredStatistics[] | null>(null);
 
   useEffect(() => {
     const storage = localStorage.getItem("admin");
     const token = storage ? JSON.parse(storage).token : null;
     let data = JSON.stringify({
-      query: `query GrafUser {
-              grafProductC(id: "${productId}") {
-              product_name
-              quantity
-              time {
-                time
-                quantity  
-              }
-            }
-          }`,
+      query: `query RegisterData {
+        registerData(start: "${dateStart}", end: "${dateEnd}") {
+            login_day
+            login_count
+        }
+    }`,
     });
     let config = {
       method: "post",
@@ -39,7 +35,7 @@ const useDataStatisticsProductById = (productId: string | undefined) => {
           );
         }
         const data = response;
-        setData(data.data.data.grafProductC.time)
+        setData(data.data.data.registerData)
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -50,4 +46,4 @@ const useDataStatisticsProductById = (productId: string | undefined) => {
   };
 };
 
-export default useDataStatisticsProductById;
+export default useDataRegisteredStatistics;

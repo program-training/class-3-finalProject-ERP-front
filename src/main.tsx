@@ -10,8 +10,8 @@ import "./main.css";
 import AddProduct from "./components/Add-EditProduct/Add-EditProduct";
 import { Products } from "./components/ProductsComponents/ProductsManager";
 import { Navi } from "./components/Navi";
-import AllProductsGraph from "./components/Statistics/StatisticsAllProductsPage";
 import ProductByIdGraph from "./components/Statistics/StatisticsProductByIdPage";
+import { MainStatisticsPage } from "./components/Statistics/MainStatisticsPage";
 
 
 
@@ -51,7 +51,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/erp/Statistics",
-        element: <AllProductsGraph />,
+        element: <MainStatisticsPage />,
       },
       {
         path: "/erp/Statistics/:productId",

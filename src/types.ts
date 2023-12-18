@@ -63,5 +63,14 @@ export interface User {
 export interface ProductData {
   product_name: string;
   quantity: number;
-  time: { time: string; quantity: number }[];
+  time: ProductDataTime[];
+}
+export interface ProductDataTime {
+  time: string;
+  quantity: number;
+}
+
+export interface DataRegisteredStatistics {
+  login_day: string;
+  login_count: number;
 }

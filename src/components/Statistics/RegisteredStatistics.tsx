@@ -8,10 +8,14 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
-import useDataStatisticsAllProducts from "./useDataStatisticsAllProducts";
+import useDataRegisteredStatistics from "./useDataRegisteredStatistics";
 
-const AllProductsGraph: React.FC = () => {
-  const { data } = useDataStatisticsAllProducts();
+const dateStart = "2023-12-01";
+const dateEnd = "2024-01-01";
+
+const RegisteredStatistics: React.FC = () => {
+  const { data } = useDataRegisteredStatistics(dateStart, dateEnd);
+  console.log(data);
 
   const style: React.CSSProperties = {
     display: "flex",
@@ -26,16 +30,16 @@ const AllProductsGraph: React.FC = () => {
   }
   return (
     <>
-      <h1>Statistics Page</h1>
+      <h1>Statistics Registered</h1>
       <div id="productPopularContainer" style={style}>
         <ResponsiveContainer width="80%" height={300}>
           <BarChart width={500} height={300} data={data}>
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="product_name" />
+            <XAxis dataKey="login_day" />
             <YAxis />
             <Tooltip />
             <Legend />
-            <Bar dataKey="quantity" fill="#8884d8" />
+            <Bar dataKey="login_count" fill="#8884d8" />
           </BarChart>
         </ResponsiveContainer>
       </div>
@@ -43,4 +47,4 @@ const AllProductsGraph: React.FC = () => {
   );
 };
 
-export default AllProductsGraph;
+export default RegisteredStatistics;
