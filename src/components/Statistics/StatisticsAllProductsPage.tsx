@@ -11,7 +11,7 @@ import {
 import useDataStatisticsAllProducts from "./useDataStatisticsAllProducts";
 
 const AllProductsGraph: React.FC = () => {
-  const { dataArray, data:data1 } = useDataStatisticsAllProducts();
+  const { dataArray } = useDataStatisticsAllProducts();
 
   const style: React.CSSProperties = {
     display: "flex",
@@ -20,11 +20,11 @@ const AllProductsGraph: React.FC = () => {
     height: "100vh",
     justifyContent: "center",
   };
+console.log(dataArray);
 
   if (!dataArray) {
     return <div>Data is not available</div>;
   }
-  console.log(data1.graf);
   
   return (
     <>
