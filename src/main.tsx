@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import LoginAndRegistration from "./components/LoginAndRegistration";
 import Header from "./components/Header";
+import SignUpForm from "./components/SignUp/SignUpForm";
 import { AuthProvider } from "./Context/AuthContext";
 import { ProductDetailsPage } from "./components/ProductDetailsPage/ProductDetailsPage";
 import "./main.css";
@@ -11,7 +12,6 @@ import { Products } from "./components/ProductsComponents/ProductsManager";
 import { Navi } from "./components/Navi";
 import ProductByIdGraph from "./components/Statistics/StatisticsProductByIdPage";
 import { MainStatisticsPage } from "./components/Statistics/MainStatisticsPage";
-import { UseDataStatisticsAllProducts } from "./components/Statistics/client";
 import { client } from "./apolloServer/client";
 import { ApolloProvider } from "@apollo/client";
 
@@ -33,7 +33,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/erp/signUp",
-        element: <UseDataStatisticsAllProducts />,
+        element: <SignUpForm />,
       },
       {
         path: "/erp/products",
