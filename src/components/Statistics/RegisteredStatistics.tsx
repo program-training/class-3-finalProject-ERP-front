@@ -14,8 +14,8 @@ const dateStart = "2023-12-01";
 const dateEnd = "2024-01-01";
 
 const RegisteredStatistics: React.FC = () => {
-  const { data } = useDataRegisteredStatistics(dateStart, dateEnd);
-  console.log(data);
+  const {dataArray } = useDataRegisteredStatistics(dateStart, dateEnd);
+  console.log(dataArray);
 
   const style: React.CSSProperties = {
     display: "flex",
@@ -25,7 +25,7 @@ const RegisteredStatistics: React.FC = () => {
     justifyContent: "center",
   };
 
-  if (!data) {
+  if (!dataArray) {
     return <div>Data is not available</div>;
   }
   return (
@@ -33,7 +33,7 @@ const RegisteredStatistics: React.FC = () => {
       <h1>Statistics Registered</h1>
       <div id="productPopularContainer" style={style}>
         <ResponsiveContainer width="80%" height={300}>
-          <BarChart width={500} height={300} data={data}>
+          <BarChart width={500} height={300} data={dataArray}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="login_day" />
             <YAxis />

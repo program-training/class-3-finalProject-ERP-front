@@ -11,8 +11,8 @@ import {
 import useDataStatisticsAllProducts from "./useDataStatisticsAllProducts";
 
 const AllProductsGraph: React.FC = () => {
-  const { data } = useDataStatisticsAllProducts();
-
+  const { dataArray, data:data1 } = useDataStatisticsAllProducts();
+  
   const style: React.CSSProperties = {
     display: "flex",
     flexDirection: "column",
@@ -21,15 +21,18 @@ const AllProductsGraph: React.FC = () => {
     justifyContent: "center",
   };
 
-  if (!data) {
+  if (!dataArray) {
     return <div>Data is not available</div>;
   }
+  const a = data1.graf
+  console.log(data1.graf);
+  
   return (
     <>
       <h1>Statistics Page</h1>
       <div id="productPopularContainer" style={style}>
         <ResponsiveContainer width="80%" height={300}>
-          <BarChart width={500} height={300} data={data}>
+          <BarChart width={500} height={300} data={dataArray}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="product_name" />
             <YAxis />

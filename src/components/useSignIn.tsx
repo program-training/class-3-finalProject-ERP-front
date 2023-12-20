@@ -22,7 +22,8 @@ export const useSignInForm = () => {
       const raw = JSON.stringify({
         "query": `mutation SignUp { logIn(user_name: \"${userName}\", password: \"${password}\") }`
       });
-
+      console.log(import.meta.env.VITE_BASE_URL);
+      
       const res = await fetch(
         `${import.meta.env.VITE_BASE_URL}`,
         {
@@ -41,6 +42,8 @@ export const useSignInForm = () => {
       }
       const resolve = await res.json();
       if (resolve.errors) {
+        console.log(resolve);
+        
         throw new Error(resolve.errors[0].message);
       }
       const admin = { userName, token: resolve.data.logIn };
@@ -49,6 +52,8 @@ export const useSignInForm = () => {
       setIsAuthenticated && setIsAuthenticated(admin);
       navigate("/erp/products");
     } catch (error) {
+      console.log(error);
+      
       if (
         error instanceof Error &&
         error.message === "Failed to fetch"

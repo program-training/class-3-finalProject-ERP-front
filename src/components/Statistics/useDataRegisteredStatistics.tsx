@@ -1,48 +1,29 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { DataRegisteredStatistics } from "../../types";
+import { useQuery } from "@apollo/client";
+import { registerDAtaQuery, subscriptionToRegister } from "./client";
 
 const useDataRegisteredStatistics = (dateStart: string, dateEnd: string) => {
-  const [data, setData] = useState< DataRegisteredStatistics[] | null>(null);
-
+  const [dataArray, setDataArray] = useState< DataRegisteredStatistics[] | null>(null);
+  const { data, subscribeToMore } = useQuery(registerDAtaQuery);
+    // setDataArray(data)
+    // const aa = data.graf
   useEffect(() => {
-    const storage = localStorage.getItem("admin");
-    const token = storage ? JSON.parse(storage).token : null;
-    let data = JSON.stringify({
-      query: `query RegisterData {
-        registerData(start: "${dateStart}", end: "${dateEnd}") {
-            login_day
-            login_count
-        }
-    }`,
+    setDataArray(data?.registerData)
+    const unsubscribe = subscribeToMore({
+      document: subscriptionToRegister,
+      updateQuery: (_prev, { subscriptionData }) => {
+        console.log(subscriptionData.data.subscriptionData);
+        setDataArray(subscriptionData.data.subscriptionData)
+      }
     });
-    let config = {
-      method: "post",
-      maxBodyLength: Infinity,
-      url: `${import.meta.env.VITE_BASE_URL}`,
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: token,
-      },
-      data: data,
-    };
-    axios
-      .request(config)
-      .then((response) => {
-        if (response.status !== 200) {
-          throw new Error(
-            `HTTP error! Status: ${response.status}, Error: ${response.data}`
-          );
-        }
-        const data = response;
-        setData(data.data.data.registerData)
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
-  }, []);
+    return () => unsubscribe();
+  }, [subscribeToMore, dataArray, data]);
+
+
   return {
-    data,
+    dataArray,
   };
 };
 
