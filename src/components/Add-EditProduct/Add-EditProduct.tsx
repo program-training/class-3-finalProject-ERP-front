@@ -23,7 +23,7 @@ export default function AddProduct() {
     formState: { errors },
   } = useForm<Product>();
 
-  const onSubmit: SubmitHandler<Product> = (data) => {
+  const onSubmit: SubmitHandler<Product> = (data) => {    
     FetchToServer(params.id, data, setWaiting, setError, navigate);
   };
 

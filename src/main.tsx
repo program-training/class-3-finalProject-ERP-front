@@ -10,6 +10,11 @@ import "./main.css";
 import AddProduct from "./components/Add-EditProduct/Add-EditProduct";
 import { Products } from "./components/ProductsComponents/ProductsManager";
 import { Navi } from "./components/Navi";
+import ProductByIdGraph from "./components/Statistics/StatisticsProductByIdPage";
+import { MainStatisticsPage } from "./components/Statistics/MainStatisticsPage";
+import { client } from "./apolloServer/client";
+import { ApolloProvider } from "@apollo/client";
+
 
 
 const router = createBrowserRouter([
@@ -46,6 +51,14 @@ const router = createBrowserRouter([
         path: "/erp/AddProduct/:id",
         element: <AddProduct />,
       },
+      {
+        path: "/erp/Statistics",
+        element: <MainStatisticsPage />,
+      },
+      {
+        path: "/erp/Statistics/:productId",
+        element: <ProductByIdGraph />,
+      },
     ],
   },
 ]);
@@ -53,7 +66,9 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <AuthProvider>
+    <ApolloProvider client={client}>
       <RouterProvider router={router} />
+      </ApolloProvider>
     </AuthProvider>
   </React.StrictMode>
 );

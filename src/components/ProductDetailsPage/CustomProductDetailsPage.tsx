@@ -8,32 +8,53 @@ export const useProductDetails = (productId: string | undefined) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const storage = localStorage.getItem("admin");
-      const token = storage ? JSON.parse(storage).token : null;
-      const headers = {
-        Authorization: token,
-      };
-      
-      axios
-        .get(`${import.meta.env.VITE_BASE_URL}/api/inventory/${productId}`, {
-          headers,
-        })
-        .then((response) => {
-          if (response.status !== 200) {
-            throw new Error(
-              `HTTP error! Status: ${response.status}, Error: ${response.data}`
-            );
+    const storage = localStorage.getItem("admin");
+    const token = storage ? JSON.parse(storage).token : null;
+    const query = `
+    query {
+      getProductById(id: "${productId}") {
+        _id
+        name
+        salePrice
+        quantity
+        description
+        category
+        discountPercentage
+        image {
+          large
+          medium
+          small
+          alt
           }
-          setProduct(response.data);
-          setLoading(false);
-        })
-        .catch((error) => {
-          console.error("Error fetching data:", error);
-        });
+      }
+    }`;
+    let config = {
+      method: "post",
+      maxBodyLength: Infinity,
+      url: `${import.meta.env.VITE_BASE_URL}`,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: token,
+      },
+      data: JSON.stringify({ query }),
     };
-
-    fetchData();
+    axios
+      .request(config)
+      .then((response) => {
+        if (response.status !== 200) {
+          throw new Error(
+            `HTTP error! Status: ${response.status}, Error: ${response.data}`
+          );
+        }
+        if (response.data.errors) {
+          throw new Error(response.data.errors[0].message);
+        }
+        setProduct(response.data.data.getProductById);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
   }, [productId]);
 
   return { product, error, loading };

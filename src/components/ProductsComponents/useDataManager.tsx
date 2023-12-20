@@ -9,17 +9,24 @@ const useProductsPageDataManager = () => {
   const [showScrollButton, setShowScrollButton] = useState(false);
 
   useEffect(() => {
-    const fetchData = async () => {
       if (page === null) return;
       const storage = localStorage.getItem("admin");
-      const token = storage ? JSON.parse(storage).token : null;      
-      const headers = {
-        Authorization: token,
+      const token = storage ? JSON.parse(storage).token : null;
+      let data = JSON.stringify({
+        query: `query OneProductPage { OneProductPage(page: ${page}) { _id name salePrice quantity description category discountPercentage image {large medium small alt} } }`,
+      });
+      let config = {
+        method: "post",
+        maxBodyLength: Infinity,
+        url: `${import.meta.env.VITE_BASE_URL}`,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+        data: data,
       };
       axios
-        .get(`${import.meta.env.VITE_BASE_URL}/api/inventory/products/${page}`, {
-          headers,
-        })
+        .request(config)
         .then((response) => {
           if (response.status !== 200) {
             if (products) {
@@ -29,18 +36,13 @@ const useProductsPageDataManager = () => {
               `HTTP error! Status: ${response.status}, Error: ${response.data}`
             );
           }
-
-          setProducts(
-            products ? [...products, ...response.data] : response.data
-          );
+          const data = response.data.data.OneProductPage;
+          setProducts(products ? [...products, ...data] : data);
           setLoadingNextPage(false);
         })
         .catch((error) => {
           console.error("Error fetching data:", error);
         });
-    };
-
-    fetchData();
   }, [page]);
 
   useEffect(() => {
@@ -69,7 +71,6 @@ const useProductsPageDataManager = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [handleScroll]);
 
-  
   return {
     products,
     setProducts,
@@ -77,7 +78,7 @@ const useProductsPageDataManager = () => {
     loadingNextPage,
     page,
     showScrollButton,
-    scrollToTop
+    scrollToTop,
   };
 };
 

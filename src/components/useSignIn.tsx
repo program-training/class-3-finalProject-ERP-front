@@ -17,13 +17,15 @@ export const useSignInForm = () => {
     setWaiting(true);
     setError("");
     try {
-      const user = { user_name: userName, password:password };
       const myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
-      const raw = JSON.stringify(user);
-
+      const raw = JSON.stringify({
+        "query": `mutation SignUp { logIn(user_name: \"${userName}\", password: \"${password}\") }`
+      });
+      console.log(import.meta.env.VITE_BASE_URL);
+      
       const res = await fetch(
-        `${import.meta.env.VITE_BASE_URL}/api/users/logIn`,
+        `${import.meta.env.VITE_BASE_URL}`,
         {
           method: "POST",
           headers: myHeaders,
@@ -38,25 +40,21 @@ export const useSignInForm = () => {
           `HTTP error! Status: ${res.status}, Error: ${errorText}`
         );
       }
-
-      const resolve = await res.text();
-      const admin = { userName, token: resolve };
+      const resolve = await res.json();
+      if (resolve.errors) {
+        console.log(resolve);
+        
+        throw new Error(resolve.errors[0].message);
+      }
+      const admin = { userName, token: resolve.data.logIn };
+      console.log(admin);
       localStorage.setItem("admin", JSON.stringify(admin));
       setIsAuthenticated && setIsAuthenticated(admin);
       navigate("/erp/products");
     } catch (error) {
+      console.log(error);
+      
       if (
-        error instanceof Error &&
-        error.message === "HTTP error! Status: 400, Error: user is not found"
-      ) {
-        setError("user is not found");
-      } else if (
-        error instanceof Error &&
-        error.message ===
-          "HTTP error! Status: 400, Error: The password is incorrect!"
-      ) {
-        setError("The password is incorrect!");
-      } else if (
         error instanceof Error &&
         error.message === "Failed to fetch"
       ) {

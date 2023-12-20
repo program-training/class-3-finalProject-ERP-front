@@ -5,6 +5,7 @@ import { ProductListProps } from "../../types";
 const ProductList: React.FC<ProductListProps> = ({
   products,
   onEdit,
+  setOpenStatistics,
   setStateProducts,
 }) => {
   return (
@@ -23,6 +24,7 @@ const ProductList: React.FC<ProductListProps> = ({
           key={product._id}
           product={product}
           onEdit={onEdit}
+          setOpenStatistics={setOpenStatistics}
           setProducts={setStateProducts}
         />
       ))}
