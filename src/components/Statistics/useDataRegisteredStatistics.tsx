@@ -1,10 +1,9 @@
-import axios from "axios";
 import { useState, useEffect } from "react";
 import { DataRegisteredStatistics } from "../../types";
 import { useQuery } from "@apollo/client";
 import { registerDAtaQuery, subscriptionToRegister } from "./client";
 
-const useDataRegisteredStatistics = (dateStart: string, dateEnd: string) => {
+const useDataRegisteredStatistics = (_dateStart: string, _dateEnd: string) => {
   const [dataArray, setDataArray] = useState< DataRegisteredStatistics[] | null>(null);
   const { data, subscribeToMore } = useQuery(registerDAtaQuery);
     // setDataArray(data)

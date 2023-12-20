@@ -12,7 +12,7 @@ import useDataStatisticsAllProducts from "./useDataStatisticsAllProducts";
 
 const AllProductsGraph: React.FC = () => {
   const { dataArray, data:data1 } = useDataStatisticsAllProducts();
-  
+
   const style: React.CSSProperties = {
     display: "flex",
     flexDirection: "column",
@@ -24,7 +24,6 @@ const AllProductsGraph: React.FC = () => {
   if (!dataArray) {
     return <div>Data is not available</div>;
   }
-  const a = data1.graf
   console.log(data1.graf);
   
   return (

@@ -1,5 +1,4 @@
 import { ApolloClient, InMemoryCache, createHttpLink, split } from '@apollo/client';
-import { WebSocketLink } from '@apollo/client/link/ws';
 import { getMainDefinition } from '@apollo/client/utilities';
 import {createClient} from "graphql-ws"
 import {GraphQLWsLink} from "@apollo/client/link/subscriptions"

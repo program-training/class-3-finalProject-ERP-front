@@ -1,7 +1,6 @@
-import axios from "axios";
 import { useState, useEffect } from "react";
 import { ProductData } from "../../types";
-import { useQuery, gql } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import { query, subscription } from "./client";
 
 
