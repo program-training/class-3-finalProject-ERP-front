@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Product } from "../../types";
+import { VITE_BASE_URL } from "../../env/env";
 export const useEditOrAdd = (params: string | undefined) => {
   const [isEdit, setIsEdit] = useState<Product | null>(null);
   const [isAdd, setAdd] = useState<boolean>(false);
@@ -14,7 +15,7 @@ export const useEditOrAdd = (params: string | undefined) => {
 
       const fetchEdit = async () => {
         const data = await fetch(
-          `${import.meta.env.VITE_BASE_URL}/inventory/${params}`,
+          `${VITE_BASE_URL}/inventory/${params}`,
           {
             method: "get",
             headers: myHeaders,

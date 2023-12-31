@@ -1,6 +1,7 @@
 import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../Context/AuthContext";
+import { VITE_BASE_URL }  from "../env/env"
 
 export const useSignInForm = () => {
   const [error, setError] = useState("");
@@ -23,7 +24,7 @@ export const useSignInForm = () => {
       const raw = JSON.stringify(user);
 
       const res = await fetch(
-        `${import.meta.env.VITE_BASE_URL}/users/logIn`,
+        `${VITE_BASE_URL}/users/logIn`,
         {
           method: "POST",
           headers: myHeaders,

@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { Product } from "../../types";
 import axios from "axios";
+import { VITE_BASE_URL }  from "../../env/env"
 
 const useProductsPageDataManager = () => {
   const [products, setProducts] = useState<Array<Product> | null>(null);
@@ -17,7 +18,7 @@ const useProductsPageDataManager = () => {
         Authorization: token,
       };
       axios
-        .get(`${import.meta.env.VITE_BASE_URL}/inventory/products/${page}`, {
+        .get(`${VITE_BASE_URL}/inventory/products/${page}`, {
           headers,
         })
         .then((response) => {

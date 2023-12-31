@@ -1,3 +1,5 @@
+import { VITE_BASE_URL } from "../../env/env";
+
 export const registerUser = async (
     userName: string,
     password: string,
@@ -22,7 +24,7 @@ export const registerUser = async (
         });
 
         const response = await fetch(
-            `${import.meta.env.VITE_BASE_URL}/users/register`,
+            `${VITE_BASE_URL}/users/register`,
             {
                 method: "POST",
                 headers: myHeaders,

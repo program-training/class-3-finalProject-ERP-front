@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Product } from "../../types";
 import axios from "axios";
+import { VITE_BASE_URL } from "../../env/env";
 
 export const useProductDetails = (productId: string | undefined) => {
   const [product, setProduct] = useState<Product | null>(null);
@@ -16,7 +17,7 @@ export const useProductDetails = (productId: string | undefined) => {
       };
       
       axios
-        .get(`${import.meta.env.VITE_BASE_URL}/inventory/${productId}`, {
+        .get(`${VITE_BASE_URL}/inventory/${productId}`, {
           headers,
         })
         .then((response) => {

@@ -1,6 +1,7 @@
 import { NavigateFunction } from "react-router-dom";
 import { Product } from "../../types";
 import axios from "axios";
+import { VITE_BASE_URL } from "../../env/env";
 
 export const FetchToServer = (
   params: string | undefined,
@@ -19,7 +20,7 @@ export const FetchToServer = (
   };
     axios({
       method: params ? "PUT" : "POST",
-      url: `${import.meta.env.VITE_BASE_URL}/inventory/${
+      url: `${VITE_BASE_URL}/inventory/${
         params !== undefined ? params : ""
       }`,
       headers: headers,

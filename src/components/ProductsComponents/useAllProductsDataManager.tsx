@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Product } from "../../types";
+import { VITE_BASE_URL } from "../../env/env";
 
 const useAllProductsDataManager = () => {
   const [allProducts, setAllProducts] = useState<Array<Product> | null>(null);
@@ -14,7 +15,7 @@ const useAllProductsDataManager = () => {
         myHeaders.append("Authorization", token);
 
         const response = await fetch(
-          `${import.meta.env.VITE_BASE_URL}/inventory`,
+          `${VITE_BASE_URL}/inventory`,
           {
             method: "GET",
             headers: myHeaders,

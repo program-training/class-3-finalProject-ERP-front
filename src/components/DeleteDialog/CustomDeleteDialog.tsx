@@ -2,6 +2,7 @@ import { useState } from "react";
 import { ModalDeleteProps } from "../../types";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { VITE_BASE_URL } from "../../env/env";
 
 export const useFetch = (props: ModalDeleteProps) => {
   const [error, setError] = useState("");
@@ -19,7 +20,7 @@ export const useFetch = (props: ModalDeleteProps) => {
     };
 
     axios
-      .delete(`${import.meta.env.VITE_BASE_URL}/inventory/${id}`, {
+      .delete(`${VITE_BASE_URL}/inventory/${id}`, {
         headers: headers,
       })
       .then((response) => {
